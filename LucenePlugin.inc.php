@@ -260,8 +260,13 @@ class LucenePlugin extends GenericPlugin {
 						$form->execute();
 						return new JSONMessage(true);
 					}
-				}
+				} else {
+					// Re-init data. It should be visible to users
+					// that whatever data they may have entered into
+					// the form was not saved.
+					$form->initData();
 
+				}
 				return new JSONMessage(true, $form->fetch($request));
 		}
 		return parent::manage($args, $request);
@@ -767,7 +772,7 @@ class LucenePlugin extends GenericPlugin {
         $templateMgr = TemplateManager::getManager($request);
 		// The spelling suggestion value is set in
 		// LucenePlugin::callbackRetrieveResults(), see there.
-		$smarty->assign('spellingSuggestion', $this->_spellingSuggestion);
+        $templateMgr->assign('spellingSuggestion', $this->_spellingSuggestion);
         $templateMgr->assign(
           'spellingSuggestionUrlParams',
           array($this->_spellingSuggestionField => $this->_spellingSuggestion)
