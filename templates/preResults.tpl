@@ -7,22 +7,22 @@
  *
  * A template to be included via Templates::Search::SearchResults::PreResults hook.
  *}
-{debug}
+<div id="luceneSpellingsuggestions"  class="plugins_generic_lucene_preResults_spelling">
 {if !empty($spellingSuggestion)}
-	<strong class="plugins_generic_lucene_preResults_spelling">{translate key="plugins.generic.lucene.results.didYouMean"}: <a href="{url op="search" params=$spellingSuggestionUrlParams}">{$spellingSuggestion} </a></strong>
+	<strong>{translate key="plugins.generic.lucene.results.didYouMean"}: <a href="{url op="search" params=$spellingSuggestionUrlParams}">{$spellingSuggestion} </a></strong>
 {/if}
+</div>
 
 <div id="luceneOrdering" class="plugins_generic_lucene_preResults_ordering">
     {translate key="plugins.generic.lucene.results.orderBy"}:&nbsp;
     <select id="luceneSearchOrder" name="luceneOrderBy" class="selectMenu">
         {html_options options=$luceneOrderByOptions selected=$orderBy}
     </select>
+    &nbsp;
+    <select id="luceneSearchDirection" name="luceneOrderDir" class="selectMenu">
+        {html_options options=$luceneOrderDirOptions selected=$orderDir}
+    </select>
  </div>
-&nbsp;
-<select id="luceneSearchDirection" name="luceneOrderDir" class="selectMenu">
-    {html_options options=$luceneOrderDirOptions selected=$orderDir}
-</select>
-&nbsp;
 <script type="text/javascript">
     // Get references to the required elements.
     document.addEventListener("DOMContentLoaded", function(event) {ldelim}
