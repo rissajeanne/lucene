@@ -115,6 +115,7 @@ class LucenePlugin extends GenericPlugin {
 			}
 
 			// Register callbacks (controller-level).
+            //these are current.
 			HookRegistry::register('ArticleSearch::getResultSetOrderingOptions', array($this, 'callbackGetResultSetOrderingOptions'));
 			HookRegistry::register('SubmissionSearch::retrieveResults', array($this, 'callbackRetrieveResults'));
 			HookRegistry::register('ArticleSearchIndex::articleMetadataChanged', array($this, 'callbackArticleMetadataChanged'));
@@ -127,6 +128,7 @@ class LucenePlugin extends GenericPlugin {
 			HookRegistry::register('ArticleSearch::getSimilarityTerms', array($this, 'callbackGetSimilarityTerms'));
 
 			// Register callbacks (forms).
+            // For custom ranking. Seems to work, but value is either not saved, or not set as seleceted after loading form
 			if ($customRanking) {
 				HookRegistry::register('sectionform::Constructor', array($this, 'callbackSectionFormConstructor'));
 				HookRegistry::register('sectionform::initdata', array($this, 'callbackSectionFormInitData'));
@@ -136,14 +138,25 @@ class LucenePlugin extends GenericPlugin {
 
 			// Register callbacks (view-level).
 			HookRegistry::register('TemplateManager::display',array($this, 'callbackTemplateDisplay'));
+
+            /* disable for now, as it leads to javascript errors
+            TODO: fix or remove
 			if ($this->getSetting(CONTEXT_SITE, 'autosuggest')) {
 				HookRegistry::register('Templates::Search::SearchResults::FilterInput', array($this, 'callbackTemplateFilterInput'));
 			}
+            */
 			if ($customRanking) {
+                //still called, and form gets adapted. But form value is not saved yet, and have to test if it works as expected.
+                //TODO: layout
 				HookRegistry::register('Templates::Manager::Sections::SectionForm::AdditionalMetadata', array($this, 'callbackTemplateSectionFormAdditionalMetadata'));
 			}
-			HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this, 'callbackTemplatePreResults'));
-			HookRegistry::register('Templates::Search::SearchResults::AdditionalArticleInfo', array($this, 'callbackTemplateAdditionalArticleInfo'));
+
+            //used to show altnerative spelling suggestions
+            HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this, 'callbackTemplatePreResults'));
+
+            // Called from template article_summary.tpl, used to add highlighted additional info to searchresult.
+            HookRegistry::register('Templates::Issue::Issue::Article', array($this, 'callbackTemplateSearchResultHighligtedText'));
+            //Does not seem to be called anymore. Either has to be added to core search again, or we add it some other way only for lucene
 			HookRegistry::register('Templates::Search::SearchResults::SyntaxInstructions', array($this, 'callbackTemplateSyntaxInstructions'));
 
 			// Instantiate the web service.
@@ -232,7 +245,7 @@ class LucenePlugin extends GenericPlugin {
 	function manage($args, $request) {
 		switch ($request->getUserVar('verb')) {
 			case 'settings':
-				// Instantiate an embedded server instance.
+               // Instantiate an embedded server instance.
 				$this->import('classes.EmbeddedServer');
 				$embeddedServer = new EmbeddedServer();
 
@@ -247,58 +260,8 @@ class LucenePlugin extends GenericPlugin {
 						$form->execute();
 						return new JSONMessage(true);
 					}
-				} else {
-					// Re-init data. It should be visible to users
-					// that whatever data they may have entered into
-					// the form was not saved.
-					$form->initData();
-
-					// Index rebuild.
-					if ($request->getUserVar('rebuildIndex')) {
-						// Check whether we got valid index rebuild options.
-						if ($form->validate()) {
-							// Check whether a journal was selected.
-							$journal = null;
-							$journalId = $request->getUserVar('journalToReindex');
-							if (!empty($journalId)) {
-								$journalDao = DAORegistry::getDAO('JournalDAO'); /* @var $journalDao JournalDAO */
-								$journal = $journalDao->getById($journalId);
-								if (!is_a($journal, 'Journal')) $journal = null;
-							}
-							if (empty($journalId) || (!empty($journalId) && is_a($journal, 'Journal'))) {
-								// Rebuild index and dictionaries.
-								$messages = null;
-								$this->_rebuildIndex(false, $journal, true, true, true, $messages);
-
-								// Transfer indexing output to the form template.
-								$form->setData('rebuildIndexMessages', $messages);
-							}
-						}
-
-					// Dictionary rebuild.
-					} elseif ($request->getUserVar('rebuildDictionaries')) {
-						// Rebuild dictionaries.
-						$journal = null;
-						$this->_rebuildIndex(false, null, false, true, false, $messages);
-
-						// Transfer indexing output to the form template.
-						$form->setData('rebuildIndexMessages', $messages);
-
-					// Boost File Update.
-					} elseif ($request->getUserVar('updateBoostFile')) {
-						$this->_updateBoostFiles();
-
-					// Start/Stop solr server.
-					} elseif ($request->getUserVar('stopServer')) {
-						// As this is a system plug-in we follow usual
-						// plug-in policy and allow journal managers to start/
-						// stop the server although this will affect all journals
-						// of the installation.
-						$embeddedServer->stopAndWait();
-					} elseif ($request->getUserVar('startServer')) {
-						$embeddedServer->start();
-					}
 				}
+
 				return new JSONMessage(true, $form->fetch($request));
 		}
 		return parent::manage($args, $request);
@@ -415,6 +378,7 @@ class LucenePlugin extends GenericPlugin {
 		list($journal, $keywords, $fromDate, $toDate, $orderBy, $orderDir, $exclude, $page, $itemsPerPage) = $params;
 		$totalResults =& $params[9]; // need to use reference
 		$error =& $params[10]; // need to use reference
+        $results =& $params[11];
 
 		// Instantiate a search request.
 		$searchRequest = new SolrSearchRequest();
@@ -427,6 +391,11 @@ class LucenePlugin extends GenericPlugin {
 		$searchRequest->setItemsPerPage($itemsPerPage);
 		$searchRequest->addQueryFromKeywords($keywords);
 		$searchRequest->setExcludedIds($exclude);
+
+        // Get the ordering criteria.
+        list($orderBy, $orderDir) = $this->_getResultSetOrdering($journal);
+        $searchRequest->setOrderBy($orderBy);
+        $searchRequest->setOrderDir($orderDir == 'asc' ? true : false);
 
 		// Configure alternative spelling suggestions.
 		$spellcheck = (boolean)$this->getSetting(CONTEXT_SITE, 'spellcheck');
@@ -457,12 +426,14 @@ class LucenePlugin extends GenericPlugin {
 			}
 			while ($section = $sections->next()) { /* @var $sections DAOResultFactory */
 				$section = $sections->next();
-				$sectionBoost = (float)$section->getData('rankingBoost');
-				if ($sectionBoost != 1.0) {
-					$searchRequest->addBoostFactor(
-						'section_id', $section->getId(), $sectionBoost
-					);
-				}
+                if ($section != null) {
+                    $sectionBoost = (float)$section->getData('rankingBoost');
+                    if ($sectionBoost != 1.0) {
+                        $searchRequest->addBoostFactor(
+                            'section_id', $section->getId(), $sectionBoost
+                        );
+                    }
+                }
 			}
 			unset($sections);
 		}
@@ -523,6 +494,7 @@ class LucenePlugin extends GenericPlugin {
 
 			// Return the scored results.
 			if (isset($result['scoredResults']) && !empty($result['scoredResults'])) {
+                $results = $result['scoredResults'];
 				return $result['scoredResults'];
 			} else {
 				return array();
@@ -739,14 +711,22 @@ class LucenePlugin extends GenericPlugin {
 	function callbackTemplateDisplay($hookName, $params) {
 		// We only plug into the search results list.
 		$template = $params[1];
-		if ($template != 'search/search.tpl') return false;
+		if ($template != 'frontend/pages/search.tpl') return false;
 
 		// Get the request.
 		$request = Application::getRequest();
+        // Get the context
+        $journal =& $request->getContext();
 
 		// Assign our private stylesheet.
 		$templateMgr = $params[0];
 		$templateMgr->addStylesheet('lucene', $request->getBaseUrl() . '/' . $this->getPluginPath() . '/templates/lucene.css');
+
+        // Result set ordering options.
+        $orderByOptions = $this->_getResultSetOrderingOptions($journal);
+        $templateMgr->assign('luceneOrderByOptions', $orderByOptions);
+        $orderDirOptions = $this->_getResultSetOrderingDirectionOptions();
+        $templateMgr->assign('luceneOrderDirOptions', $orderDirOptions);
 
 		// Instant search.
 		if ($this->getSetting(CONTEXT_SITE, 'instantSearch')) {
@@ -770,7 +750,12 @@ class LucenePlugin extends GenericPlugin {
 		$smarty =& $params[1];
 		$output =& $params[2];
 		$smarty->assign($params[0]);
-		$output .= $smarty->fetch($this->getTemplateResource('filterInput.tpl'));
+        $request = Application::getRequest();
+        $templateMgr = TemplateManager::getManager($request);
+        $templateMgr->assign($params[0]);
+
+        $templateMgr->display($this->getTemplateResource('filterInput.tpl'));
+        //$output .= $smarty->fetch($this->getTemplateResource('filterInput.tpl'));
 		return false;
 	}
 
@@ -778,33 +763,36 @@ class LucenePlugin extends GenericPlugin {
 	 * @see templates/search/searchResults.tpl
 	 */
 	function callbackTemplatePreResults($hookName, $params) {
-		$smarty =& $params[1];
-		$output =& $params[2];
+        $request = Application::getRequest();
+        $templateMgr = TemplateManager::getManager($request);
 		// The spelling suggestion value is set in
 		// LucenePlugin::callbackRetrieveResults(), see there.
 		$smarty->assign('spellingSuggestion', $this->_spellingSuggestion);
-		$smarty->assign(
-			'spellingSuggestionUrlParams',
-			array($this->_spellingSuggestionField => $this->_spellingSuggestion)
-		);
-		$output .= $smarty->fetch($this->getTemplateResource('preResults.tpl'));
-		return false;
+        $templateMgr->assign(
+          'spellingSuggestionUrlParams',
+          array($this->_spellingSuggestionField => $this->_spellingSuggestion)
+        );
+
+        $templateMgr->display($this->getTemplateResource('preResults.tpl'));
+        return false;
+
 	}
 
 	/**
-	 * @see templates/search/searchResults.tpl
+	 * @see templates/frontend/objects/article_summary.tpl
 	 */
-	function callbackTemplateAdditionalArticleInfo($hookName, $params) {
-		// Check whether the "highlighting" feature is enabled.
+	function callbackTemplateSearchResultHighligtedText($hookName, $params) {
+        $smarty =& $params[1];
+        $article = $smarty->getTemplateVars('article');
+
+        // Check whether the "highlighting" feature is enabled.
 		if (!$this->getSetting(CONTEXT_SITE, 'highlighting')) return false;
 
 		// Check and prepare the article parameter.
-		$hookParams = $params[0];
-		if (!(isset($hookParams['articleId']) && is_numeric($hookParams['articleId'])
-			&& isset($hookParams['numCols']))) {
+		if (!(isset($article) && is_numeric($article->getId()))) {
 			return false;
 		}
-		$articleId = $hookParams['articleId'];
+		$articleId = $article->getId();
 
 		// Check whether we have highlighting info for the given article.
 		if (!isset($this->_highlightedArticles[$articleId])) return false;
@@ -814,8 +802,8 @@ class LucenePlugin extends GenericPlugin {
 		// there should be no XSS risk here (but we need the <em> tag in the
 		// highlighted result).
 		$output =& $params[2];
-		$output .= '<tr class="plugins_generic_lucene_highlighting"><td colspan=' . $hookParams['numCols'] . '>"...&nbsp;'
-			. trim($this->_highlightedArticles[$articleId]) . '&nbsp;..."</td></tr>';
+		$output .= '<div class="plugins_generic_lucene_highlighting">...&nbsp;'
+			. trim($this->_highlightedArticles[$articleId]) . '&nbsp;..."</div>';
 		return false;
 	}
 
@@ -842,6 +830,41 @@ class LucenePlugin extends GenericPlugin {
 		return false;
 	}
 
+
+    /**
+     * Return the available options for result
+     * set ordering.
+     * @param $journal Journal
+     * @return array
+     */
+    function _getResultSetOrderingOptions($journal) {
+        $resultSetOrderingOptions = array(
+          'score' => __('plugins.generic.lucene.results.orderBy.relevance'),
+          'authors' => __('plugins.generic.lucene.results.orderBy.author'),
+          'issuePublicationDate' => __('plugins.generic.lucene.results.orderBy.issue'),
+          'publicationDate' => __('plugins.generic.lucene.results.orderBy.date'),
+          'title' => __('plugins.generic.lucene.results.orderBy.article')
+        );
+
+        // Only show the "journal title" option if we have several journals.
+        if (!is_a($journal, 'Journal')) {
+            $resultSetOrderingOptions['journalTitle'] = __('plugins.generic.lucene.results.orderBy.journal');
+        }
+
+        return $resultSetOrderingOptions;
+    }
+
+    /**
+     * Return the available options for the result
+     * set ordering direction.
+     * @return array
+     */
+    function _getResultSetOrderingDirectionOptions() {
+        return array(
+          'asc' => __('plugins.generic.lucene.results.orderDir.asc'),
+          'desc' => __('plugins.generic.lucene.results.orderDir.desc')
+        );
+    }
 
 	//
 	// Public methods
@@ -914,6 +937,40 @@ class LucenePlugin extends GenericPlugin {
 	//
 	// Private helper methods
 	//
+    /**
+     * Return the currently selected result
+     * set ordering option (default: descending relevance).
+     * @param $journal Journal
+     * @return array An array with the order field as the
+     *  first entry and the order direction as the second
+     *  entry.
+     */
+    function _getResultSetOrdering($journal) {
+        // Retrieve the request.
+        $request =& Application::getRequest();
+
+        // Order field.
+        $orderBy = $request->getUserVar('orderBy');
+        $orderByOptions = $this->_getResultSetOrderingOptions($journal);
+        if (is_null($orderBy) || !in_array($orderBy, array_keys($orderByOptions))) {
+            $orderBy = 'score';
+        }
+
+        // Ordering direction.
+        $orderDir = $request->getUserVar('orderDir');
+        $orderDirOptions = $this->_getResultSetOrderingDirectionOptions();
+        if (is_null($orderDir) || !in_array($orderDir, array_keys($orderDirOptions))) {
+            if (in_array($orderBy, array('score', 'publicationDate', 'issuePublicationDate'))) {
+                $orderDir = 'desc';
+            } else {
+                $orderDir = 'asc';
+            }
+        }
+
+        return array($orderBy, $orderDir);
+    }
+
+
 	/**
 	 * Get all currently enabled facet categories.
 	 * @return array
