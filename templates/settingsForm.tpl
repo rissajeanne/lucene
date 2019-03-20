@@ -25,7 +25,7 @@
 		<span class="instruct">{translate key="plugins.generic.lucene.settings.searchEndpointInstructions"}</span>
 		{fbvElement type="text" id="username" value=$username label="plugins.generic.lucene.settings.username" required=true}
 		<span class="instruct">{translate key="plugins.generic.lucene.settings.usernameInstructions"}</span>
-		{fbvElement type="text" id="password" value=$password label="plugins.generic.lucene.settings.password" required=true password="true"}
+		{fbvElement type="text" id="password" value=$password label="plugins.generic.lucene.settings.password" required=true password=true}
 		<span class="instruct">{translate key="plugins.generic.lucene.settings.passwordInstructions"}</span>
 		{fbvElement type="text" id="instId" value=$instId label="plugins.generic.lucene.settings.instId" required=true}
 		<span class="instruct">{translate key="plugins.generic.lucene.settings.instIdInstructions"}</span>
@@ -81,6 +81,9 @@
 
 	{fbvFormButtons}
 	<p><span class="formRequired">{translate key="common.requiredField"}</span></p>
-	<a id="indexAdmin"> </a>
+
+	<div class="separator"></div>
+	<br />
+
 </form>
 </div>
