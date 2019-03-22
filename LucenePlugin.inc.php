@@ -160,7 +160,11 @@ class LucenePlugin extends GenericPlugin {
             HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this, 'callbackTemplatePreResults'));
 
             // Called from template article_summary.tpl, used to add highlighted additional info to searchresult.
+            //As Templates::Search::SearchResults::AdditionalArticleLinks has been removed
+            //from OJS 3, we also need this same hook to display additionalArticleLinks .
             HookRegistry::register('Templates::Issue::Issue::Article', array($this, 'callbackTemplateSearchResultHighligtedText'));
+            HookRegistry::register('Templates::Issue::Issue::Article', array($this, 'callbackTemplateSimilarDocumentsLinks'));
+
             //Does not seem to be called anymore. Either has to be added to core search again, or we add it some other way only for lucene
 			HookRegistry::register('Templates::Search::SearchResults::SyntaxInstructions', array($this, 'callbackTemplateSyntaxInstructions'));
 
@@ -320,7 +324,8 @@ class LucenePlugin extends GenericPlugin {
 		$publicOps = array(
 			'queryAutocomplete',
 			'pullChangedArticles',
-			'usageMetricBoost'
+			'usageMetricBoost',
+            'similarDocuments',
 		);
 		if (!in_array($op, $publicOps)) return;
 
@@ -817,7 +822,44 @@ class LucenePlugin extends GenericPlugin {
 		return false;
 	}
 
-	/**
+    /**
+     * @see templates/search/searchResults.tpl
+     */
+    function callbackTemplateSimilarDocumentsLinks($hookName, $params) {
+        // Check whether the "similar documents" feature is
+        // enabled.
+        if (!$this->getSetting(0, 'simdocs')) return false;
+
+        $smarty =& $params[1];
+        $article = $smarty->getTemplateVars('article');
+
+        // Check and prepare the article parameter.
+        if (!(isset($article) && is_numeric($article->getId()))) {
+            return false;
+        }
+
+        $urlParams = array(
+          'articleId' => $article->getId()
+        );
+
+        // Create a URL that links to "similar documents".
+        $request =& PKPApplication::getRequest();
+        $router =& $request->getRouter();
+        $simdocsUrl = $router->url(
+          $request, null, 'lucene', 'similarDocuments', null, $urlParams
+        );
+
+        // Return a link to the URL (a template seems overkill here).
+        $output =& $params[2];
+        $output .= '&nbsp;<a href="' . $simdocsUrl . '" class="file">'
+          . __('plugins.generic.lucene.results.similarDocuments')
+          . '</a>';
+        return false;
+    }
+
+
+
+    /**
 	 * @see templates/search/searchResults.tpl
 	 */
 	function callbackTemplateSyntaxInstructions($hookName, $params) {
