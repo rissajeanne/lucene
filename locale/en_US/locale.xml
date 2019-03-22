@@ -15,6 +15,8 @@
 	<message key="plugins.generic.lucene.displayName">Lucene Search Plugin</message>
 	<message key="plugins.generic.lucene.description">The Lucene plugin provides multi-language support, improved search result relevance, faster indexing, better scalability and more.</message>
 
+	<message key="plugins.generic.lucene.faceting.displayName">Lucene Faceting</message>
+	<message key="plugins.generic.lucene.faceting.description">Faceting Block Plugin for Lucene</message>
 	<message key="plugins.generic.lucene.faceting.title">refine your search</message>
 	<message key="plugins.generic.lucene.faceting.discipline">Discipline</message>
 	<message key="plugins.generic.lucene.faceting.subject">Keyword</message>
@@ -38,6 +40,16 @@
 	<message key="plugins.generic.lucene.rebuildIndex.updateBoostFile">Updating usage statistics data</message>
 	
 	<message key="plugins.generic.lucene.results.didYouMean">Did you mean</message>
+	<message key="plugins.generic.lucene.results.orderBy">Order results by</message>
+	<message key="plugins.generic.lucene.results.orderBy.relevance">Relevance</message>
+	<message key="plugins.generic.lucene.results.orderBy.author">Author</message>
+	<message key="plugins.generic.lucene.results.orderBy.issue">Issue</message>
+	<message key="plugins.generic.lucene.results.orderBy.date">Publication Date</message>
+	<message key="plugins.generic.lucene.results.orderBy.journal">Journal Title</message>
+	<message key="plugins.generic.lucene.results.orderBy.article">Article Title</message>
+	<message key="plugins.generic.lucene.results.orderDir.asc">Ascending</message>
+	<message key="plugins.generic.lucene.results.orderDir.desc">Descending</message>
+	<message key="plugins.generic.lucene.results.similarDocuments">similar documents</message>
 	<message key="plugins.generic.lucene.results.syntaxInstructions"><![CDATA[
 		Search tips: <ul>
 			<li>Search terms are case-insensitive</li>

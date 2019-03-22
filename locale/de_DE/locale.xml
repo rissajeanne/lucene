@@ -38,6 +38,16 @@
 	<message key="plugins.generic.lucene.rebuildIndex.updateBoostFile">Daten zu Nutzungsstatistiken aktualisieren</message>
 	
 	<message key="plugins.generic.lucene.results.didYouMean">Meinten Sie</message>
+	<message key="plugins.generic.lucene.results.orderBy">Ergebnisse sortieren nach</message>
+	<message key="plugins.generic.lucene.results.orderBy.relevance">Relevanz</message>
+	<message key="plugins.generic.lucene.results.orderBy.author">Autor/in</message>
+	<message key="plugins.generic.lucene.results.orderBy.issue">Ausgabe</message>
+	<message key="plugins.generic.lucene.results.orderBy.date">Veröffentlichungsdatum</message>
+	<message key="plugins.generic.lucene.results.orderBy.journal">Titel der Zeitschrift</message>
+	<message key="plugins.generic.lucene.results.orderBy.article">Titel des Artikels</message>
+	<message key="plugins.generic.lucene.results.orderDir.asc">Aufsteigend</message>
+	<message key="plugins.generic.lucene.results.orderDir.desc">Absteigend</message>
+	<message key="plugins.generic.lucene.results.similarDocuments">Ähnliche Dokumente</message>
 	<message key="plugins.generic.lucene.results.syntaxInstructions"><![CDATA[
 		Suchhinweise: <ul>
 			<li>Groß- und Kleinschreibung der Suchbegriffe werden nicht unterschieden.</li>
