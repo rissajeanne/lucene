@@ -17,16 +17,16 @@ import('lib.pkp.classes.plugins.BlockPlugin');
 
 class LuceneFacetsBlockPlugin extends BlockPlugin {
 
-	/** @var string */
-	var $_parentPluginName;
+	/** @var LucenePlugin */
+	var $_lucenePlugin;
 
 
 	/**
 	 * Constructor
-	 * @param $parentPluginName string
+	 * @param $lucenePlugin string
 	 */
-	function __construct($parentPluginName) {
-		$this->_parentPluginName = $parentPluginName;
+	function __construct($lucenePlugin) {
+		$this->_lucenePlugin = $lucenePlugin;
 		parent::__construct();
 	}
 
@@ -157,6 +157,10 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 		if (!$hasFacets) return '';
 
 		$templateMgr->assign('facets', $facets);
+        $templateMgr->addJavaScript(
+          'luceneAccordion',
+          $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/LuceneAccordion.js'
+        );
 		return parent::getContents($templateMgr, $request);
 	}
 
@@ -169,7 +173,7 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 	 * @return LucenePlugin
 	 */
 	function _getLucenePlugin() {
-		return PluginRegistry::getPlugin('generic', $this->_parentPluginName);
+		return $this->_lucenePlugin;
 	}
 }
 

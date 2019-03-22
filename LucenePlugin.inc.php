@@ -136,6 +136,11 @@ class LucenePlugin extends GenericPlugin {
 				HookRegistry::register('sectionform::execute', array($this, 'callbackSectionFormExecute'));
 			}
 
+
+            $this->import('LuceneFacetsBlockPlugin');
+            PluginRegistry::register('blocks', new LuceneFacetsBlockPlugin($this), $this->getPluginPath());
+
+
 			// Register callbacks (view-level).
 			HookRegistry::register('TemplateManager::display',array($this, 'callbackTemplateDisplay'));
 
