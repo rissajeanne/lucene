@@ -296,7 +296,7 @@ class LucenePlugin extends GenericPlugin {
 
 		// Instantiate the block plug-in for facets.
 		$this->import('LuceneFacetsBlockPlugin');
-		$luceneFacetsBlockPlugin = new LuceneFacetsBlockPlugin($this->getName());
+		$luceneFacetsBlockPlugin = new LuceneFacetsBlockPlugin($this);
 
 		// Add the plug-in to the registry.
 		$plugins =& $args[1];
