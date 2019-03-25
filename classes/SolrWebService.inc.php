@@ -1447,19 +1447,36 @@ class SolrWebService extends XmlWebService {
             }
         }
 
-        // Add subjects and subject classes.
-		if (!empty($subjects)) {
+        // in OJS2, keywords and subjects where put together into the subject Facet.
+        // For now, I do the same here. TODO: Decide if this is wanted.
+        $submissionKeywordDAO = DAORegistry::getDAO('SubmissionKeywordDAO');
+        $keywords = $submissionKeywordDAO->getKeywords($article->getId(), $supportedLocales);
+        foreach($keywords as $locale => $keyword) {
+            if (empty($keyword)) {
+                unset($keyword[$locale]);
+            }
+        }
+
+        // Add subjects and keywords.
+		if (!empty($subjects) || !empty($keywords)) {
 			$subjectList = XMLCustomWriter::createElement($articleDoc, 'subjectList');
+
 			if (!is_array($subjects)) $subjects = array();
-			$locales = array_keys($subjects);
+			if (!is_array($keywords)) $keywords = array();
+            $locales = array_unique(array_merge(array_keys($subjects), array_keys($keywords)));
 			foreach($locales as $locale) {
-				$subject = '';
 				if (isset($subjects[$locale])) {
                     foreach($subjects[$locale] as $localizedSubject) {
                         $subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $localizedSubject);
                         XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
                     }
 				}
+                if (isset($keywords[$locale])) {
+                    foreach($keywords[$locale] as $localizedKeyword) {
+                        $subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $localizedKeyword);
+                        XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
+                    }
+                }
 
 			}
 			XMLCustomWriter::appendChild($articleNode, $subjectList);
