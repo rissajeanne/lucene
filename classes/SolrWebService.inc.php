@@ -1414,19 +1414,40 @@ class SolrWebService extends XmlWebService {
 			XMLCustomWriter::appendChild($articleNode, $abstractList);
 		}
 
-		// Add discipline.
-		$disciplines = $article->getDiscipline(null); // return all locales
+		// Add disciplines.
+        $submissionDisciplineDao = DAORegistry::getDAO('SubmissionDisciplineDAO');
+        $disciplines = $submissionDisciplineDao->getDisciplines($article->getId(), $supportedLocales);
+
+        foreach ($disciplines as $locale => $discipline) {
+            if (empty($discipline)) {
+                unset($disciplines[$locale]);
+            }
+        }
+
 		if (!empty($disciplines)) {
 			$disciplineList = XMLCustomWriter::createElement($articleDoc, 'disciplineList');
-			foreach ($disciplines as $locale => $discipline) {
-				$disciplineNode = XMLCustomWriter::createChildWithText($articleDoc, $disciplineList, 'discipline', $discipline);
-				XMLCustomWriter::setAttribute($disciplineNode, 'locale', $locale);
-			}
+            $locales = array_keys($disciplines);
+            foreach($locales as $locale) {
+                $discipline = '';
+                if (isset($disciplines[$locale])) {
+                    foreach($disciplines[$locale] as $localizedDiscipline) {
+                        $disciplineNode = XMLCustomWriter::createChildWithText($articleDoc, $disciplineList, 'discipline', $localizedDiscipline);
+                        XMLCustomWriter::setAttribute($disciplineNode, 'locale', $locale);
+                    }
+                }
+            }
 			XMLCustomWriter::appendChild($articleNode, $disciplineList);
 		}
 
-		// Add subjects and subject classes.
-		$subjects = $article->getSubject(null);
+        $submissionSubjectDao = DAORegistry::getDAO('SubmissionSubjectDAO');
+        $subjects =  $submissionSubjectDao->getSubjects($article->getId(), $supportedLocales);
+        foreach ($subjects as $locale => $subject) {
+            if (empty($subject)) {
+                unset($subjects[$locale]);
+            }
+        }
+
+        // Add subjects and subject classes.
 		if (!empty($subjects)) {
 			$subjectList = XMLCustomWriter::createElement($articleDoc, 'subjectList');
 			if (!is_array($subjects)) $subjects = array();
@@ -1434,11 +1455,12 @@ class SolrWebService extends XmlWebService {
 			foreach($locales as $locale) {
 				$subject = '';
 				if (isset($subjects[$locale])) {
-					if (!empty($subject)) $subject .= ' ';
-					$subject .= $subjects[$locale];
+                    foreach($subjects[$locale] as $localizedSubject) {
+                        $subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $localizedSubject);
+                        XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
+                    }
 				}
-				$subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $subject);
-				XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
+
 			}
 			XMLCustomWriter::appendChild($articleNode, $subjectList);
 		}
