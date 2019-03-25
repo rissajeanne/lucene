@@ -1453,7 +1453,7 @@ class SolrWebService extends XmlWebService {
         $keywords = $submissionKeywordDAO->getKeywords($article->getId(), $supportedLocales);
         foreach($keywords as $locale => $keyword) {
             if (empty($keyword)) {
-                unset($keyword[$locale]);
+                unset($keywords[$locale]);
             }
         }
 
@@ -1465,18 +1465,22 @@ class SolrWebService extends XmlWebService {
 			if (!is_array($keywords)) $keywords = array();
             $locales = array_unique(array_merge(array_keys($subjects), array_keys($keywords)));
 			foreach($locales as $locale) {
+                $subject = '';
 				if (isset($subjects[$locale])) {
                     foreach($subjects[$locale] as $localizedSubject) {
-                        $subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $localizedSubject);
-                        XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
+                        if (!empty($subject)) $subject .= '; ';
+                        $subject .= $localizedSubject;
                     }
 				}
                 if (isset($keywords[$locale])) {
                     foreach($keywords[$locale] as $localizedKeyword) {
-                        $subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $localizedKeyword);
-                        XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
+                        if (!empty($subject)) $subject .= '; ';
+                        $subject .= $localizedKeyword;
                     }
                 }
+
+                $subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $subject);
+                XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
 
 			}
 			XMLCustomWriter::appendChild($articleNode, $subjectList);
