@@ -258,7 +258,7 @@ class LucenePlugin extends GenericPlugin {
 				$this->import('classes.EmbeddedServer');
 				$embeddedServer = new EmbeddedServer();
 
-				// Instantiate the settings form.
+                // Instantiate the settings form.
 				$this->import('classes.form.LuceneSettingsForm');
 				$form = new LuceneSettingsForm($this, $embeddedServer);
 
@@ -667,7 +667,13 @@ class LucenePlugin extends GenericPlugin {
 
 		// Read the section's ranking boost.
 		$rankingBoost = LUCENE_PLUGIN_DEFAULT_RANKING_BOOST;
-		$section = $form->section;
+        $sectionDao = DAORegistry::getDAO('SectionDAO');
+        $journal = Application::getRequest()->getJournal();
+        $section = null;
+        if ($form->getSectionId()) {
+            $section = $sectionDao->getById($form->getSectionId(), $journal->getId());
+        }
+
 		if (is_a($section, 'Section')) {
 			$rankingBoostSetting = $section->getData('rankingBoost');
 			if (is_numeric($rankingBoostSetting)) $rankingBoost = (float)$rankingBoostSetting;
@@ -698,6 +704,7 @@ class LucenePlugin extends GenericPlugin {
 	 * Callback for execution upon section form save
 	 * @param $hookName string
 	 * @param $params array
+     * @return mixed
 	 */
 	function callbackSectionFormExecute($hookName, $params) {
 		// Convert the ranking boost option back into a ranking boost factor.
@@ -710,9 +717,17 @@ class LucenePlugin extends GenericPlugin {
 			$rankingBoost = LUCENE_PLUGIN_DEFAULT_RANKING_BOOST;
 		}
 
-		// Update the ranking boost of the section.
-		$section =& $params[1]; /* @var $section Section */
-		$section->setData('rankingBoost', $rankingBoost);
+        $sectionDao = DAORegistry::getDAO('SectionDAO');
+        $journal = Application::getRequest()->getJournal();
+
+        // Get or create the section object
+        if ($form->getSectionId()) {
+            $section = $sectionDao->getById($form->getSectionId(), $journal->getId());
+            // Update the ranking boost of the section.
+            $section->setData('rankingBoost', $rankingBoost);
+            $sectionDao->updateObject($section);
+        }
+
 		return false;
 	}
 
@@ -857,8 +872,6 @@ class LucenePlugin extends GenericPlugin {
         return false;
     }
 
-
-
     /**
 	 * @see templates/search/searchResults.tpl
 	 */
@@ -873,13 +886,14 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function callbackTemplateSectionFormAdditionalMetadata($hookName, $params) {
 		// Assign the ranking boost options to the template.
-		$smarty =& $params[1];
-		$smarty->assign('rankingBoostOptions', $this->_getRankingBoostOptions());
+        $request = Application::getRequest();
+        $templateMgr = TemplateManager::getManager($request);
 
-		// Render the template.
-		$output =& $params[2];
-		$output .= $smarty->fetch($this->getTemplateResource('additionalSectionMetadata.tpl'));
-		return false;
+        $templateMgr->assign('rankingBoostOptions', $this->_getRankingBoostOptions());;
+
+        $templateMgr->display($this->getTemplateResource('additionalSectionMetadata.tpl'));
+        return false;
+
 	}
 
 
