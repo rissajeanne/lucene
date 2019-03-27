@@ -165,18 +165,24 @@ class SolrWebService extends XmlWebService {
 	 * back-end will update it during the next batch update.
 	 * @param $articleId Integer
 	 */
-	function markArticleChanged($articleId) {
-		if(!is_numeric($articleId)) {
-			assert(false);
-			return;
-		}
+    function markArticleChanged($articleId) {
+        if(!is_numeric($articleId)) {
+            assert(false);
+            return;
+        }
 
-		// Mark the article "changed".
-		$articleDao = DAORegistry::getDAO('ArticleDAO'); /* @var $articleDao ArticleDAO */
-		$articleDao->updateSetting(
-			$articleId, 'indexingState', SOLR_INDEXINGSTATE_DIRTY, 'bool'
-		);
-	}
+        // Mark the article "changed".
+        $articleDao =DAORegistry::getDAO('ArticleDAO'); /* @var $articleDao ArticleDAO */
+        $articleDao->updateSetting(
+          $articleId, 'indexingState', SOLR_INDEXINGSTATE_DIRTY, 'bool'
+        );
+
+        //in core, in many, many cases callbackArticleChangesFinished is not called anymore.
+        //until i fix that, I will just call the update here cause else i will be working against none current index
+        //all the time
+        //TODO: FIX AND REMOVE If it is set here, the cli rebuildindex always says 0 articles indexed
+        //$this->pushChangedArticles(1);
+    }
 
 	/**
 	 * Mark the given journal for re-indexing.
@@ -1554,23 +1560,23 @@ class SolrWebService extends XmlWebService {
 			}
 		}
 
-		// We need the router to build file URLs.
-		$router = $request->getRouter(); /* @var $router PageRouter */
+		// We need a PageRouter to build file URLs.
+        $router = $request->getRouter(); /* @var $router PageRouter */
+        if (!is_a($router, 'PKPKPageRouter')) {
+            $router = new PKPPageRouter();
+            $application = Application::getApplication();
+            $router->setApplication($application);
+        }
 
 
-		// Add galley files
-        $fileDao = DAORegistry::getDAO('SubmissionFileDAO');
-        AppLocale::requireComponents(LOCALE_COMPONENT_APP_COMMON);
-        import('lib.pkp.classes.submission.SubmissionFile'); // Constants
-        // Index galley files
-        $galleys = $fileDao->getLatestRevisions(
-          $article->getId(), SUBMISSION_FILE_PROOF
-        );
+        $galleys = array();
+        $articleGalleyDao = DAORegistry::getDAO('ArticleGalleyDAO'); /* @var $articleGalleyDao ArticleGalleyDAO */
+        $galleys = $articleGalleyDao->getBySubmissionId($article->getId())->toArray();
         $galleyList = null;
         foreach ($galleys as $galley) {
             if ($galley->getFileId()) {
-                $locale = $galley->getsubmissionLocale();
-                $galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', array(intval($article->getId()), intval($galley->getSubmissionId())));
+                $locale = $galley->getLocale();
+                $galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', array(intval($article->getBestArticleId()), intval($galley->getBestGalleyId())));
                 //This doesn't work from settingspage, only from commandline. From settingspage we have the problem that $router->url doesn't return correct url (and uses ComponentRouter and not PageRouter)
                 //$galleyUrl = $router->url($request, null, 'articleHandler', 'download', 'download', array(intval($article->getId()), intval($galley->getId())));
                 //This is only necessary when testing from a VM with port mappings for port 80. BaseUrl has port 8000, but if the server makes the connection it should use port 80
@@ -1592,6 +1598,8 @@ class SolrWebService extends XmlWebService {
 
                 // Index dependent files associated with any galley files.
                 // TODO: Decide if we want to index the dependent files. And test if it works.
+                // For now, I get errors when run from CLI
+                /*$fileDao = DAORegistry::getDAO('SubmissionFileDAO');
                 $dependentFiles = $fileDao->getLatestRevisionsByAssocId(ASSOC_TYPE_SUBMISSION_FILE, $galley->getFileId(), $article->getId(), SUBMISSION_FILE_DEPENDENT);
                 foreach ($dependentFiles as $depFile) {
                     if ($depFile->getFileId()) {
@@ -1616,7 +1624,7 @@ class SolrWebService extends XmlWebService {
                             XMLCustomWriter::appendChild($galleyList, $galleyNode);
                         }
                     }
-                }
+                }*/
             }
         }
 
