@@ -258,7 +258,8 @@ class LucenePlugin extends GenericPlugin {
 				$this->import('classes.EmbeddedServer');
 				$embeddedServer = new EmbeddedServer();
 
-                // Instantiate the settings form.
+
+				// Instantiate the settings form.
 				$this->import('classes.form.LuceneSettingsForm');
 				$form = new LuceneSettingsForm($this, $embeddedServer);
 
@@ -440,7 +441,6 @@ class LucenePlugin extends GenericPlugin {
 				$sections = $sectionDao->getAll();
 			}
 			while ($section = $sections->next()) { /* @var $sections DAOResultFactory */
-				$section = $sections->next();
                 if ($section != null) {
                     $sectionBoost = (float)$section->getData('rankingBoost');
                     if ($sectionBoost != 1.0) {
