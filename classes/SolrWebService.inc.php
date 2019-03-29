@@ -1028,7 +1028,7 @@ class SolrWebService extends XmlWebService {
 		$fieldNames = array(
 			'search' => array(
 				'localized' => array(
-					'title', 'abstract', 'discipline', 'subject',
+					'title', 'subtitle', 'abstract', 'discipline', 'subject',
 					'type', 'coverage',
 				),
 				'multiformat' => array(
@@ -1399,15 +1399,16 @@ class SolrWebService extends XmlWebService {
 		XMLCustomWriter::appendChild($articleNode, $titleList);
 
         // Add Subtitles.
-        $subtitles = $article->getSubtitle(null); // return all locales
-        if (!empty($subtitles)) {
-            $subtitleList = XMLCustomWriter::createElement($articleDoc, 'subtitleList');
-            foreach ($subtitles as $locale => $subtitle) {
-                $subtitleNode = XMLCustomWriter::createChildWithText($articleDoc, $subtitleList, 'abstract', $subtitle);
+        $subtitleList = XMLCustomWriter::createElement($articleDoc, 'subtitleList');
+        foreach($supportedLocales as $locale) {
+            $localizedSubtitle = $article->getLocalizedSubtitle($locale);
+            if (!is_null($localizedSubtitle)) {
+                // Add the localized subtitle.
+                $subtitleNode = XMLCustomWriter::createChildWithText($articleDoc, $subtitleList, 'subtitle', $localizedSubtitle);
                 XMLCustomWriter::setAttribute($subtitleNode, 'locale', $locale);
             }
-            XMLCustomWriter::appendChild($articleNode, $subtitleList);
         }
+        XMLCustomWriter::appendChild($articleNode, $subtitleList);
 
 		// Add abstracts.
 		$abstracts = $article->getAbstract(null); // return all locales
