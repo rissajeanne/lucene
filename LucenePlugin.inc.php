@@ -127,7 +127,7 @@ class LucenePlugin extends GenericPlugin {
 			HookRegistry::register('ArticleSearchIndex::rebuildIndex', array($this, 'callbackRebuildIndex'));
 			HookRegistry::register('ArticleSearch::getSimilarityTerms', array($this, 'callbackGetSimilarityTerms'));
 
-			// Register callbacks (forms).
+            // Register callbacks (forms).
             // For custom ranking. Seems to work, but value is either not saved, or not set as seleceted after loading form
 			if ($customRanking) {
 				HookRegistry::register('sectionform::Constructor', array($this, 'callbackSectionFormConstructor'));
@@ -158,6 +158,10 @@ class LucenePlugin extends GenericPlugin {
 
             //used to show altnerative spelling suggestions
             HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this, 'callbackTemplatePreResults'));
+
+            //used to show addintional filters for selected facet values
+            HookRegistry::register('Templates::Search::SearchResults::AdditionalFilters', array($this, 'callbackTemplateAdditionalFilters'));
+
 
             // Called from template article_summary.tpl, used to add highlighted additional info to searchresult.
             //As Templates::Search::SearchResults::AdditionalArticleLinks has been removed
@@ -258,6 +262,9 @@ class LucenePlugin extends GenericPlugin {
 				$this->import('classes.EmbeddedServer');
 				$embeddedServer = new EmbeddedServer();
 
+                //Just for testing purposes, TODO: Remove
+                //$mymessages='';
+                //$this->_rebuildIndex(false, null, true, true, false, $mymessages);
 
 				// Instantiate the settings form.
 				$this->import('classes.form.LuceneSettingsForm');
@@ -807,6 +814,30 @@ class LucenePlugin extends GenericPlugin {
         return false;
 
 	}
+
+   function callbackTemplateAdditionalFilters($hookName, $params) {
+       $request = Application::getRequest();
+       $templateMgr = TemplateManager::getManager($request);
+
+       $smarty =& $params[1];
+       $enabledFacets = $this->_getEnabledFacetCategories();
+       $facets = $this->getFacets();
+       $selectedFacets = array();
+       foreach($enabledFacets as $currentFacet) {
+           if ($currentValue = $smarty->getTemplateVars($currentFacet)) {
+               $facetDisplayName = __('plugins.generic.lucene.faceting.' . $currentFacet );
+               //author is already available in standard filtersection, so we don't show that again
+               if ($currentFacet != "authors") {
+                   $selectedFacets[$currentFacet] = array('facetDisplayName' => $facetDisplayName, 'facetValue' =>$currentValue);
+               }
+           }
+       }
+
+       $templateMgr->assign('selectedFacets', $selectedFacets);
+
+       $templateMgr->display($this->getTemplateResource('additionalFilters.tpl'));
+       return false;
+   }
 
 	/**
 	 * @see templates/frontend/objects/article_summary.tpl
