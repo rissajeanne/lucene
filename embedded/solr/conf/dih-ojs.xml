@@ -104,10 +104,10 @@
       row.put('journal_id', instId + '-' + journalId);
 
       // Add localized fields.
-      var locFields = ['title', 'subtitle', 'abstract', 'discipline', 'subject', 'type', 'coverage', 'journalTitle'];
+      var locFields = ['title', 'abstract', 'discipline', 'subject', 'type', 'coverage', 'journalTitle'];
 
       // Define how fields are being indexed.
-      var searchFields = ['title', 'subtitle', 'abstract', 'discipline', 'subject', 'type', 'coverage'];
+      var searchFields = ['title', 'abstract', 'discipline', 'subject', 'type', 'coverage'];
       var indexTermsFields = ['discipline', 'subject', 'type', 'coverage'];
       var sortFields = ['title', 'journalTitle'];
       var facetFields = ['discipline', 'subject', 'type', 'coverage', 'journalTitle'];
@@ -352,10 +352,6 @@
       <field column="etl_titleList" xpath="/articleList/article/titleList/title" multiValued="true" />
       <field column="etl_titleList_locales" xpath="/articleList/article/titleList/title/@locale" multiValued="true" />
       <field column="etl_titleList_sortOnly" xpath="/articleList/article/titleList/title/@sortOnly" multiValued="true" />
-
-      <!-- Subtitles -->
-      <field column="etl_subtitleList" xpath="/articleList/article/subtitleList/subtitle" multiValued="true" />
-      <field column="etl_subtitleList_locales" xpath="/articleList/article/subtitleList/subtitle/@locale" multiValued="true" />
 
       <!-- Abstracts -->
       <field column="etl_abstractList" xpath="/articleList/article/abstractList/abstract" multiValued="true" stripHTML="true" />

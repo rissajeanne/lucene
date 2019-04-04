@@ -1028,7 +1028,7 @@ class SolrWebService extends XmlWebService {
 		$fieldNames = array(
 			'search' => array(
 				'localized' => array(
-					'title', 'subtitle', 'abstract', 'discipline', 'subject',
+					'title', 'abstract', 'discipline', 'subject',
 					'type', 'coverage',
 				),
 				'multiformat' => array(
@@ -1377,13 +1377,13 @@ class SolrWebService extends XmlWebService {
 		$supportedLocales = $site->getSupportedLocales() + array_keys($journal->getSupportedLocaleNames());
 		assert(!empty($supportedLocales));
 
-		// Add titles.
+		// Add titles, We get the FullTitle so subtitles are also found
 		$titleList = XMLCustomWriter::createElement($articleDoc, 'titleList');
 		// Titles are used for sorting, we therefore need
 		// them in all supported locales.
 		assert(!empty($supportedLocales));
 		foreach($supportedLocales as $locale) {
-			$localizedTitle = $article->getLocalizedTitle($locale);
+			$localizedTitle = $article->getFullTitle($locale);
 			if (!is_null($localizedTitle)) {
 				// Add the localized title.
 				$titleNode = XMLCustomWriter::createChildWithText($articleDoc, $titleList, 'title', $localizedTitle);
@@ -1397,18 +1397,6 @@ class SolrWebService extends XmlWebService {
 			}
 		}
 		XMLCustomWriter::appendChild($articleNode, $titleList);
-
-        // Add Subtitles.
-        $subtitleList = XMLCustomWriter::createElement($articleDoc, 'subtitleList');
-        foreach($supportedLocales as $locale) {
-            $localizedSubtitle = $article->getLocalizedSubtitle($locale);
-            if (!is_null($localizedSubtitle)) {
-                // Add the localized subtitle.
-                $subtitleNode = XMLCustomWriter::createChildWithText($articleDoc, $subtitleList, 'subtitle', $localizedSubtitle);
-                XMLCustomWriter::setAttribute($subtitleNode, 'locale', $locale);
-            }
-        }
-        XMLCustomWriter::appendChild($articleNode, $subtitleList);
 
 		// Add abstracts.
 		$abstracts = $article->getAbstract(null); // return all locales
