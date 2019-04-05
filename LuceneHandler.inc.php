@@ -168,6 +168,7 @@ class LuceneHandler extends Handler {
 	 * @param $args array
 	 * @param $request Request
 	 */
+    /*
 	function usageMetricBoost($args, $request) {
 		$this->validate(null, $request);
 
@@ -185,7 +186,7 @@ class LuceneHandler extends Handler {
 
 		// Generate (and output) the report.
 		if (!$lucenePlugin->generateBoostFile($filter));
-	}
+	}*/
 
 
 	//

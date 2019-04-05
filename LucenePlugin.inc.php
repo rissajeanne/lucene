@@ -332,7 +332,7 @@ class LucenePlugin extends GenericPlugin {
 		$publicOps = array(
 			'queryAutocomplete',
 			'pullChangedArticles',
-			'usageMetricBoost',
+			//'usageMetricBoost',
             'similarDocuments',
 		);
 		if (!in_array($op, $publicOps)) return;
@@ -341,7 +341,7 @@ class LucenePlugin extends GenericPlugin {
 		$request = Application::getRequest();
 		$router = $request->getRouter();
 		$journal = $router->getContext($request); /* @var $journal Journal */
-		if ($op == 'usageMetricBoost' && $journal != null) return;
+		//if ($op == 'usageMetricBoost' && $journal != null) return;
 
 		// Looks as if our handler had been requested.
 		define('HANDLER_CLASS', 'LuceneHandler');
@@ -461,13 +461,13 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		// Configure ranking-by-metric.
-		$rankingByMetric = (boolean)$this->getSetting(CONTEXT_SITE, 'rankingByMetric');
+		/*$rankingByMetric = (boolean)$this->getSetting(CONTEXT_SITE, 'rankingByMetric');
 		if ($rankingByMetric) {
 			// The 'usageMetricAll' field is an external file field containing
 			// multiplicative boost values calculated from usage metrics and
 			// normalized to values between 1.0 and 2.0.
 			$searchRequest->addBoostField('usageMetricAll');
-		}
+		}*/
 
 		// Call the solr web service.
 		$solrWebService = $this->getSolrWebService();
@@ -531,6 +531,9 @@ class LucenePlugin extends GenericPlugin {
 		assert($hookName == 'ArticleSearchIndex::articleMetadataChanged');
 		list($article) = $params; /* @var $article Article */
 		$this->_solrWebService->markArticleChanged($article->getId());
+        // in OJS core in many cases callbackArticleChangesFinished is not called.
+        // So we call it ourselves, it won't do anything is pull-indexing is active
+        $this->callbackArticleChangesFinished(null, null);
 		return true;
 	}
 
@@ -541,6 +544,7 @@ class LucenePlugin extends GenericPlugin {
 		assert($hookName == 'ArticleSearchIndex::submissionFilesChanged');
 		list($article) = $params; /* @var $article Article */
 		$this->_solrWebService->markArticleChanged($article->getId());
+
 		return true;
 	}
 
@@ -551,6 +555,9 @@ class LucenePlugin extends GenericPlugin {
 		assert($hookName == 'ArticleSearchIndex::submissionFileChanged');
 		list($articleId, $type, $fileId) = $params;
 		$this->_solrWebService->markArticleChanged($articleId);
+        // in OJS core in many cases callbackArticleChangesFinished is not called.
+        // So we call it ourselves, it won't do anything is pull-indexing is active
+        $this->callbackArticleChangesFinished(null, null);
 		return true;
 	}
 
@@ -611,7 +618,7 @@ class LucenePlugin extends GenericPlugin {
 		// Check switches.
 		$rebuildIndex = true;
 		$rebuildDictionaries = false;
-		$updateBoostFile = false;
+		//$updateBoostFile = false;
 		if (is_array($switches)) {
 			if (in_array('-n', $switches)) {
 				$rebuildIndex = false;
@@ -619,14 +626,15 @@ class LucenePlugin extends GenericPlugin {
 			if (in_array('-d', $switches)) {
 				$rebuildDictionaries = true;
 			}
+            /*
 			if (in_array('-b', $switches)) {
 				$updateBoostFile = true;
-			}
+			}*/
 		}
 
 		// Rebuild the index.
 		$messages = null;
-		$this->_rebuildIndex($log, $journal, $rebuildIndex, $rebuildDictionaries, $updateBoostFile, $messages);
+		$this->_rebuildIndex($log, $journal, $rebuildIndex, $rebuildDictionaries, $messages);
 		return true;
 	}
 
@@ -974,7 +982,8 @@ class LucenePlugin extends GenericPlugin {
 	 * @param $output boolean|string When true then write to stdout, otherwise
 	 *   interpret the variable as file name and write to the given file.
 	 */
-	function generateBoostFile($timeFilter, $output = true) {
+
+	/* function generateBoostFile($timeFilter, $output = true) {
 		// Check error conditions:
 		// - the "ranking/sorting-by-metric" feature is not enabled
 		// - a "main metric" is not configured
@@ -1028,7 +1037,7 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		if (!is_null($file)) fclose($file);
-	}
+	} */
 
 
 	//
@@ -1097,7 +1106,7 @@ class LucenePlugin extends GenericPlugin {
 	 * @param $messages string Return parameter for log message output.
 	 * @return boolean True on success, otherwise false.
 	 */
-	function _rebuildIndex($log, $journal, $buildIndex, $buildDictionaries, $updateBoostFile, &$messages) {
+	function _rebuildIndex($log, $journal, $buildIndex, $buildDictionaries, &$messages) {
 		// Rebuilding the index can take a long time.
 		@set_time_limit(0);
 		$solrWebService = $this->getSolrWebService();
@@ -1167,7 +1176,7 @@ class LucenePlugin extends GenericPlugin {
 			// Rebuild dictionaries.
 			$this->_indexingMessage($log, 'LucenePlugin: ' . __('plugins.generic.lucene.rebuildIndex.rebuildDictionaries') . ' ... ', $messages);
 			$solrWebService->rebuildDictionaries();
-			if ($updateBoostFile) $this->_indexingMessage($log, __('search.cli.rebuildIndex.done') . PHP_EOL, $messages);
+			//if ($updateBoostFile) $this->_indexingMessage($log, __('search.cli.rebuildIndex.done') . PHP_EOL, $messages);
 		}
 
 		// Remove the field cache file as additional fields may be available after re-indexing. If we don't
@@ -1181,11 +1190,11 @@ class LucenePlugin extends GenericPlugin {
 			}
 		}
 
-		if ($updateBoostFile) {
+		/*if ($updateBoostFile) {
 			// Update the boost file.
 			$this->_indexingMessage($log, 'LucenePlugin: ' . __('plugins.generic.lucene.rebuildIndex.updateBoostFile') . ' ... ', $messages);
 			$this->_updateBoostFiles();
-		}
+		}*/
 
 		$this->_indexingMessage($log, __('search.cli.rebuildIndex.done') . PHP_EOL, $messages);
 
@@ -1276,7 +1285,8 @@ class LucenePlugin extends GenericPlugin {
 	/**
 	 * Generate and update the boost file.
 	 */
-	function _updateBoostFiles() {
+
+	/*function _updateBoostFiles() {
 		// Make sure that we have an embedded server.
 		if ($this->getSetting(CONTEXT_SITE, 'pullIndexing')) return;
 
@@ -1309,6 +1319,6 @@ class LucenePlugin extends GenericPlugin {
 		// Make the solr server aware of the boost file.
 		$solr = $this->getSolrWebService();
 		$solr->reloadExternalFiles();
-	}
+	}*/
 }
 
