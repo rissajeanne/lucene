@@ -901,9 +901,9 @@ class LucenePlugin extends GenericPlugin {
 
         // Return a link to the URL (a template seems overkill here).
         $output =& $params[2];
-        $output .= '&nbsp;<a href="' . $simdocsUrl . '" class="file">'
+        $output .= '<div class="plugins_generic_lucene_similardocuments"><a href="' . $simdocsUrl . '" class="file">'
           . __('plugins.generic.lucene.results.similarDocuments')
-          . '</a>';
+          . '</a></div>';
         return false;
     }
 
