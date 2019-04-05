@@ -176,12 +176,6 @@ class SolrWebService extends XmlWebService {
         $articleDao->updateSetting(
           $articleId, 'indexingState', SOLR_INDEXINGSTATE_DIRTY, 'bool'
         );
-
-        //in core, in many, many cases callbackArticleChangesFinished is not called anymore.
-        //until i fix that, I will just call the update here cause else i will be working against none current index
-        //all the time
-        //TODO: FIX AND REMOVE If it is set here, the cli rebuildindex always says 0 articles indexed
-        //$this->pushChangedArticles(1);
     }
 
 	/**
@@ -1210,7 +1204,7 @@ class SolrWebService extends XmlWebService {
 		// Check error conditions.
 		if (!is_numeric($numProcessed)) return null;
 		$numProcessed = (integer)$numProcessed;
-		if ($numProcessed != $batchCount) {
+		if ($numProcessed != $batchCount - $numDeleted) {
 			$this->_serviceMessage = __(
 				'plugins.generic.lucene.message.indexingIncomplete',
 				array('numProcessed' => $numProcessed, 'numDeleted' => $numDeleted, 'batchCount' => $batchCount)
