@@ -134,6 +134,7 @@ class LucenePlugin extends GenericPlugin {
 				HookRegistry::register('sectionform::initdata', array($this, 'callbackSectionFormInitData'));
 				HookRegistry::register('sectionform::readuservars', array($this, 'callbackSectionFormReadUserVars'));
 				HookRegistry::register('sectionform::execute', array($this, 'callbackSectionFormExecute'));
+                HookRegistry::register('Templates::Manager::Sections::SectionForm::AdditionalMetadata', array($this, 'callbackTemplateSectionFormAdditionalMetadata'));
 			}
 
 
@@ -150,11 +151,6 @@ class LucenePlugin extends GenericPlugin {
 				HookRegistry::register('Templates::Search::SearchResults::FilterInput', array($this, 'callbackTemplateFilterInput'));
 			}
             */
-			if ($customRanking) {
-                //still called, and form gets adapted. But form value is not saved yet, and have to test if it works as expected.
-                //TODO: layout
-				HookRegistry::register('Templates::Manager::Sections::SectionForm::AdditionalMetadata', array($this, 'callbackTemplateSectionFormAdditionalMetadata'));
-			}
 
             //used to show altnerative spelling suggestions
             HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this, 'callbackTemplatePreResults'));
