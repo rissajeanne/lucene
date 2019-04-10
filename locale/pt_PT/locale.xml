@@ -100,10 +100,10 @@
 		<ul>
 			<li>Pode não ter um servidor embebido instalado nesta instância de OJS  (veja 'plugins/generic/lucene/README' para detalhes).</li>
 			<li>A instalação do seu servidor embebido pode estar incompleta. Verifique que as pastas 'plugins/generic/lucene/lib/solr' e 'plugins/generic/lucene/lib/jetty' realmente contêm (ou apontam para) os ficheiros de instalação solr/jetty.</li>
-			<li>Os ficheiros de administração do servidor 'start.sh', 'stop.sh' e 'check.sh' na pasta 'plugins/generic/lucene/embedded/bin' podem não ser executáveis. Valide as permissões destes ficheiros.</li>
-			<li>Os ficheiros em 'files/lucene/' não têm permissões de escrita pelo utilizador do seu servidor web. Valide as permissões destes ficheiros.</li>
-			<li>Um processo embebido Solr pode já estar a ser executado com um utilizador diferente, o que quererá dizer que não poderá manipular o processo a partir do PHP.</li>
-			<li>A sua configuração de  PHP pode não permitir a execução de programas. Verifique as opções  'safe_mode' e 'disabled_function'  no seu  php.ini. Se não tiver acesso ao seu php.ini, então terá de executar manualmente estes programas para iniciar ou parar o servidor.</li>
+			<li>Os ficheiros de administração do servidor 'start.sh', 'stop.sh' e 'check.sh' na pasta 'plugins/generic/lucene/embedded/bin' podem não ser executáveis. Valide as permissões destes ficheiros. {$canExecuteResult}</li>
+			<li>Os ficheiros em 'files/lucene/' não têm permissões de escrita pelo utilizador do seu servidor web. Valide as permissões destes ficheiros. {$filesAreWriteableResult}</li>
+			<li>Um processo embebido Solr pode já estar a ser executado com um utilizador diferente, o que quererá dizer que não poderá manipular o processo a partir do PHP. {$solrIsRunningUnderPHPUser}</li>
+			<li>A sua configuração de  PHP pode não permitir a execução de programas. Verifique as opções  'safe_mode' e 'disabled_function'  no seu  php.ini. Se não tiver acesso ao seu php.ini, então terá de executar manualmente estes programas para iniciar ou parar o servidor. {$safemodeOrExecDisabled}</li>
 		</ul>]]></message>
 	<message key="plugins.generic.lucene.settings.simdocs">Mais-Como-Este (apresenta uma ligação de "documentos similares" para cada resultado de pesquisa)</message>
 	<message key="plugins.generic.lucene.settings.sortingByMetricEnabled">Ordenação por Estatística de Uso (Os seus dados estatísticos '{$metricName}' serão usados para ordenar por popularidade)</message>

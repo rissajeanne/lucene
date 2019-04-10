@@ -82,8 +82,58 @@
 	{fbvFormButtons}
 	<p><span class="formRequired">{translate key="common.requiredField"}</span></p>
 
+	<a id="indexAdmin"> </a>
+	<h3>{translate key="plugins.generic.lucene.settings.indexAdministration"}</h3>
+	<script>
+		function jumpToIndexAdminAnchor() {ldelim}
+			$form = $('#luceneSettings form');
+			// Return directly to the rebuild index section.
+			$form.attr('action', $form.attr('action') + '#indexAdmin');
+			return true;
+		{rdelim}
+	</script>
+
 	<div class="separator"></div>
 	<br />
 
+	<div class="section">
+		<label>{fieldLabel name="rebuildIndex" key="plugins.generic.lucene.settings.indexRebuild"}</label>
+		<select name="journalToReindex" id="journalToReindex" class="selectMenu">
+			{html_options options=$journalsToReindex selected=$journalToReindex}
+		</select>
+		<script>
+			function rebuildIndexClick() {ldelim}
+				var confirmation = confirm({translate|json_encode key="plugins.generic.lucene.settings.indexRebuild.confirm"});
+				if (confirmation === true) jumpToIndexAdminAnchor();
+				return confirmation;
+				{rdelim}
+		</script>
+		<input type="submit" name="rebuildIndex" {if !$serverIsRunning}disabled="disabled"{/if} value="{translate key="plugins.generic.lucene.settings.indexRebuild"}" onclick="rebuildIndexClick()" class="action" /><br/>
+		<input type="submit" name="rebuildDictionaries" {if !$serverIsRunning}disabled="disabled"{/if} value="{translate key="plugins.generic.lucene.settings.dictionaryRebuild"}" onclick="rebuildIndexClick()" class="action" /><br/>
+		<br/>
+		{if $rebuildIndexMessages}
+			<div id="rebuildIndexMessage">
+				<strong>{translate key="plugins.generic.lucene.settings.indexRebuildMessages"}</strong><br/>
+				{$rebuildIndexMessages|escape|replace:$smarty.const.PHP_EOL:"<br/>"|replace:" ":"&nbsp;"}
+			</div>
+		{else}
+			<span class="instruct">{translate key="plugins.generic.lucene.settings.indexRebuildDescription"}</span><br/>
+		{/if}
+	</div>
+
+	<div class="section">
+		<label>{fieldLabel name="startStopServer" key="plugins.generic.lucene.settings.startStopServer"}</label>
+		{if $serverIsAvailable}
+			{if $serverIsRunning}
+				<input type="submit" name="stopServer" value="{translate key="plugins.generic.lucene.settings.stopServer"}" onclick="jumpToIndexAdminAnchor()" class="action" /><br/>
+			{else}
+				<input type="submit" name="startServer" value="{translate key="plugins.generic.lucene.settings.startServer"}" onclick="jumpToIndexAdminAnchor()" class="action" /><br/>
+			{/if}
+		{else}
+			<div id="serverNotAvailable">
+				{translate key="plugins.generic.lucene.settings.serverNotAvailable" canExecuteResult=$canExecuteResult filesAreWriteableResult=$filesAreWriteableResult solrIsRunningUnderPHPUser=$solrIsRunningUnderPHPUser safemodeOrExecDisabled=$safemodeOrExecDisabled}
+			</div>
+		{/if}
+	</div>
 </form>
 </div>

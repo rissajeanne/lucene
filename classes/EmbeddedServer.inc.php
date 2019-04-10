@@ -175,7 +175,25 @@ class EmbeddedServer {
 	 * @return boolean
 	 */
 	function _canExecScripts() {
-		// Script execution is not allowed in safe mode.
+		//check whether safe mode is enabled or exec() function is disabled
+		if (!$this->_safemodeOrExecDisabled()) return false;
+
+		// Check whether the management scripts are executable.
+		if (!$this->_scriptsAreExecutable()) return false;
+
+		if (!$this->_filesAreWriteable()) return false;
+
+		if (!$this->_solrIsRunningUnderPHPUser()) return false;
+
+		return true;
+	}
+
+	/**
+	 * Checks if Safe_mode is enabled or the exec function is disabled.
+	 * In both cases, PHP cannot execute scripts
+	 * @return bool
+	 */
+	function _safemodeOrExecDisabled() {
 		if (ini_get('safe_mode')) return false;
 
 		// Check whether the exec() function is disabled.
@@ -183,7 +201,30 @@ class EmbeddedServer {
 		$disabled_functions = array_map('trim', $disabled_functions);
 		if (in_array('exec', $disabled_functions)) return false;
 
-		// Check whether the management scripts are executable.
+		return true;
+	}
+
+	/**
+	 * Check whether there is an existing solr process, and if so, whether
+	 * it is running under the same user id as PHP. Otherwise we cannot
+	 * manipulate the process.
+	 *
+	 * @return bool
+	 */
+	function _solrIsRunningUnderPHPUser() {
+		if (function_exists('posix_getuid') && $this->isRunning()) {
+			$phpUid = posix_getuid();
+			if (!$this->_runScript('check', false, $phpUid)) return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Checks if the start, stop and check scripts are executable
+	 *
+	 * @return bool
+	 */
+	function _scriptsAreExecutable() {
 		$scriptDir = $this->_getScriptDirectory();
 		foreach(array('start', 'stop', 'check') as $script) {
 			$scriptPath = $this->_getScriptPath($script);
@@ -194,21 +235,21 @@ class EmbeddedServer {
 			}
 		}
 
-		// Check whether crucial files are writable.
+		return true;
+	}
+
+	/**
+	 * Checks whether crucial files are writable.
+	 *
+	 * @return bool
+	 */
+	function _filesAreWriteable() {
 		$filesDir = Config::getVar('files', 'files_dir');
 		foreach(array('data', 'solr-java.log', 'solr-php.log', 'solr.pid') as $fileName) {
 			$filePath = $filesDir . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . $fileName;
 			if (file_exists($filePath) && !is_writable($filePath)) {
 				return false;
 			}
-		}
-
-		// Check whether there is an existing solr process, and if so, whether
-		// it is running under the same user id as PHP. Otherwise we cannot
-		// manipulate the process.
-		if (function_exists('posix_getuid') && $this->isRunning()) {
-			$phpUid = posix_getuid();
-			if (!$this->_runScript('check', false, $phpUid)) return false;
 		}
 
 		return true;

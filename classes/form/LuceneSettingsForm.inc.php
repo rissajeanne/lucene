@@ -31,7 +31,8 @@ class LuceneSettingsForm extends Form {
 
 	/**
 	 * Constructor
-	 * @param $plugin LucenePlugin
+	 * @param null|string $plugin
+	 * @param bool $embeddedServer
 	 */
 	function __construct($plugin, $embeddedServer) {
 		$this->_plugin = $plugin;
@@ -47,14 +48,15 @@ class LuceneSettingsForm extends Form {
 
 		// Search feature configuration.
 		$this->addCheck(new FormValidatorInSet($this, 'autosuggestType', FORM_VALIDATOR_REQUIRED_VALUE, 'plugins.generic.lucene.settings.internalError', array_keys($this->_getAutosuggestTypes())));
-		$binaryFeatureSwitches = $this->_getFormFields(true);
-		foreach($binaryFeatureSwitches as $binaryFeatureSwitch) {
+		$binaryFeatureSwitches = $this->_getFormFields(TRUE);
+		foreach ($binaryFeatureSwitches as $binaryFeatureSwitch) {
 			$this->addCheck(new FormValidatorBoolean($this, $binaryFeatureSwitch, 'plugins.generic.lucene.settings.internalError'));
 		}
 
 		// Index administration.
 		$journalsToReindex = array_keys($this->_getJournalsToReindex());
 		$this->addCheck(new FormValidatorInSet($this, 'journalToReindex', FORM_VALIDATOR_REQUIRED_VALUE, 'plugins.generic.lucene.settings.internalError', $journalsToReindex));
+
 	}
 
 
@@ -94,18 +96,26 @@ class LuceneSettingsForm extends Form {
 	/**
 	 * @see Form::fetch()
 	 */
-	function fetch($request, $template = null, $display = false) {
+	function fetch($request, $template = null, $display = FALSE) {
 		$templateMgr = TemplateManager::getManager($request);
 		$templateMgr->assign(array(
-			'pluginName' => $this->_plugin->getName(),
-			'autosuggestTypes' => $this->_getAutosuggestTypes(),
-			'metricName' => $metricName = $this->_getDefaultMetric(),
-			'noMainMetric', empty($metricName),
-			'serverIsAvailable' => $this->_embeddedServer->isAvailable(),
-			'serverIsRunning' => $this->_embeddedServer->isRunning(),
-			'journalsToReindex' => $this->_getJournalsToReindex(),
-			'canWriteBoostFile' => is_writable(Config::getVar('files', 'files_dir') . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'data'),
+		  'pluginName' => $this->_plugin->getName(),
+		  'autosuggestTypes' => $this->_getAutosuggestTypes(),
+		  'metricName' => $metricName = $this->_getDefaultMetric(),
+		  'noMainMetric',
+		  empty($metricName),
+		  'serverIsAvailable' => $this->_embeddedServer->isAvailable(),
+		  'serverIsRunning' => $this->_embeddedServer->isRunning(),
+		  'journalsToReindex' => $this->_getJournalsToReindex(),
+		  'canWriteBoostFile' => is_writable(Config::getVar('files', 'files_dir') . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'data'),
+		  'canExecuteResult' => $this->_embeddedServer->_scriptsAreExecutable() ? '<span class="fa fa-smile-o" style="color: green;"></span>' : '<span class="fa fa-frown" style="color: red;"></span>',
+		  'filesAreWriteableResult' => $this->_embeddedServer->_filesAreWriteable() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
+		  'solrIsRunningUnderPHPUser' => $this->_embeddedServer->_solrIsRunningUnderPHPUser() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
+		  'safemodeOrExecDisabled' => $this->_embeddedServer->_safemodeOrExecDisabled() ? '<span class="fa fa-smile-o"  style="color: green;"></span>' : '<span class="fa fa-frown-o" style="color: red;"></span>',
 		));
+
+		$templateMgr->addStylesheet('fontawesome', $request->getBaseUrl() . '/' . '/lib/pkp/styles/fontawesome/fontawesome.css');
+
 		return parent::fetch($request, $template, $display);
 	}
 
@@ -116,7 +126,7 @@ class LuceneSettingsForm extends Form {
 		$plugin = $this->_plugin;
 		$formFields = $this->_getFormFields();
 		$formFields[] = 'password';
-		foreach($formFields as $formField) {
+		foreach ($formFields as $formField) {
 			$plugin->updateSetting(CONTEXT_SITE, $formField, $this->getData($formField), 'string');
 		}
 	}
@@ -131,23 +141,36 @@ class LuceneSettingsForm extends Form {
 	 *  switches.
 	 * @return array
 	 */
-	function _getFormFields($booleanOnly = false) {
+	function _getFormFields($booleanOnly = FALSE) {
 		$booleanFormFields = array(
-			'autosuggest', 'spellcheck', 'pullIndexing',
-			'simdocs', 'highlighting', 'facetCategoryDiscipline',
-			'facetCategorySubject', 'facetCategoryType',
-			'facetCategoryCoverage', 'facetCategoryJournalTitle',
-			'facetCategoryAuthors', 'facetCategoryPublicationDate',
-			'customRanking', 'instantSearch',
-			'rankingByMetric', 'sortingByMetric', 'useProxySettings'
+		  'autosuggest',
+		  'spellcheck',
+		  'pullIndexing',
+		  'simdocs',
+		  'highlighting',
+		  'facetCategoryDiscipline',
+		  'facetCategorySubject',
+		  'facetCategoryType',
+		  'facetCategoryCoverage',
+		  'facetCategoryJournalTitle',
+		  'facetCategoryAuthors',
+		  'facetCategoryPublicationDate',
+		  'customRanking',
+		  'instantSearch',
+		  'rankingByMetric',
+		  'sortingByMetric',
+		  'useProxySettings'
 		);
 		$otherFormFields = array(
-			'searchEndpoint', 'username', 'instId',
-			'autosuggestType'
+		  'searchEndpoint',
+		  'username',
+		  'instId',
+		  'autosuggestType'
 		);
 		if ($booleanOnly) {
 			return $booleanFormFields;
-		} else {
+		}
+		else {
 			return array_merge($booleanFormFields, $otherFormFields);
 		}
 	}
@@ -158,8 +181,8 @@ class LuceneSettingsForm extends Form {
 	 */
 	function _getAutosuggestTypes() {
 		return array(
-			SOLR_AUTOSUGGEST_SUGGESTER => __('plugins.generic.lucene.settings.autosuggestTypeSuggester'),
-			SOLR_AUTOSUGGEST_FACETING => __('plugins.generic.lucene.settings.autosuggestTypeFaceting')
+		  SOLR_AUTOSUGGEST_SUGGESTER => __('plugins.generic.lucene.settings.autosuggestTypeSuggester'),
+		  SOLR_AUTOSUGGEST_FACETING => __('plugins.generic.lucene.settings.autosuggestTypeFaceting')
 		);
 	}
 
@@ -172,11 +195,12 @@ class LuceneSettingsForm extends Form {
 		static $journalsToReindex;
 
 		if (is_null($journalsToReindex)) {
-			$journalDao = DAORegistry::getDAO('JournalDAO'); /* @var $journalDao JournalDAO */
+			$journalDao = DAORegistry::getDAO('JournalDAO');
+			/* @var $journalDao JournalDAO */
 			$journalsToReindex = array(
-				'' => __('plugins.generic.lucene.settings.indexRebuildAllJournals')
+			  '' => __('plugins.generic.lucene.settings.indexRebuildAllJournals')
 			);
-			foreach($journalDao->getTitles(true) as $journalId => $journalName) {
+			foreach ($journalDao->getTitles(TRUE) as $journalId => $journalName) {
 				$journalsToReindex[$journalId] = __('plugins.generic.lucene.settings.indexRebuildJournal', array('journalName' => $journalName));
 			}
 		}
@@ -191,9 +215,14 @@ class LuceneSettingsForm extends Form {
 	function _getDefaultMetric() {
 		$application = Application::getApplication();
 		$metricType = $application->getDefaultMetricType();
-		if (empty($metricType)) return null;
-		$metricNames = $application->getMetricTypes(true);
-		if (!isset($metricNames[$metricType])) return null;
+		if (empty($metricType)) {
+			return null;
+		}
+		$metricNames = $application->getMetricTypes(TRUE);
+		if (!isset($metricNames[$metricType])) {
+			return null;
+		}
+
 		return $metricNames[$metricType];
 	}
 }

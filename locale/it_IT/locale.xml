@@ -106,10 +106,10 @@
 		<ul>
 			<li>Non hai Solr installato nella tua instanza OJS (vedi 'plugins/generic/lucene/README' per dettagli).</li>
 			<li>L'installazion può essere incompleta. Controlla le directory 'plugins/generic/lucene/lib/solr' e 'plugins/generic/lucene/lib/jetty', devono contenere o puntare ai file di solr/jetty.</li>
-			<li>I file di amministrazione 'start.sh', 'stop.sh' e 'check.sh' in 'plugins/generic/lucene/embedded/bin' devono essere eseguibili. Controlla i permessi.</li>
-			<li>I file in 'files/lucene/' non sono scrivibili dal tuo utente di apache. Controlla i permessi</li>
-			<li>Controlla che non ci sia un processo solr già attivo con un altro utente.</li>
-			<li>La tua configurazione di PHP potrebbe aver disabilitato l'esecuzione di script, controlla le configurazioni 'safe_mode' e 'disabled_function' in php.ini.</li>
+			<li>I file di amministrazione 'start.sh', 'stop.sh' e 'check.sh' in 'plugins/generic/lucene/embedded/bin' devono essere eseguibili. Controlla i permessi. {$canExecuteResult}</li>
+			<li>I file in 'files/lucene/' non sono scrivibili dal tuo utente di apache. Controlla i permessi {$filesAreWriteableResult}</li>
+			<li>Controlla che non ci sia un processo solr già attivo con un altro utente. {$solrIsRunningUnderPHPUser}</li>
+			<li>La tua configurazione di PHP potrebbe aver disabilitato l'esecuzione di script, controlla le configurazioni 'safe_mode' e 'disabled_function' in php.ini. {$safemodeOrExecDisabled}</li>
 		</ul>
 	]]></message>
 	<message key="plugins.generic.lucene.settings.simdocs">Altri come questo (mostra un link a "documenti simili" per ogni risultato)</message>

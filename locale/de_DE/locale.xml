@@ -115,10 +115,10 @@
 		<ul>
 			<li>Sie haben keinen eingebetteten Server in Ihrer OJS-Instanz installiert (Details in 'plugins/generic/lucene/README').</li>
 			<li>Die Installation Ihres eingebetteten Servers könnte unvollständig sein. Bitte kontrollieren Sie, dass die Verzeichnisse  'plugins/generic/lucene/lib/solr' und 'plugins/generic/lucene/lib/jetty' tatsächlich die solr/jetty-Installationsdatein enthalten (oder darauf verweisen).</li>
-			<li>Die Server-Administrationsskripts 'start.sh', 'stop.sh' und 'check.sh' in 'plugins/generic/lucene/embedded/bin' könnten nicht ausführbar sein. Kontrollieren Sie die Rechteinstellungen dieser Dateien.</li>
-			<li>Die Dateien in 'files/lucene/' könnten nicht schreibbar für den Webserver-User sein. Kontrollieren Sie die Rechteeinstellungen dieser Dateien.</li>
-			<li>Ein eingebetteter Solr-Prozess könnte bereits laufen, allerdings unter einem anderen Betriebssystem-Nutzer. Dies bedeutet, dass Sie den Prozess nicht aus PHP heraus beeinflussen können.</li>
-			<li>Ihre PHP-Konfiguration könnte die Ausführung von Skripten verbieten. Kontrollieren Sie die Einstellungen zu 'safe_mode' und 'disabled_function' in Ihrer php.ini. Wenn Sie keinen Zugriff auf Ihre php.ini haben, können Sie die Skripts manuell ausführen, um den Server zu starten/zu stoppen.</li>
+			<li>Die Server-Administrationsskripts 'start.sh', 'stop.sh' und 'check.sh' in 'plugins/generic/lucene/embedded/bin' könnten nicht ausführbar sein. Kontrollieren Sie die Rechteinstellungen dieser Dateien. {$canExecuteResult}</li>
+			<li>Die Dateien in 'files/lucene/' könnten nicht schreibbar für den Webserver-User sein. Kontrollieren Sie die Rechteeinstellungen dieser Dateien. {$filesAreWriteableResult}</li>
+			<li>Ein eingebetteter Solr-Prozess könnte bereits laufen, allerdings unter einem anderen Betriebssystem-Nutzer. Dies bedeutet, dass Sie den Prozess nicht aus PHP heraus beeinflussen können. {$solrIsRunningUnderPHPUser}</li>
+			<li>Ihre PHP-Konfiguration könnte die Ausführung von Skripten verbieten. Kontrollieren Sie die Einstellungen zu 'safe_mode' und 'disabled_function' in Ihrer php.ini. Wenn Sie keinen Zugriff auf Ihre php.ini haben, können Sie die Skripts manuell ausführen, um den Server zu starten/zu stoppen. {$safemodeOrExecDisabled}</li>
 		</ul>
 	]]></message>
 	<message key="plugins.generic.lucene.settings.simdocs">Mehr davon (zeigt einen Link auf "ähnliche Dokumente" für jedes Suchergebnis)</message>
