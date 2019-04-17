@@ -1307,6 +1307,10 @@ class LucenePlugin extends GenericPlugin {
 			$this->_updateBoostFiles();
 		}*/
 
+		if ($this->getSetting(CONTEXT_SITE, 'pullIndexing')) {
+			$this->_indexingMessage($log, 'LucenePlugin: ' . __('plugins.generic.lucene.rebuildIndex.pullWarning') . PHP_EOL, $messages);
+		}
+
 		$this->_indexingMessage($log, __('search.cli.rebuildIndex.done') . PHP_EOL, $messages);
 
 		return true;
