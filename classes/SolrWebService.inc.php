@@ -1204,7 +1204,7 @@ class SolrWebService extends XmlWebService {
 		// Check error conditions.
 		if (!is_numeric($numProcessed)) return null;
 		$numProcessed = (integer)$numProcessed;
-		if ($numProcessed != $batchCount - $numDeleted) {
+		if ($numProcessed != $batchCount && $numProcessed != $batchCount - $numDeleted) {
 			$this->_serviceMessage = __(
 				'plugins.generic.lucene.message.indexingIncomplete',
 				array('numProcessed' => $numProcessed, 'numDeleted' => $numDeleted, 'batchCount' => $batchCount)

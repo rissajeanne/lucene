@@ -19,19 +19,6 @@ import('lib.pkp.classes.core.JSONMessage');
 import('classes.search.ArticleSearch');
 
 class LuceneHandler extends Handler {
-	/**
-	 * @copydoc PKPHandler::authorize()
-	 */
-	function authorize($request, &$args, $roleAssignments) {
-		import('lib.pkp.classes.security.authorization.ContextRequiredPolicy');
-		$this->addPolicy(new ContextRequiredPolicy($request));
-
-		import('classes.security.authorization.OjsJournalMustPublishPolicy');
-		$this->addPolicy(new OjsJournalMustPublishPolicy($request));
-
-		return parent::authorize($request, $args, $roleAssignments);
-	}
-
 
 	//
 	// Public operations
