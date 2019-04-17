@@ -36,7 +36,7 @@
 
 	<message key="plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache">Could not delete the field cache. Please execute 'rm cache/fc-plugins-lucene-fieldCache.php' manually with appropriate permissions.</message>
 	<message key="plugins.generic.lucene.rebuildIndex.pullResult">{$numMarked} articles marked for update</message>
-	<message key="plugins.generic.lucene.rebuildIndex.pullWarning">Warning: The search index is currently empty because pull indexing is active. You must wait until the SOLR-server pulls the changes or execute the pull.sh script from the command line.</message>
+	<message key="plugins.generic.lucene.rebuildIndex.pullWarning">Warning: The search index is currently empty because pull indexing is active. You must wait until the SOLR-server pulls the changes or execute the pull.sh and then the load.sh script from the command line.</message>
 	<message key="plugins.generic.lucene.rebuildIndex.rebuildDictionaries">Rebuilding dictionaries</message>
 	<message key="plugins.generic.lucene.rebuildIndex.updateBoostFile">Updating usage statistics data</message>
 	
