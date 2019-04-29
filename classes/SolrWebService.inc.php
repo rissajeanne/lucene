@@ -1560,14 +1560,9 @@ class SolrWebService extends XmlWebService {
             if ($galley->getFileId()) {
                 $locale = $galley->getLocale();
                 $galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', array(intval($article->getBestArticleId()), intval($galley->getBestGalleyId())));
-                //This doesn't work from settingspage, only from commandline. From settingspage we have the problem that $router->url doesn't return correct url (and uses ComponentRouter and not PageRouter)
-                //$galleyUrl = $router->url($request, null, 'articleHandler', 'download', 'download', array(intval($article->getId()), intval($galley->getId())));
-                //This is only necessary when testing from a VM with port mappings for port 80. BaseUrl has port 8000, but if the server makes the connection it should use port 80
-                //TODO: Check if galley is of a type that should be indexed.
-                //First check if they are indexed if the checkbox to prevent that is set
-                //If so, we probably have to get the file objeect and then the genre over $galley->getFile()->getGenreID()
-                //Also check: submissionFiesChanged in ArticleSearchIndex.inc.php
-                //TODO: Remove next line before committing
+
+                //TODO: Remove next line before finalizing
+				//This is only necessary when testing from a VM with port mappings for port 80. BaseUrl has port 8000, but if the server makes the connection it should use port 80
                 $galleyUrl = str_replace(':8000', ':80', $galleyUrl);
                 if (!empty($locale) && !empty($galleyUrl)) {
                     if (is_null($galleyList)) {
@@ -1578,36 +1573,6 @@ class SolrWebService extends XmlWebService {
                     XMLCustomWriter::setAttribute($galleyNode, 'fileName', $galleyUrl);
                     XMLCustomWriter::appendChild($galleyList, $galleyNode);
                 }
-
-                // Index dependent files associated with any galley files.
-                // TODO: Decide if we want to index the dependent files. And test if it works.
-                // For now, I get errors when run from CLI
-                /*$fileDao = DAORegistry::getDAO('SubmissionFileDAO');
-                $dependentFiles = $fileDao->getLatestRevisionsByAssocId(ASSOC_TYPE_SUBMISSION_FILE, $galley->getFileId(), $article->getId(), SUBMISSION_FILE_DEPENDENT);
-                foreach ($dependentFiles as $depFile) {
-                    if ($depFile->getFileId()) {
-                        $locale = $depFile->getsubmissionLocale();
-                        $galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', array(intval($article->getId()), intval($depFile->getSubmissionId())));
-                        //This doesn't work from settingspage, only from commandline. From settingspage we have the problem that $router->url doesn't return correct url (and uses ComponentRouter and not PageRouter)
-                        //$galleyUrl = $router->url($request, null, 'articleHandler', 'download', 'download', array(intval($article->getId()), intval($galley->getId())));
-                        //This is only necessary when testing from a VM with port mappings for port 80. BaseUrl has port 8000, but if the server makes the connection it should use port 80
-                        //TODO: Remove next line before committing
-                        //TODO: Check if galley is of a type that should be indexed.
-                        //First check if they are indexed if the checkbox to prevent that is set
-                        //If so, we probably have to get the file objeect and then the genre over $galley->getFile()->getGenreID()
-                        //Also check: submissionFiesChanged in ArticleSearchIndex.inc.php
-                        $galleyUrl = str_replace(':8000', ':80', $galleyUrl);
-                        if (!empty($locale) && !empty($galleyUrl)) {
-                            if (is_null($galleyList)) {
-                                $galleyList = XMLCustomWriter::createElement($articleDoc, 'galleyList');
-                            }
-                            $galleyNode = XMLCustomWriter::createElement($articleDoc, 'galley');
-                            XMLCustomWriter::setAttribute($galleyNode, 'locale', $locale);
-                            XMLCustomWriter::setAttribute($galleyNode, 'fileName', $galleyUrl);
-                            XMLCustomWriter::appendChild($galleyList, $galleyNode);
-                        }
-                    }
-                }*/
             }
         }
 
