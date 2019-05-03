@@ -20,7 +20,6 @@ $('.lucenetoggle').click(function(e) {
 
   var $this = $(this);
 
-  console.log($this.next());
   //if options visible, close options
   if ($this.next().hasClass('show')) {
     $this.next().removeClass('show');
