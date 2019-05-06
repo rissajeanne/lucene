@@ -19,26 +19,27 @@
 		{capture assign="autocompleteUrl"}{url page="lucene" op="queryAutocomplete" searchField=$filterName}{/capture}
 		{assign var="searchForm" value="searchForm"}
 	{/if}
-	$(function() {ldelim}
-		$('#{$filterName}Autocomplete').pkpHandler(
-			'$.pkp.plugins.generic.lucene.LuceneAutocompleteHandler',
-			{ldelim}
-				sourceUrl: "{$autocompleteUrl|escape:javascript}",
-				searchForm: "{$searchForm}"
-			{rdelim});
+	document.addEventListener("DOMContentLoaded", function(event){ldelim}
+		$('#{$filterName}Autocomplete').find("#{$filterName}_input").autocomplete(
+				{ldelim}
+					source:  function(request, response) {ldelim}
+					$.ajax({ldelim}
+						url: '{$autocompleteUrl}',
+						data: {ldelim}query: request.term},
+						dataType: 'json',
+						success: function(jsonData) {ldelim}
+							if (jsonData.status == true) {ldelim}
+								response(jsonData.content);
+							{rdelim}
+						{rdelim}
+					{rdelim});
+				}
+				{rdelim}
+		)
+
 	{rdelim});
 </script>
 <span id="{$filterName}Autocomplete">
 	<input type="text" id="{$filterName}_input" name="{$filterName}" size="{$size|default:40}" maxlength="255" value="{$filterValue|escape}" class="textField" />
 	<input type="hidden" id="{$filterName}" name="{$filterName}_hidden" value="{$filterValue|escape}" />
-	<script>
-		{* The following lines guarantee graceful fallback in case
-		   a client does not support JavaScript. We do this here and not
-		   in the handler to better document what's going on. Otherwise
-		   the renaming would be even more obscure. ;-) We also want to
-		   do this at the earliest point possible to avoid errors in case
-		   a client loads slowly. *}
-		$('#{$filterName}_input').attr('name', '{$filterName}_input');
-		$('#{$filterName}').attr('name', '{$filterName}');
-	</script>
 </span>
