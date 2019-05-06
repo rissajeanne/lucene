@@ -1934,7 +1934,8 @@ class SolrWebService extends XmlWebService {
 		// facet results. This may be an invalid query
 		// but edismax will deal gracefully with syntax
 		// errors.
-		$userInput = PKPString::substr($userInput, 0, -PKPString::strlen($facetPrefix));
+		$userInput = substr($userInput, 0, -PKPString::strlen($facetPrefix));
+
 		switch ($fieldName) {
 			case 'query':
 				// The 'query' filter goes against all fields.
@@ -1966,7 +1967,8 @@ class SolrWebService extends XmlWebService {
 		} else {
 			$params['facet.field'] = $fieldName . '_spell';
 		}
-		$facetPrefixLc = PKPString::strtolower($facetPrefix);
+		$facetPrefixLc = strtolower($facetPrefix);
+
 		$params['facet.prefix'] = $facetPrefixLc;
 
 		// Make the request.
@@ -1986,7 +1988,7 @@ class SolrWebService extends XmlWebService {
 		foreach($termSuggestions as $termSuggestion) {
 			// Restore case if possible.
 			if (strpos($termSuggestion, $facetPrefixLc) === 0) {
-				$termSuggestion = $facetPrefix . PKPString::substr($termSuggestion, PKPString::strlen($facetPrefix));
+				$termSuggestion = $facetPrefix . substr($termSuggestion, strlen($facetPrefix));
 			}
 			$suggestions[] = $userInput . $termSuggestion;
 		}

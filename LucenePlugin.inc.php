@@ -166,12 +166,11 @@ class LucenePlugin extends GenericPlugin {
 			// Register callbacks (view-level).
 			HookRegistry::register('TemplateManager::display', array($this, 'callbackTemplateDisplay'));
 
-			/* disable for now, as it leads to javascript errors
-			TODO: fix or remove
+
 			if ($this->getSetting(CONTEXT_SITE, 'autosuggest')) {
 				HookRegistry::register('Templates::Search::SearchResults::FilterInput', array($this, 'callbackTemplateFilterInput'));
 			}
-			*/
+
 
 			//used to show altnerative spelling suggestions
 			HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this,
