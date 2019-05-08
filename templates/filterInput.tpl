@@ -12,19 +12,15 @@
  *   $filterValue string
  *}
 <script>
-	{if $filterName == "simpleQuery"}
-		{capture assign="autocompleteUrl"}{url page="lucene" op="queryAutocomplete"}{/capture}
-		{assign var="searchForm" value="simpleSearchForm"}
-	{else}
-		{capture assign="autocompleteUrl"}{url page="lucene" op="queryAutocomplete" searchField=$filterName}{/capture}
-		{assign var="searchForm" value="searchForm"}
-	{/if}
-	document.addEventListener("DOMContentLoaded", function(event){ldelim}
+
+		{capture assign="autocompleteUrl"}{url page="lucene" op="queryAutocomplete" searchField=$searchfield}{/capture}
+
+		document.addEventListener("DOMContentLoaded", function(event){ldelim}
 		$('#{$filterName}Autocomplete').find("#{$filterName}_input").autocomplete(
 				{ldelim}
 					source:  function(request, response) {ldelim}
 					$.ajax({ldelim}
-						url: '{$autocompleteUrl}',
+						url: ' 	{$autocompleteUrl}',
 						data: {ldelim}query: request.term},
 						dataType: 'json',
 						success: function(jsonData) {ldelim}

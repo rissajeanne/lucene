@@ -883,6 +883,11 @@ class LucenePlugin extends GenericPlugin {
 	function callbackTemplateFilterInput($hookName, $params) {
 		$smarty =& $params[1];
 		$output =& $params[2];
+		if ($params[0]['filterName'] == 'simpleQuery') {
+			$params[0]['searchfield'] = 'query';
+		} else {
+			$params[0]['searchfield'] = $params[0]['filterName'];
+		}
 		$smarty->assign($params[0]);
 		$request = Application::getRequest();
 		$templateMgr = TemplateManager::getManager($request);
