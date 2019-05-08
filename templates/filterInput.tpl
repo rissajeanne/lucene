@@ -36,6 +36,6 @@
 	{rdelim});
 </script>
 <span id="{$filterName}Autocomplete">
-	<input type="text" id="{$filterName}_input" name="{$filterName}" size="{$size|default:40}" maxlength="255" value="{$filterValue|escape}" class="textField" />
+	<input type="text" id="{$filterName}_input" name="{$filterInputFieldName}" size="{$size|default:40}" maxlength="255" value="{$filterValue|escape}" class="textField" />
 	<input type="hidden" id="{$filterName}" name="{$filterName}_hidden" value="{$filterValue|escape}" />
 </span>

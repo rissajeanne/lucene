@@ -882,11 +882,16 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function callbackTemplateFilterInput($hookName, $params) {
 		$smarty =& $params[1];
-		$output =& $params[2];
+		//in order for the search to be executed, the input field must have the name set to query
+		//for the simpleQuery case (main search field in header). But we cannot have two fields
+		//with the same id="query" on the page, so the add an extra parameter filterInputFieldName
+		//to set the name value.
 		if ($params[0]['filterName'] == 'simpleQuery') {
 			$params[0]['searchfield'] = 'query';
+			$params[0]['filterInputFieldName'] = 'query';
 		} else {
 			$params[0]['searchfield'] = $params[0]['filterName'];
+			$params[0]['filterInputFieldName'] = $params[0]['filterName'];
 		}
 		$smarty->assign($params[0]);
 		$request = Application::getRequest();
@@ -895,7 +900,6 @@ class LucenePlugin extends GenericPlugin {
 
 		$templateMgr->display($this->getTemplateResource('filterInput.tpl'));
 
-		//$output .= $smarty->fetch($this->getTemplateResource('filterInput.tpl'));
 		return false;
 	}
 
