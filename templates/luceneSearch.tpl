@@ -81,7 +81,7 @@
 			{rdelim});
 	</script>
 	<span id="authorsAutocomplete">
-		<input type="text" id="authors_input" name="authors" size="{$size|default:40}" maxlength="255" value="{$query|escape}" class="textField" />
+		<input type="text" id="authors_input" name="authors" size="{$size|default:40}" maxlength="255" value="{$authors|escape}" class="textField" />
 		<input type="hidden" id="authors" name="authors_hidden" value="{$query|escape}" />
 	</span>
 {/block}
