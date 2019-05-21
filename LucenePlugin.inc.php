@@ -1276,7 +1276,7 @@ class LucenePlugin extends GenericPlugin {
 						}
 						$this->_indexingMessage($log, '.', $messages);
 						$numIndexed += $articlesInBatch;
-					} while ($articlesInBatch == SOLR_INDEXING_MAX_BATCHSIZE);
+					} while ($articlesInBatch > 0);
 					$this->_indexingMessage($log, ' ' . __('search.cli.rebuildIndex.result', array('numIndexed' => $numIndexed)) . PHP_EOL, $messages);
 				}
 			}
