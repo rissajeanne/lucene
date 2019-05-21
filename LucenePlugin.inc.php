@@ -166,13 +166,6 @@ class LucenePlugin extends GenericPlugin {
 			// Register callbacks (view-level).
 			HookRegistry::register('TemplateManager::display', array($this, 'callbackTemplateDisplay'));
 
-			/* disable for now, as it leads to javascript errors
-			TODO: fix or remove
-			if ($this->getSetting(CONTEXT_SITE, 'autosuggest')) {
-				HookRegistry::register('Templates::Search::SearchResults::FilterInput', array($this, 'callbackTemplateFilterInput'));
-			}
-			*/
-
 			//used to show altnerative spelling suggestions
 			HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this,
 			  'callbackTemplatePreResults'
@@ -846,7 +839,8 @@ class LucenePlugin extends GenericPlugin {
 	function callbackTemplateDisplay($hookName, $params) {
 		// We only plug into the search results list.
 		$template = $params[1];
-		if ($template != 'frontend/pages/search.tpl') return false;
+
+	if ($template != 'frontend/pages/search.tpl') return false;
 
 		// Get the request.
 		$request = Application::getRequest();
@@ -854,8 +848,11 @@ class LucenePlugin extends GenericPlugin {
 		$journal =& $request->getContext();
 
 		// Assign our private stylesheet.
+		/** @var TemplateManager */
 		$templateMgr = $params[0];
 		$templateMgr->addStylesheet('lucene', $request->getBaseUrl() . '/' . $this->getPluginPath() . '/templates/lucene.css');
+
+
 
 		// Result set ordering options.
 		$orderByOptions = $this->_getResultSetOrderingOptions($journal);
@@ -875,23 +872,11 @@ class LucenePlugin extends GenericPlugin {
 			$templateMgr->assign('simDocsEnabled', true);
 		}
 
-		return false;
-	}
+		if ($this->getSetting(CONTEXT_SITE, 'autosuggest')) {
+			$templateMgr->display($this->getTemplateResource('luceneSearch.tpl'));
+			return true;
+		}
 
-	/**
-	 * @see templates/search/searchResults.tpl
-	 */
-	function callbackTemplateFilterInput($hookName, $params) {
-		$smarty =& $params[1];
-		$output =& $params[2];
-		$smarty->assign($params[0]);
-		$request = Application::getRequest();
-		$templateMgr = TemplateManager::getManager($request);
-		$templateMgr->assign($params[0]);
-
-		$templateMgr->display($this->getTemplateResource('filterInput.tpl'));
-
-		//$output .= $smarty->fetch($this->getTemplateResource('filterInput.tpl'));
 		return false;
 	}
 

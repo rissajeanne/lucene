@@ -44,7 +44,7 @@ class LuceneHandler extends Handler {
 			// Get the autosuggest input and remove it from
 			// the filter array.
 			$autosuggestField = $request->getUserVar('searchField');
-			$userInput = $searchFilters[$autosuggestField];
+			$userInput = isset($searchFilters[$autosuggestField]) ? $searchFilters[$autosuggestField] : $searchFilters['query'];
 			if (isset($searchFilters[$autosuggestField])) {
 				unset($searchFilters[$autosuggestField]);
 			}
