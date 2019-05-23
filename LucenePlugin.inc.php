@@ -393,7 +393,6 @@ class LucenePlugin extends GenericPlugin {
 		$publicOps = array(
 		  'queryAutocomplete',
 		  'pullChangedArticles',
-			//'usageMetricBoost',
 		  'similarDocuments',
 		);
 		if (!in_array($op, $publicOps)) return;
@@ -403,7 +402,6 @@ class LucenePlugin extends GenericPlugin {
 		$router = $request->getRouter();
 		$journal = $router->getContext($request);
 		/* @var $journal Journal */
-		//if ($op == 'usageMetricBoost' && $journal != null) return;
 
 		// Looks as if our handler had been requested.
 		define('HANDLER_CLASS', 'LuceneHandler');
@@ -447,11 +445,6 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function callbackGetResultSetOrderingOptions($hookName, $params) {
 		$resultSetOrderingOptions =& $params[1];
-
-		// Only show the "popularity" option when sorting-by-metric is enabled.
-		if (!$this->getSetting(CONTEXT_SITE, 'sortingByMetric')) {
-			unset($resultSetOrderingOptions['popularityAll'], $resultSetOrderingOptions['popularityMonth']);
-		}
 	}
 
 	/**
@@ -524,15 +517,6 @@ class LucenePlugin extends GenericPlugin {
 			}
 			unset($sections);
 		}
-
-		// Configure ranking-by-metric.
-		/*$rankingByMetric = (boolean)$this->getSetting(CONTEXT_SITE, 'rankingByMetric');
-		if ($rankingByMetric) {
-			// The 'usageMetricAll' field is an external file field containing
-			// multiplicative boost values calculated from usage metrics and
-			// normalized to values between 1.0 and 2.0.
-			$searchRequest->addBoostField('usageMetricAll');
-		}*/
 
 		// Call the solr web service.
 		$solrWebService = $this->getSolrWebService();
@@ -1055,76 +1039,7 @@ class LucenePlugin extends GenericPlugin {
 		);
 	}
 
-	//
-	// Public methods
-	//
-	/**
-	 * Generate an external boost file from usage statistics data.
-	 * The file will be empty when an error condition is met.
-	 * @param $timeFilter string Can be one of "all" (all-time statistics) or
-	 *   "month" (last month only).
-	 * @param $output boolean|string When true then write to stdout, otherwise
-	 *   interpret the variable as file name and write to the given file.
-	 */
-
-	/* function generateBoostFile($timeFilter, $output = true) {
-		// Check error conditions:
-		// - the "ranking/sorting-by-metric" feature is not enabled
-		// - a "main metric" is not configured
-		$application = Application::getApplication();
-		$metricType = $application->getDefaultMetricType();
-		if (!($this->getSetting(CONTEXT_SITE, 'rankingByMetric') || $this->getSetting(CONTEXT_SITE, 'sortingByMetric')) ||
-				empty($metricType)) return;
-
-		// Retrieve a usage report for all articles ordered by the article ID.
-		// Ordering seems to be important, see the remark about pre-sorting the file here:
-		// https://lucene.apache.org/solr/api-3_6_2/org/apache/solr/schema/ExternalFileField.html
-		$column = STATISTICS_DIMENSION_ARTICLE_ID;
-		$filter = array(STATISTICS_DIMENSION_ASSOC_TYPE => array(ASSOC_TYPE_GALLEY, ASSOC_TYPE_SUBMISSION));
-		if ($timeFilter == 'month') {
-			$oneMonthAgo = date('Ymd', strtotime('-1 month'));
-			$today = date('Ymd');
-			$filter[STATISTICS_DIMENSION_DAY] = array('from' => $oneMonthAgo, 'to' => $today);
-		}
-		$orderBy = array(STATISTICS_DIMENSION_ARTICLE_ID => STATISTICS_ORDER_ASC);
-		$metricReport = $application->getMetrics($metricType, $column, $filter, $orderBy);
-		if (empty($metricReport)) return;
-
-		// Pluck the metric values and find the maximum.
-		$max = max(array_map(function($reportRow) {
-			return $reportRow['metric'];
-		}, $metricReport));
-		if ($max <= 0) return;
-
-		// Get the Lucene plugin installation ID.
-		$instId = $this->getSetting(CONTEXT_SITE, 'instId');
-
-		$file = null;
-		if (is_string($output)) {
-			// Write the result to a file.
-			$file = fopen($output, 'w');
-			if ($file === false) return;
-		}
-
-		// Normalize and return the metric values.
-		// NB: We do not return values for articles that have no data.
-		foreach ($metricReport as $reportRow) {
-			// The normalization function is: 2 ^ (metric / max).
-			// This normalizes the metric to values between 1.0 and 2.0.
-			$record = $instId . '-' . $reportRow['submission_id'] . '=' .
-					round(pow(2, $reportRow['metric'] / $max), 5) . PHP_EOL;
-			if (is_null($file)) {
-				echo $record;
-			} else {
-				fwrite($file, $record);
-			}
-		}
-
-		if (!is_null($file)) fclose($file);
-	} */
-
-
-	//
+		//
 	// Private helper methods
 	//
 	/**
@@ -1385,43 +1300,5 @@ class LucenePlugin extends GenericPlugin {
 		);
 	}
 
-	/**
-	 * Generate and update the boost file.
-	 */
-
-	/*function _updateBoostFiles() {
-		// Make sure that we have an embedded server.
-		if ($this->getSetting(CONTEXT_SITE, 'pullIndexing')) return;
-
-		// Make sure that the ranking/sorting-by-metric feature is enabled.
-		if (!($this->getSetting(CONTEXT_SITE, 'rankingByMetric') || $this->getSetting(CONTEXT_SITE, 'sortingByMetric'))) return;
-
-		// Construct the file name.
-		$ds = DIRECTORY_SEPARATOR;
-
-		foreach (array('all', 'month') as $filter) {
-			$fileName = Config::getVar('files', 'files_dir') . "${ds}lucene${ds}data${ds}external_usageMetric" . ucfirst($filter);
-
-			// Find the next extension. We cannot write to the existing file
-			// while it is in-use and locked (on Windows).
-			// Solr lets us write a new file and will always use the
-			// (alphabetically) last file. The older file will automatically
-			// be deleted.
-			$lastExtension = 0;
-			foreach (glob($fileName . '.*') as $source) {
-				$existingExtension = (int)pathinfo($source, PATHINFO_EXTENSION);
-				if ($existingExtension > $lastExtension) $lastExtension = $existingExtension;
-			}
-			$newExtension = (string) $lastExtension + 1;
-			$newExtension = str_pad($newExtension, 8, '0', STR_PAD_LEFT);
-
-			// Generate the files.
-			$this->generateBoostFile($filter, $fileName . '.' . $newExtension);
-		}
-
-		// Make the solr server aware of the boost file.
-		$solr = $this->getSolrWebService();
-		$solr->reloadExternalFiles();
-	}*/
 }
 

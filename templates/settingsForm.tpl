@@ -58,22 +58,6 @@
 			{fbvElement type="checkbox" id="spellcheck" value="1" checked=$spellcheck label="plugins.generic.lucene.settings.spellcheck"}
 			{fbvElement type="checkbox" id="simdocs" value="1" checked=$simdocs label="plugins.generic.lucene.settings.simdocs"}
 			{fbvElement type="checkbox" id="customRanking" value="1" checked=$customRanking label="plugins.generic.lucene.settings.customRanking"}
-			{capture assign="metricLabel"}
-				{if $noMainMetric}
-					{translate key="plugins.generic.lucene.settings.rankingByMetricDisabled"}
-				{else}
-					{translate key="plugins.generic.lucene.settings.rankingByMetricEnabled" metricName=$metricName}
-				{/if}
-			{/capture}
-			{fbvElement type="checkbox" id="rankingByMetric" value="1" checked=$rankingByMetric label=$metricLabel disabled=$noMainMetric translate=false}
-			{capture assign="metricLabel"}
-				{if $noMainMetric}
-					{translate key="plugins.generic.lucene.settings.sortingByMetricDisabled"}
-				{else}
-					{translate key="plugins.generic.lucene.settings.sortingByMetricEnabled" metricName=$metricName}
-				{/if}
-			{/capture}
-			{fbvElement type="checkbox" id="rankingByMetric" value="1" checked=$rankingByMetric label=$metricLabel disabled=$noMainMetric translate=false}
 			{fbvElement type="checkbox" id="instantSearch" value="1" checked=$instantSearch label="plugins.generic.lucene.settings.instantSearch"}
 			{fbvElement type="checkbox" id="pullIndexing" value="1" checked=$pullIndexing label="plugins.generic.lucene.settings.pullIndexing"}
 		{/fbvFormSection}
