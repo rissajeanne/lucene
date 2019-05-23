@@ -58,7 +58,6 @@
 			{fbvElement type="checkbox" id="spellcheck" value="1" checked=$spellcheck label="plugins.generic.lucene.settings.spellcheck"}
 			{fbvElement type="checkbox" id="simdocs" value="1" checked=$simdocs label="plugins.generic.lucene.settings.simdocs"}
 			{fbvElement type="checkbox" id="customRanking" value="1" checked=$customRanking label="plugins.generic.lucene.settings.customRanking"}
-			{fbvElement type="checkbox" id="instantSearch" value="1" checked=$instantSearch label="plugins.generic.lucene.settings.instantSearch"}
 			{fbvElement type="checkbox" id="pullIndexing" value="1" checked=$pullIndexing label="plugins.generic.lucene.settings.pullIndexing"}
 		{/fbvFormSection}
 	{/fbvFormArea}

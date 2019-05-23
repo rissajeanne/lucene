@@ -99,17 +99,5 @@
 		<name>customRanking</name>
 		<value>false</value>
 	</setting>
-	<setting type="bool">
-		<name>instantSearch</name>
-		<value>true</value>
-	</setting>
-	<setting type="bool">
-		<name>rankingByMetric</name>
-		<value>false</value>
-	</setting>
-	<setting type="bool">
-		<name>sortingByMetric</name>
-		<value>false</value>
-	</setting>
 </plugin_settings>
 

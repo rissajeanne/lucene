@@ -156,7 +156,6 @@ class LuceneSettingsForm extends Form {
 		  'facetCategoryAuthors',
 		  'facetCategoryPublicationDate',
 		  'customRanking',
-		  'instantSearch',
 		  'useProxySettings'
 		);
 		$otherFormFields = array(

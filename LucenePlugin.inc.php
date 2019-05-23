@@ -844,13 +844,6 @@ class LucenePlugin extends GenericPlugin {
 		$orderDirOptions = $this->_getResultSetOrderingDirectionOptions();
 		$templateMgr->assign('luceneOrderDirOptions', $orderDirOptions);
 
-		// Instant search.
-		if ($this->getSetting(CONTEXT_SITE, 'instantSearch')) {
-			$instantSearch = (boolean) $request->getUserVar('instantSearch');
-			$templateMgr->assign('instantSearch', $instantSearch);
-			$templateMgr->assign('instantSearchEnabled', true);
-		}
-
 		// Similar documents.
 		if ($this->getSetting(CONTEXT_SITE, 'simdocs')) {
 			$templateMgr->assign('simDocsEnabled', true);
