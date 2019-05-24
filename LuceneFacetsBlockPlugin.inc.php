@@ -113,8 +113,8 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 	/**
 	 * @see BlockPlugin::getBlockContext()
 	 */
-	function getBlockContext() {
-		$blockContext = parent::getBlockContext();
+	function getBlockContext($contextId = NULL) {
+		$blockContext = parent::getBlockContext($contextId);
 
 		// Place the block on the left by default
 		// where navigation will usually be expected

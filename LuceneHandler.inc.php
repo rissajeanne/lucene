@@ -149,33 +149,6 @@ class LuceneHandler extends Handler {
     }
 
 
-	/**
-	 * If the "ranking-by-metric" feature is enabled then this
-	 * handler returns a file with normalized boost data.
-	 * @param $args array
-	 * @param $request Request
-	 */
-    /*
-	function usageMetricBoost($args, $request) {
-		$this->validate(null, $request);
-
-		// We return a text file.
-		header('Content-type: text/plain');
-
-		// Make sure that we got a parameter telling us
-		// whether to generate all-time or monthly statistics.
-		$filter = $request->getUserVar('filter');
-		if ($filter != 'all' && $filter != 'month') return;
-
-		// Only allow external report generation in the pull scenario.
-		$lucenePlugin = $this->_getLucenePlugin();
-		if (!$lucenePlugin->getSetting(CONTEXT_SITE, 'pullIndexing')) return;
-
-		// Generate (and output) the report.
-		if (!$lucenePlugin->generateBoostFile($filter));
-	}*/
-
-
 	//
 	// Public methods
 	//
