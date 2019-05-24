@@ -14,11 +14,10 @@ Contents
   6)  Central Server Mode: Installation and Configuration
   7)  Troubleshooting
   8)  Push versus Pull Indexing
-  9)  Ranking by Usage Statistics
-  10) Rebuilding your index, usage statistics and/or dictionaries
-  11) What else do I have to do to keep my index up to date?
-  12) Customizing Solr (additional languages, stopwords, etc.)
-  13) Subscription-Based Publications
+  9) Rebuilding your index, usage statistics and/or dictionaries
+  10) What else do I have to do to keep my index up to date?
+  11) Customizing Solr (additional languages, stopwords, etc.)
+  12) Subscription-Based Publications
 
 
 1 Welcome to the OJS Lucene/Solr Plug-In!
@@ -166,8 +165,8 @@ deploy in central server mode:
   If that doesn't help and you see a lot of swapping occur on your machine then
   you'll probably have to install more physical RAM.
 
-- PHP configuration: The plug-in relies on the PHP curl. Please activate it 
-  before enabling the plug-in. If you have a large OJS installation then rebuilding 
+- PHP configuration: The plug-in relies on the PHP curl. Please activate it
+  before enabling the plug-in. If you have a large OJS installation then rebuilding
   your index (see the dedicated chapter) may require lots of memory. Please increase
   the 'memory_limit' in php.ini until you no longer get 'Allowed memory size
   ... exhausted' errors.
@@ -193,7 +192,7 @@ a Solr search server.
 
      - Edit plugins/generic/lucene/embedded/etc/realm.properties
 
-     - Change the line "admin: ojsojs,content_updater,admin" to
+     - Change the line "admin: please change,content_updater,admin" to
        "admin: xxxxxxx,content_updater,admin" where xxxxxxx is to be replaced
        with a password you choose.
 
@@ -205,7 +204,7 @@ a Solr search server.
 
   3) Download the Jetty and Solr binaries:
 
-     - Jetty: Get the latest Jetty 6 binary from http://dist.codehaus.org/jetty/
+     - Jetty: Get the latest Jetty 6 binary from http://get.jenv.mvnsearch.org/jetty/
        and unzip it into plugins/generic/lucene/lib in your OJS application
        directory.
 
@@ -214,7 +213,7 @@ a Solr search server.
 
        If you are on Linux execute something like (from the OJS application directory):
           #> cd plugins/generic/lucene/lib
-          #> wget http://dist.codehaus.org/jetty/jetty-6.1.26/jetty-6.1.26.zip
+          #> wget http://get.jenv.mvnsearch.org/download/jetty/jetty-6.1.26.zip
           #> unzip jetty-6.1.26.zip
 
        (You may have to install the unzip tool first...)
@@ -240,8 +239,7 @@ a Solr search server.
        If you are on Linux execute something like (from the OJS application
        directory):
           #> cd plugins/generic/lucene/lib
-          #> wget http://www.eu.apache.org/dist/lucene/solr/3.6.2/
-                                                          apache-solr-3.6.2.zip
+          #> wget http://archive.apache.org/dist/lucene/solr/3.6.2/apache-solr-3.6.2.zip
           #> unzip apache-solr-3.6.2.zip
 
        This should create a folder apache-solr-3.6.2 in your lib directory. If
@@ -495,6 +493,10 @@ the following:
 
   Now execute another test search request in OJS.
 
+- If you do get search results, but autosuggestion does not work, make sure that
+  autosuggestion has been activated in the plugin settings and the dictionaries have
+  been build. You can build the dictionaries from the plugin settings page
+  or by executing rebuildSearchIndex.php with the -d flag from the Commandline.
 
 - If the previous steps didn't give you a working search index then have a look
   at the file 'files/lucene/solr-java.log'. This is the log written by the Solr
