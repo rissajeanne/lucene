@@ -38,6 +38,17 @@
 	<message key="plugins.generic.lucene.rebuildIndex.updateBoostFile">Оновлення даних статистики використання</message>
 	
 	<message key="plugins.generic.lucene.results.didYouMean">Ви мали на увазі</message>
+
+    <message key="plugins.generic.lucene.results.orderBy">Сортувати результати за</message>
+    <message key="plugins.generic.lucene.results.orderBy.relevance">Релевантністю</message>
+    <message key="plugins.generic.lucene.results.orderBy.author">Автором</message>
+    <message key="plugins.generic.lucene.results.orderBy.issue">Випуском</message>
+    <message key="plugins.generic.lucene.results.orderBy.date">Датою публікації</message>
+    <message key="plugins.generic.lucene.results.orderBy.journal">Назвою журналу</message>
+    <message key="plugins.generic.lucene.results.orderBy.article">Назвою статті</message>
+    <message key="plugins.generic.lucene.results.orderDir.asc">Прямий порядок</message>
+    <message key="plugins.generic.lucene.results.orderDir.desc">Зворотній порядок</message>
+
 	<message key="plugins.generic.lucene.results.syntaxInstructions"><![CDATA[
 		Поради щодо пошуку: <ul>
 			<li>Пошук не чутливий до регістру літер (великі та малі літери не відрізняються)</li>

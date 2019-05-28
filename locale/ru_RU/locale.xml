@@ -38,6 +38,18 @@
 	<message key="plugins.generic.lucene.rebuildIndex.updateBoostFile">Обновление данных статистики использования</message>
 	
 	<message key="plugins.generic.lucene.results.didYouMean">Вы имели в виду</message>
+
+    <message key="plugins.generic.lucene.results.orderBy">Упорядочить результат по </message>
+    <message key="plugins.generic.lucene.results.orderBy.relevance">Релевантности</message>
+    <message key="plugins.generic.lucene.results.orderBy.author">Авторам</message>
+    <message key="plugins.generic.lucene.results.orderBy.issue">Выпускам</message>
+    <message key="plugins.generic.lucene.results.orderBy.date">Дате публикации</message>
+    <message key="plugins.generic.lucene.results.orderBy.journal">Названию журнала</message>
+    <message key="plugins.generic.lucene.results.orderBy.article">Названию статьи</message>
+    <message key="plugins.generic.lucene.results.orderDir.asc">По возрастанию</message>
+    <message key="plugins.generic.lucene.results.orderDir.desc">По убыванию</message>
+    <message key="plugins.generic.lucene.results.similarDocuments">похожие документы</message>
+
 	<message key="plugins.generic.lucene.results.syntaxInstructions"><![CDATA[
 		<h4>Советы по поиску:</h4><ul>
 			<li>Поиск производится независимо от регистра (заглавные и строчные буквы не различаются)</li>

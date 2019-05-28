@@ -38,6 +38,17 @@
 	<message key="plugins.generic.lucene.rebuildIndex.updateBoostFile">Aggiorna le statistiche d'uso</message>
 	
 	<message key="plugins.generic.lucene.results.didYouMean">Forse cercavi</message>
+    <message key="plugins.generic.lucene.results.orderBy">Ordina i risultati per</message>
+    <message key="plugins.generic.lucene.results.orderBy.relevance">Rilevanza</message>
+    <message key="plugins.generic.lucene.results.orderBy.author">Autore</message>
+    <message key="plugins.generic.lucene.results.orderBy.issue">Fascicolo</message>
+    <message key="plugins.generic.lucene.results.orderBy.date">Data di pubblicazione</message>
+    <message key="plugins.generic.lucene.results.orderBy.journal">Titolo della rivista</message>
+    <message key="plugins.generic.lucene.results.orderBy.article">Titolo dell'articolo</message>
+    <message key="plugins.generic.lucene.results.orderDir.asc">Ascendente</message>
+    <message key="plugins.generic.lucene.results.orderDir.desc">Discendente</message>
+    <message key="plugins.generic.lucene.results.similarDocuments">documenti simili</message>
+
 	<message key="plugins.generic.lucene.results.syntaxInstructions"><![CDATA[
 		<h4>Suggerimenti di ricerca:</h4><ul>
 			<li>La ricerca non differenzia maiuscole e minuscole nei termini inseriti</li>
