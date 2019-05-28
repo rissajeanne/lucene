@@ -45,12 +45,12 @@
 	<message key="plugins.generic.lucene.results.syntaxInstructions"><![CDATA[Saveti za pretragu: <ul>
 <li> Termini ne zavise od veličine slova (veliko/malo) </p>
 <li> Uobičajene reči su ignorisane </li>
-<li> Podrazumevano, članci koji sadrže <em> bilo koji </em> izraz u upitu su prikazani kao rezultat pretrage ( tj. <em> ILI </em> se podrazumeva) </p>
+<li> Podrazumevano, članci koji sadrže <em> bilo koji </em> izraz u upitu su prikazani kao rezultat pretrage ( tj. <em> OR </em> se podrazumeva) </p>
 <li> Uverite se da reč postoji u članku tako što joj dajete prefiks <strong>+</strong>, npr. <em>+časopis+pristup naučno akademski</em></p>
-<li> Kombinujte više reči sa <em>I</em> da biste pronašli članke koji sadrže sve uslove, npr. <em>obrazovanje I istraživanje</em></p>
-<li> Izuzmite reč tako da je prefiks <strong> - </strong> ili <em> NE</em >, npr. <em>onlajn -politika</em> ili <em>OnLine NE politika</em></p>
+<li> Kombinujte više reči sa <em>AND</em> da biste pronašli članke koji sadrže sve uslove, npr. <em>obrazovanje AND istraživanje</em></p>
+<li> Izuzmite reč tako da je prefiks <strong> - </strong> ili <em> NOT</em >, npr. <em>onlajn -politika</em> ili <em>OnLine NOT politika</em></p>
 <li> Traži tačnu frazu stavljajući je u navodnike, npr. <em> "otvoreni pristup" </em></p>
-<li> Koristite zagrade da kreirate složenije upite, npr. <em>arhiva ((časopis I konferencija) NE teze)</em></p>
+<li> Koristite zagrade da kreirate složenije upite, npr. <em>arhiva ((časopis AND konferencija) NOT teze)</em></p>
 </p>]]></message>
 	
 	<message key="plugins.generic.lucene.error.searchServiceOffline">Na žalost OJS sistem pretrage trenutno ne radi, administrator sistema je obavešten o ovome.</message>

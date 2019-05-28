@@ -85,3 +85,7 @@
 		<input type="hidden" id="authors" name="authors_hidden" value="{$query|escape}" />
 	</span>
 {/block}
+{block name=searchSyntaxInstructions}
+	<div>{fieldLabel name="syntaxInstructions" key="plugins.generic.lucene.results.syntaxInstructions"}</div>
+{/block}
+
