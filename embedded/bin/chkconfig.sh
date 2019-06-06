@@ -28,12 +28,12 @@ if [ ! -e "$PLUGIN_DIR/lib/jetty/start.jar" ]; then
 fi
 
 # Check availability of solr.
-if [ ! -e "$PLUGIN_DIR/embedded/webapps/solr.war" ]; then
+if [ ! -e "$PLUGIN_DIR/lib/solr/server/start.jar" ]; then
   echo "Solr was not correctly installed. Please make sure that the solr"
   echo "installation is available in"
   echo "'$PLUGIN_DIR/lib/solr'."
-  echo "The directory 'example/webapps' therein should contain the file"
-  echo "'solr.war'."
+  echo "The directory 'server' therein should contain the file"
+  echo "'start.jar'."
   ERROR=true
 fi
 
