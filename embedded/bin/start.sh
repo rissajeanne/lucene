@@ -21,42 +21,38 @@ fi
 
 # The deployment directory
 DEPLOYMENT_DIR="$PLUGIN_DIR/embedded"
-JAVA_OPTIONS="-Dsolr.deployment=$DEPLOYMENT_DIR"
+#JAVA_OPTIONS="-Dsolr.deployment=$DEPLOYMENT_DIR"
 
 # Jetty configuration
-JETTY_CONF="$DEPLOYMENT_DIR/etc/jetty.xml"
+#JETTY_CONF="$DEPLOYMENT_DIR/etc/jetty.xml"
 # Use the following line instead if you want extra logging.
 #JETTY_CONF="$DEPLOYMENT_DIR/etc/jetty-logging.xml $DEPLOYMENT_DIR/etc/jetty.xml"
 
 # The Jetty home directory
-JETTY_HOME="$PLUGIN_DIR/lib/jetty"
-JAVA_OPTIONS="$JAVA_OPTIONS -Djetty.home=$JETTY_HOME"
+#JETTY_HOME="$PLUGIN_DIR/lib/jetty"
+#JAVA_OPTIONS="$JAVA_OPTIONS -Djetty.home=$JETTY_HOME"
 
-# Solr home
-SOLR_HOME="$DEPLOYMENT_DIR/solr"
-JAVA_OPTIONS="$JAVA_OPTIONS -Dsolr.solr.home=$SOLR_HOME"
+# Solr home /configset
+SOLR_HOME="$DEPLOYMENT_DIR/solr77"
+#JAVA_OPTIONS="$JAVA_OPTIONS -Dsolr.solr.home=$SOLR_HOME"
 
 # Solr index data directory
 SOLR_DATA="$LUCENE_FILES/data"
 if [ ! -d "$SOLR_DATA" ]; then
   mkdir "$SOLR_DATA"
 fi
-JAVA_OPTIONS="$JAVA_OPTIONS -Dsolr.data.dir=$SOLR_DATA"
+#JAVA_OPTIONS="$JAVA_OPTIONS -Dsolr.data.dir=$SOLR_DATA"
 
 # Logging configuration
-JAVA_OPTIONS="$JAVA_OPTIONS -Djava.util.logging.config.file=$DEPLOYMENT_DIR/etc/logging.properties -Djetty.logs=$LUCENE_FILES"
+#JAVA_OPTIONS="$JAVA_OPTIONS -Djava.util.logging.config.file=$DEPLOYMENT_DIR/etc/logging.properties -Djetty.logs=$LUCENE_FILES"
 
 # The system's temporary directory
 if [ -z "$TMP" ]; then
   TMP=/tmp
 fi
-JAVA_OPTIONS="$JAVA_OPTIONS -Djava.io.tmpdir=$TMP"
+#JAVA_OPTIONS="$JAVA_OPTIONS -Djava.io.tmpdir=$TMP"
 
 #java $JAVA_OPTIONS -jar "$JETTY_HOME/start.jar" $JETTY_CONF >>$LUCENE_FILES/solr-java.log 2>&1 &
-$PLUGIN_DIR/lib/solr/bin/solr start
+SOLR_PID_DIR="$LUCENE_FILES"
 
-# Remember the PID of the process we just started.
-SOLR_PID=$!
-echo $SOLR_PID>$SOLR_PIDFILE
-
-echo "Started solr."
+SOLR_INCLUDE="$PLUGIN_DIR/embedded/etc/solr.in.sh" SOLR_HOME="$SOLR_HOME" SOLR_PID_DIR="$SOLR_PID_DIR" SOLR_DATA_HOME="$SOLR_DATA" SOLR_LOGS_DIR="$SOLR_PID_DIR"  $PLUGIN_DIR/lib/solr/bin/solr start

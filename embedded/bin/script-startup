@@ -20,7 +20,7 @@ if [ ! -d "$LUCENE_FILES" ]; then
 fi
 
 # Set the path to the solr PID file.
-SOLR_PIDFILE="$OJS_FILES/lucene/solr.pid"
+SOLR_PIDFILE="$OJS_FILES/lucene/solr-8983.pid"
 
 # Try to guess the OJS base URL from its configuration file.
 URL_HOST_PATTERN='((([a-z0-9]([-a-z0-9]*[a-z0-9])?\.)*[a-z]([a-z0-9]+)?\.?)|([0-9]{1,3}(\.[0-9]{1,3}){3}))'

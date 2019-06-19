@@ -15,35 +15,12 @@
 EXEC_PATH=`dirname $0`
 source "$EXEC_PATH/script-startup"
 
-# If we don't find a PID-file we assume that the server is stopped.
-if [ ! -e $SOLR_PIDFILE ]; then
-  echo 'Server is stopped (no PID file found).'
-  exit 1
-fi
+# The deployment directory
+DEPLOYMENT_DIR="$PLUGIN_DIR/embedded"
+# Solr home /configset
+SOLR_HOME="$DEPLOYMENT_DIR/solr77"
+SOLR_DATA="$LUCENE_FILES/data"
+SOLR_PID_DIR="$LUCENE_FILES"
 
-SOLR_PID=`cat $SOLR_PIDFILE`
+SOLR_INCLUDE="$PLUGIN_DIR/embedded/etc/solr.in.sh" SOLR_HOME="$SOLR_HOME" SOLR_PID_DIR="$SOLR_PID_DIR" SOLR_DATA_HOME="$SOLR_DATA"  $PLUGIN_DIR/lib/solr/bin/solr status
 
-# Check whether we got a PID at all.
-if [ -z "$SOLR_PID" ]; then
-  echo 'Server is stopped (no PID found in PID file).'
-  exit 1
-fi
-
-# Check the PID to find out whether the server is running.
-if [ -e "/proc/$SOLR_PID" ]; then
-  # Check whether the UID of the process is the one given as
-  # an argument.
-  if [ -n "$1" ]; then
-    # Get the UID of the process.
-    SOLR_UID=`ps --no-heading -o uid $SOLR_PID | sed 's/^ *//'`
-    if [ "$SOLR_UID" -ne "$1" ]; then
-      echo "Server is running under UID $SOLR_UID and not under UID $1 as requested."
-      exit 1
-    fi
-  fi
-  echo 'Server is running.'
-  exit 0
-else
-  echo 'Server is stopped (last PID no longer active).'
-  exit 1
-fi
