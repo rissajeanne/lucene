@@ -423,16 +423,18 @@ class SolrWebService extends XmlWebService {
 			foreach ($doc->childNodes as $docField) {
 				// Get the document field
 				$docFieldAtts = $docField->attributes;
-				$fieldNameAtt = $docFieldAtts->getNamedItem('name');
+				if ($docFieldAtts != null) {
+					$fieldNameAtt = $docFieldAtts->getNamedItem('name');
 
-				switch($docField->tagName) {
-					case 'float':
-						$currentDoc[$fieldNameAtt->value] = (float)$docField->textContent;
-						break;
+					switch($docField->tagName) {
+						case 'float':
+							$currentDoc[$fieldNameAtt->value] = (float)$docField->textContent;
+							break;
 
-					case 'str':
-						$currentDoc[$fieldNameAtt->value] = $docField->textContent;
-						break;
+						case 'str':
+							$currentDoc[$fieldNameAtt->value] = $docField->textContent;
+							break;
+					}
 				}
 			}
 			$results[] = $currentDoc;
@@ -482,7 +484,10 @@ class SolrWebService extends XmlWebService {
 					$indexArticleId = $highlightingNode->attributes->getNamedItem('name')->nodeValue;
 					$articleIdParts = explode('-', $indexArticleId);
 					$articleId = array_pop($articleIdParts);
-					$excerpt = $highlightingNode->firstChild->firstChild->textContent;
+					$excerpt = $highlightingNode->textContent;
+					if (empty($excerpt)) {
+						$excerpt = $highlightingNode->firstChild->firstChild->textContent;
+					}
 					if (is_numeric($articleId) && !empty($excerpt)) {
 						$highligthedArticles[$articleId] = $excerpt;
 					}
@@ -503,12 +508,14 @@ class SolrWebService extends XmlWebService {
 				$facetCategory = array_shift($facetFieldParts);
 				$facets[$facetCategory] = array();
 				foreach($facetFieldNode->childNodes as $facetNode) { /* @var $facetNode DOMElement */
-					$facet = $facetNode->attributes->getNamedItem('name')->nodeValue;
-					$facetCount = (integer)$facetNode->textContent;
-					// Only select facets that return results and are more selective than
-					// the current search criteria.
-					if (!empty($facet) && $facetCount > 0 && $facetCount < $totalResults) {
-						$facets[$facetCategory][$facet] = $facetCount;
+					if ($facetNode->attributes != null) {
+						$facet = $facetNode->attributes->getNamedItem('name')->nodeValue;
+						$facetCount = (integer)$facetNode->textContent;
+						// Only select facets that return results and are more selective than
+						// the current search criteria.
+						if (!empty($facet) && $facetCount > 0 && $facetCount < $totalResults) {
+							$facets[$facetCategory][$facet] = $facetCount;
+						}
 					}
 				}
 			}
@@ -516,28 +523,34 @@ class SolrWebService extends XmlWebService {
 			// Read range-based facets.
 			$facetsNodeList = $response->query('/response/lst[@name="facet_counts"]/lst[@name="facet_ranges"]/lst');
 			foreach($facetsNodeList as $facetFieldNode) { /* @var $facetFieldNode DOMElement */
-				$facetField = $facetFieldNode->attributes->getNamedItem('name')->nodeValue;
-				$facetFieldParts = explode('_', $facetField);
-				$facetCategory = array_shift($facetFieldParts);
-				$facets[$facetCategory] = array();
-				foreach($facetFieldNode->childNodes as $rangeInfoNode) { /* @var $rangeInfoNode DOMElement */
-					// Search for the "counts" node in the range info.
-					if($rangeInfoNode->attributes->getNamedItem('name')->nodeValue == 'counts') {
-						// Run through all ranges.
-						foreach($rangeInfoNode->childNodes as $facetNode) { /* @var $facetNode DOMElement */
-							// Retrieve and format the date range facet.
-							$facet = $facetNode->attributes->getNamedItem('name')->nodeValue;
-							$facet = date('Y', strtotime(substr($facet, 0, 10)));
-							$facetCount = (integer)$facetNode->textContent;
-							// Only select ranges that return results and are more selective than
-							// the current search criteria.
-							if ($facetCount > 0 && $facetCount < $totalResults) {
-								$facets[$facetCategory][$facet] = $facetCount;
+				if ($facetFieldNode->attributes != null) {
+					$facetField = $facetFieldNode->attributes->getNamedItem('name')->nodeValue;
+					$facetFieldParts = explode('_', $facetField);
+					$facetCategory = array_shift($facetFieldParts);
+					$facets[$facetCategory] = array();
+					foreach($facetFieldNode->childNodes as $rangeInfoNode) { /* @var $rangeInfoNode DOMElement */
+						// Search for the "counts" node in the range info.
+						if ($rangeInfoNode->attributes != null) {
+							if($rangeInfoNode->attributes->getNamedItem('name')->nodeValue == 'counts') {
+								// Run through all ranges.
+								foreach($rangeInfoNode->childNodes as $facetNode) { /* @var $facetNode DOMElement */
+									// Retrieve and format the date range facet.
+									if ($facetNode->attributes != null) {
+										$facet = $facetNode->attributes->getNamedItem('name')->nodeValue;
+										$facet = date('Y', strtotime(substr($facet, 0, 10)));
+										$facetCount = (integer)$facetNode->textContent;
+										// Only select ranges that return results and are more selective than
+										// the current search criteria.
+										if ($facetCount > 0 && $facetCount < $totalResults) {
+											$facets[$facetCategory][$facet] = $facetCount;
+										}
+									}
+								}
+
+								// We do not need the other children.
+								break;
 							}
 						}
-
-						// We do not need the other children.
-						break;
 					}
 				}
 			}
@@ -1872,19 +1885,21 @@ class SolrWebService extends XmlWebService {
 		if ($nodeList->length == 0) return array();
 		$suggestionNode = $nodeList->item(0);
 		foreach($suggestionNode->childNodes as $childNode) {
-			$nodeType = $childNode->attributes->getNamedItem('name')->value;
-			switch($nodeType) {
-				case 'startOffset':
-				case 'endOffset':
-					$$nodeType = ((int)$childNode->textContent);
-					break;
+			if ($childNode->attributes != null) {
+				$nodeType = $childNode->attributes->getNamedItem('name')->value;
+				switch($nodeType) {
+					case 'startOffset':
+					case 'endOffset':
+						$$nodeType = ((int)$childNode->textContent);
+						break;
 
-				case 'suggestion':
-					$suggestions = array();
-					foreach($childNode->childNodes as $suggestionNode) {
-						$suggestions[] = $suggestionNode->textContent;
-					}
-					break;
+					case 'suggestion':
+						$suggestions = array();
+						foreach($childNode->childNodes as $suggestionNode) {
+							$suggestions[] = $suggestionNode->textContent;
+						}
+						break;
+				}
 			}
 		}
 
