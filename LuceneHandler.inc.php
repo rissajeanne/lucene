@@ -126,7 +126,7 @@ class LuceneHandler extends Handler {
         // Check error conditions.
         // - The "similar documents" feature is not enabled.
         // - We got a non-numeric article ID.
-        $lucenePlugin =& $this->_getLucenePlugin();
+        $lucenePlugin = $this->_getLucenePlugin();
         if (!($lucenePlugin->getSetting(0, 'simdocs')
           && is_numeric($articleId))) {
             $request->redirect(null, 'search');
@@ -134,7 +134,7 @@ class LuceneHandler extends Handler {
 
         // Identify "interesting" terms of the
         // given article.
-        $solrWebService =& $lucenePlugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
+        $solrWebService = $lucenePlugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
         $searchTerms = $solrWebService->getInterestingTerms($articleId);
         if (empty($searchTerms)) {
             $request->redirect(null, 'search');
