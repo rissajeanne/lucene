@@ -16,6 +16,7 @@
 	<message key="plugins.generic.lucene.description">The Lucene plugin provides multi-language support, improved search result relevance, faster indexing, better scalability and more.</message>
 
 	<message key="plugins.generic.lucene.faceting.displayName">Lucene Faceting</message>
+	<message key="plugins.generic.lucene.faceting.facetBlockTitle">Lucene Faceting Block</message>
 	<message key="plugins.generic.lucene.faceting.description">Faceting Block Plugin for Lucene</message>
 	<message key="plugins.generic.lucene.faceting.title">refine your search</message>
 	<message key="plugins.generic.lucene.faceting.discipline">Discipline</message>

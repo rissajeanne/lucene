@@ -52,7 +52,7 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 	 * @see Plugin::getDisplayName()
 	 */
 	function getDisplayName() {
-		return __('plugins.generic.lucene');
+		return __('plugins.generic.lucene.faceting.facetBlockTitle');
 	}
 
 	/**

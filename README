@@ -18,6 +18,7 @@ Contents
   10) What else do I have to do to keep my index up to date?
   11) Customizing Solr (additional languages, stopwords, etc.)
   12) Subscription-Based Publications
+  13) Using facets
 
 
 1 Welcome to the OJS Lucene/Solr Plug-In!
@@ -836,3 +837,21 @@ you are looking at the right URL. But please do not do this when you are already
 productive as changes to articles will only be published once. So if you look
 at the pull service manually you'll have to do a full index rebuild afterwards
 to make sure that your index is fully up-to-date.
+
+13 Using facets
+---------------
+Lucene supports faceted search. In faceted search, in addition to the standard set
+of search results, we also get facet results, which are lists of subcategories for
+certain categories. For example, for the keyword facet, we get a list of relevant
+keywords; for the author facet, we get a list of relevant authors; and so on.
+In most UIs, when users click one of these subcategories, the search is narrowed,
+or drilled down, and a new search limited to this subcategory (e.g., to a specific
+keyword or author) is performed.
+
+Faceting can be enabled or disabled for different categories (discipline, keyword,
+method/approach, journal, author and publication date) in the plugin settings form.
+
+If relevant facets are found for a search request, a facet block will be displayed
+in the sidebar. You can determine the position of the facets block under
+'Settings / Website / Appearance' below Sidebar Management. It is recommended to
+move the Lucene Faceting Block to the top of the sidebar.

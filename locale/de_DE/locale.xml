@@ -15,6 +15,7 @@
 	<message key="plugins.generic.lucene.displayName">Lucene-Suche-Plugin</message>
 	<message key="plugins.generic.lucene.description">Das Lucene-Suche-Plugin bietet Unterstützung von Mehrsprachigkeit, verbesserte Relevanz der Suchergebnisse, schnellere Indizierung, bessere Skalierung und mehr.</message>
 
+    <message key="plugins.generic.lucene.faceting.facetBlockTitle">Lucene Facettierung-Block</message>
 	<message key="plugins.generic.lucene.faceting.title">Verfeinern Sie Ihre Suche</message>
 	<message key="plugins.generic.lucene.faceting.discipline">Disziplin</message>
 	<message key="plugins.generic.lucene.faceting.subject">Schlagwort</message>
