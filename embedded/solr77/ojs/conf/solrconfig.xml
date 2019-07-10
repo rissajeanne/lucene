@@ -717,12 +717,12 @@
             <str name="hl.mergeContiguous">true</str>
             <str name="facet.limit">15</str> <!-- Do not show more than 15 facets per category. You may change this according to your preference. -->
             <str name="facet.mincount">1</str> <!-- Only show a facet if it returns at least one result -->
-            <!--spellchecker disabled for now. TODO: enable
+
             <str name="spellcheck.dictionary">default</str>
-            <str name="spellcheck.collate">on</str>  Make sure that we always get an alternative spelling suggestion. That's what we actually use.
-            <str name="spellcheck.collateExtendedResults">off</str> We enforce the result format so that we can be sure to understand the result.
-            <str name="spellcheck.maxCollations">1</str>  We only display one collation.
-            -->
+            <str name="spellcheck.collate">on</str>  <!--Make sure that we always get an alternative spelling suggestion. That's what we actually use.-->
+            <str name="spellcheck.collateExtendedResults">off</str> <!--We enforce the result format so that we can be sure to understand the result.-->
+            <str name="spellcheck.maxCollations">1</str>  <!--We only display one collation.-->
+
         </lst>
         <lst name="defaults">
             <str name="hl">off</str>
