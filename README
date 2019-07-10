@@ -215,9 +215,6 @@ a Solr search server.
           e.g.:
           #> ln -s solr-8.1.1 solr
 
-    /***** OBSOLETE; NOW TOGETHER
-
-
        If you are on Windows then download and unzip the file to the lib folder
        using your favorite browser and zip tool. Then rename the solr-8.1.1 folder to
        "solr" or use the Windows "mklink" tool to create a symlink to the
