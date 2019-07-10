@@ -204,57 +204,26 @@ a Solr search server.
 
   3) Download the Jetty and Solr binaries:
 
-     - Jetty: Get the latest Jetty 6 binary from http://get.jenv.mvnsearch.org/jetty/
-       and unzip it into plugins/generic/lucene/lib in your OJS application
-       directory.
-
-       We are using version 6.1.26 here as an example but the latest version may
-       be different. Please change the following commands accordingly.
-
-       If you are on Linux execute something like (from the OJS application directory):
+ 	If you are on Linux execute something like (from the OJS application directory):
           #> cd plugins/generic/lucene/lib
-          #> wget http://get.jenv.mvnsearch.org/download/jetty/jetty-6.1.26.zip
-          #> unzip jetty-6.1.26.zip
+          #> wget http://mirrors.ae-online.de/apache/lucene/solr/8.1.1/solr-8.1.1.zip
+          #>  #> unzip solr-8.1.1.zip
+          (You may have to install the unzip tool first...)
 
-       (You may have to install the unzip tool first...)
+          This should create a folder solr-8.1.1 in your lib directory. If
+          you are on Linux then please create a symlink pointing to this directory,
+          e.g.:
+          #> ln -s solr-8.1.1 solr
 
-       This should create a folder jetty-6.1.26 in your lib directory. If you
-       are on Linux then please create a symlink pointing to this directory,
-       e.g.:
-          #> ln -s jetty-6.1.26 jetty
+    /***** OBSOLETE; NOW TOGETHER
+
 
        If you are on Windows then download and unzip the file to the lib folder
-       using your favorite browser and zip tool. Then rename the Jetty folder to
-       "jetty" or use the Windows "mklink" tool to create a symlink to the
+       using your favorite browser and zip tool. Then rename the solr-8.1.1 folder to
+       "solr" or use the Windows "mklink" tool to create a symlink to the
        unzipped folder, e.g.:
           C:\...\ojs> cd plugins\generic\lucene\lib
-          C:\...\lib> mklink /d jetty jetty-6.1.26
-
-       Please make sure that you find the file "start.jar" in the jetty folder.
-       If not, you may have to unwrap the unzipped file hierarchy.
-
-     - Solr: Get the latest Solr 3.6.2 binary from an Apache download mirror and unzip
-       it into plugins/generic/lucene/lib in your OJS application directory.
-
-       If you are on Linux execute something like (from the OJS application
-       directory):
-          #> cd plugins/generic/lucene/lib
-          #> wget http://archive.apache.org/dist/lucene/solr/3.6.2/apache-solr-3.6.2.zip
-          #> unzip apache-solr-3.6.2.zip
-
-       This should create a folder apache-solr-3.6.2 in your lib directory. If
-       you are on Linux then please create a symlink pointing to this directory,
-       e.g.:
-          #> ln -s apache-solr-3.6.2 solr
-
-       On Windows download and unzip the file to the lib folder. Then rename the
-       Solr folder to "solr" or use the Windows "mklink" tool to create a
-       symlink to the unzipped folder, e.g.:
-          C:\...\ojs> cd plugins\generic\lucene\lib
-          C:\...\lib> mklink /d solr apache-solr-3.6.2
-
-       Please make sure that you find the "example" folder below the solr
-       folder. If not, you may have to unwrap the unzipped file hierarchy.
+          C:\...\lib> mklink /d solr solr-8.1.1
 
   4) Check your installation:
      We provide a script that finalizes the installation and helps you to make
