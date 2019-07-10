@@ -13,7 +13,7 @@ source "$EXEC_PATH/script-startup"
 # The deployment directory
 DEPLOYMENT_DIR="$PLUGIN_DIR/embedded"
 
-SOLR_HOME="$DEPLOYMENT_DIR/solr77"
+SOLR_HOME="$DEPLOYMENT_DIR/solr81"
 SOLR_DATA="$LUCENE_FILES/data"
 SOLR_PID_DIR="$LUCENE_FILES"
 

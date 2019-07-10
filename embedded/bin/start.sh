@@ -33,7 +33,7 @@ DEPLOYMENT_DIR="$PLUGIN_DIR/embedded"
 #JAVA_OPTIONS="$JAVA_OPTIONS -Djetty.home=$JETTY_HOME"
 
 # Solr home /configset
-SOLR_HOME="$DEPLOYMENT_DIR/solr77"
+SOLR_HOME="$DEPLOYMENT_DIR/solr81"
 #JAVA_OPTIONS="$JAVA_OPTIONS -Dsolr.solr.home=$SOLR_HOME"
 
 # Solr index data directory
