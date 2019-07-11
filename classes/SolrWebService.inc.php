@@ -464,7 +464,8 @@ class SolrWebService extends XmlWebService {
 		// Read alternative spelling suggestions (if any).
 		$spellingSuggestion = null;
 		if ($searchRequest->getSpellcheck()) {
-			$alternativeSpellingNodeList = $response->query('/response/lst[@name="spellcheck"]/lst[@name="suggestions"]/str[@name="collation"]');
+			$alternativeSpellingNodeList = $response->query('/response/lst[@name="spellcheck"]/lst[@name="collations"]');
+
 			if ($alternativeSpellingNodeList->length == 1) {
 				$alternativeSpellingNode = $alternativeSpellingNodeList->item(0);
 				$spellingSuggestion = $alternativeSpellingNode->textContent;
@@ -1680,6 +1681,7 @@ class SolrWebService extends XmlWebService {
 		$params = array(
 			'defType' => 'edismax',
 			'qf' => $fieldList,
+			'df' => $fieldList,
 			// NB: mm=1 is equivalent to implicit OR
 			// This deviates from previous OJS practice, please see
 			// http://pkp.sfu.ca/wiki/index.php/OJSdeSearchConcept#Query_Parser
