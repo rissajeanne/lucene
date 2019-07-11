@@ -58,8 +58,13 @@
 
 
 
-      <!-- The StrField type is not analyzed, but indexed/stored verbatim (e.g. for sort fields or textual ID fields). -->
-    <fieldType name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+    <!-- Used for sorting, f.e. title. Do not use StrField type, cause then Case influences sort order -->
+    <fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+        <analyzer>
+            <tokenizer class="solr.KeywordTokenizerFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+        </analyzer>
+    </fieldType>
 
     <!-- A Trie based date field for faster date range queries and date faceting. -->
     <!--TODO: Activate<fieldType name="tdate" class="solr.DatePointField" omitNorms="true" precisionStep="6" positionIncrementGap="0"/>-->
