@@ -1751,6 +1751,15 @@ class SolrWebService extends XmlWebService {
 		} else {
 			$params['q'] = $subQuery;
 		}
+
+		//since v8 of SOLR, The eDisMax parser by default no longer allows subqueries that specify a Solr
+		//parser using either local parameters, or the older _query_ magic field trick.
+		//see: https://lucene.apache.org/solr/guide/8_0/the-extended-dismax-query-parser.html#extended-dismax-parameters
+		$params['uf'] = '* _query_';
+
+		$params['qf'] = $fieldList;
+		$params['df'] = $fieldList;
+
 		$params[$fieldAlias] = $searchPhrase;
 		return $params;
 	}
