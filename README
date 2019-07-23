@@ -188,21 +188,31 @@ a Solr search server.
      Please make sure that you have a firewall in place that denies public
      access to IP port 8983. If for some reason you do not have a firewall in
      place right now, then make sure you change the default Solr admin password
-     immediately:
+     immediately.
 
-     - Edit plugins/generic/lucene/embedded/etc/realm.properties
+     In the standard configuration Basic Authentication is used, and configured
+     in the file plugins/generic/lucene/embedded/solr81/security.json.
+     The standard admin username and password are solr and SolrRocks
 
-     - Change the line "admin: please change,content_updater,admin" to
-       "admin: xxxxxxx,content_updater,admin" where xxxxxxx is to be replaced
-       with a password you choose.
+     If you want to change to another authentication method, please consult the
+     documentation at
+     https://lucene.apache.org/solr/guide/8_1/authentication-and-authorization-plugins.htm
+
+     To change the standard password, use the following command from the commandline
+     and replace PLEASE CHANGE with the new password
+
+     curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
+
+     This command will change the file plugins/generic/lucene/embedded/solr81/security.json,
+     so if you upload this file again, the password will be reset to SolrRocks
 
   2) Install java:
-     You'll need a working installation of the Java 2 Platform, Standard Edition
+     You'll need a working installation of the Java 8 Platform, Standard Edition
      (J2SE) Runtime Environment, Version 1.5 or higher. If you are on Linux then
      install a J2SE compliant Java package. If you are on Windows you may get
      the latest J2SE version from http://java.com/en/download/index.jsp.
 
-  3) Download the Jetty and Solr binaries:
+  3) Download the Solr binaries:
 
  	If you are on Linux execute something like (from the OJS application directory):
           #> cd plugins/generic/lucene/lib
