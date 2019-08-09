@@ -43,6 +43,7 @@ import('lib.pkp.classes.webservice.WebServiceRequest');
 import('lib.pkp.classes.webservice.XmlWebService');
 import('lib.pkp.classes.xml.XMLCustomWriter');
 import('plugins.generic.lucene.classes.SolrSearchRequest');
+import('lib.pkp.classes.core.PKPPageRouter');
 import('classes.search.ArticleSearch');
 
 class SolrWebService extends XmlWebService {

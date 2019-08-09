@@ -1,10 +1,9 @@
 #!/bin/bash -e
-
 # This script is used to pull article metadata XML files from
 # OJS installations. You should schedule it via cronjob. We
 # recommend running this script once a day during off-hours.
 #
-# Usage:
+# Usagage:
 #   pull.sh [path/to/pull.conf]
 #
 # If no configuration file is given then the file will use
@@ -23,6 +22,8 @@ if [ -z "$1" ]; then
 else
   CONFIG_FILE="$1"
 fi
+
+echo $CONFIG_FILE
 
 # If no configuration file can be found then exit.
 if [ ! -r "$CONFIG_FILE" ]; then
@@ -111,6 +112,9 @@ for PULL_URL in $PULL_URLS; do
     SUFFIX=`printf %03d $COUNTER`
     FILENAME="$PULL_STAGING_DIR/$PREFIX-$TIMESTAMP-$SUFFIX.xml"
     curl -s "$PULL_URL/index/lucene/pullChangedArticles" >"$FILENAME"
+
+
+    echo " - Full URL: $PULL_URL"
     echo " - Pulling '$FILENAME'."
     HAS_MORE=`cat "$FILENAME" | egrep '<articleList[^>]* hasMore="(yes|no)"' | sed -r 's/^.*hasMore="(yes|no)".*$/\1/'`
     let COUNTER=COUNTER+1
@@ -118,13 +122,13 @@ for PULL_URL in $PULL_URLS; do
   echo " - $COUNTER file(s) pulled from '$PULL_URL'."
 
   # Update usage statistics.
-  echo " - Checking usage statistics."
-  updateStatFile all "$CURRENT_STAT_FILE_A" "$NEXT_STAT_FILE_A"
-  updateStatFile month "$CURRENT_STAT_FILE_M" "$NEXT_STAT_FILE_M"
-  if [ $UPDATED_STAT_FILE = 'false' ]; then
-    echo " - No statistics found or statistics disabled."
-  fi
-  echo
+  #echo " - Checking usage statistics."
+  #updateStatFile all "$CURRENT_STAT_FILE_A" "$NEXT_STAT_FILE_A"
+  #updateStatFile month "$CURRENT_STAT_FILE_M" "$NEXT_STAT_FILE_M"
+  #if [ $UPDATED_STAT_FILE = 'false' ]; then
+  #  echo " - No statistics found or statistics disabled."
+  #fi
+  #echo
 done
 
 if [ $UPDATED_STAT_FILE = 'true' ]; then
