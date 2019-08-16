@@ -166,12 +166,12 @@ class LucenePlugin extends GenericPlugin {
 			// Register callbacks (view-level).
 			HookRegistry::register('TemplateManager::display', array($this, 'callbackTemplateDisplay'));
 
-			//used to show altnerative spelling suggestions
+			//used to show alterative spelling suggestions
 			HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this,
 			  'callbackTemplatePreResults'
 			));
 
-			//used to show addintional filters for selected facet values
+			//used to show additional filters for selected facet values
 			HookRegistry::register('Templates::Search::SearchResults::AdditionalFilters', array($this,
 			  'callbackTemplateAdditionalFilters'
 			));
@@ -821,10 +821,12 @@ class LucenePlugin extends GenericPlugin {
 	 * @see TemplateManager::display()
 	 */
 	function callbackTemplateDisplay($hookName, $params) {
-		// We only plug into the search results list.
 		$template = $params[1];
 
-	if ($template != 'frontend/pages/search.tpl') return false;
+		if ($template == 'frontend/pages/indexSite.tpl') return false;
+		// avoid recursive calls of the template
+		if (strpos($template,'plugins-plugins') !== false) return false;
+		if (strpos($template,'frontend/pages/') === false) return false;
 
 		// Get the request.
 		$request = Application::getRequest();
@@ -850,7 +852,7 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		if ($this->getSetting(CONTEXT_SITE, 'autosuggest')) {
-			$templateMgr->display($this->getTemplateResource('luceneSearch.tpl'));
+			$templateMgr->display('extends:'.$template.'|'.$this->getTemplateResource('luceneSearch.tpl'));
 			return true;
 		}
 
