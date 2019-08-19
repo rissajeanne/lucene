@@ -1,4 +1,3 @@
-{extends file='frontend/pages/search.tpl'}
 {block name=searchQuery}
 	<script>
 
