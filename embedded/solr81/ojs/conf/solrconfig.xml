@@ -719,8 +719,8 @@
             <str name="facet.mincount">1</str> <!-- Only show a facet if it returns at least one result -->
 
             <str name="spellcheck.dictionary">default</str>
-            <str name="spellcheck.collate">on</str>  <!--Make sure that we always get an alternative spelling suggestion. That's what we actually use.-->
-            <str name="spellcheck.collateExtendedResults">off</str> <!--We enforce the result format so that we can be sure to understand the result.-->
+            <str name="spellcheck.collate">true</str>  <!--Make sure that we always get an alternative spelling suggestion. That's what we actually use.-->
+            <!--<str name="spellcheck.collateExtendedResults">off</str> We enforce the result format so that we can be sure to understand the result.-->
             <str name="spellcheck.maxCollations">1</str>  <!--We only display one collation.-->
 
         </lst>
@@ -729,6 +729,7 @@
             <str name="hl.fl">abstract_*</str>
             <str name="facet">off</str>
             <str name="spellcheck">off</str>
+            <str name="spellcheck.collate">true</str>
             <str name="spellcheck.onlyMorePopular">on</str> <!-- Not only make spelling suggestions but also suggest searches that yield more results. -->
             <str name="spellcheck.maxCollationTries">5</str> <!-- Only return suggestions that actually give a result. -->
         </lst>
@@ -748,7 +749,7 @@
             <str name="spellcheck.dictionary">all</str>
             <str name="spellcheck.count">5</str>
             <str name="spellcheck.onlyMorePopular">true</str><!-- Sort results by popularity (=term frequency). -->
-            <str name="spellcheck.collate">false</str><!-- We build our own query suggestions. -->
+            <str name="spellcheck.collate">true</str>
         </lst>
         <arr name="components">
             <str>dictionaries</str>
@@ -786,6 +787,7 @@
             <str name="mlt.mindf">1</str>
             <str name="mlt.minwl">3</str>
             <str name="mlt.maxqt">5</str>
+            <str name="defType">edismax</str>
             <str name="mlt.boost">false</str> <!-- We do not support boosting in our regular interface. We switch it off to produce consistent queries. -->
             <str name="mlt.interestingTerms">list</str>
             <str name="mlt.match.include">off</str>
@@ -793,7 +795,6 @@
         </lst>
     </requestHandler>
     <!-- END -->
-
     <!--
    Support for commit-free external file fields, see http://stackoverflow.com/questions/12015049/externalfilefield-in-solr-3-6
    NB:
