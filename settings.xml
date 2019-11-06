@@ -25,11 +25,11 @@
 	</setting>
 	<setting type="string">
 		<name>username</name>
-		<value>admin</value>
+		<value>solr</value>
 	</setting>
 	<setting type="string">
 		<name>password</name>
-		<value>please change</value>
+		<value>SolrRocks</value>
 	</setting>
 	<setting type="string">
 		<name>instId</name>
