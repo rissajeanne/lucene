@@ -623,9 +623,9 @@ class SolrWebService extends XmlWebService {
 		$url = $this->_getInterestingTermsUrl();
 		$params = array(
 			'q' => $this->_instId . '-' . $articleId,
-			'mlt.fl' => $this->_expandFieldList(array('title', 'abstract')),
-			'qf' => $this->_expandFieldList(array('title', 'abstract')),
-			'df' => $this->_expandFieldList(array('title', 'abstract')),
+			'mlt.fl' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
+			'qf' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
+			'df' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
 		);
 		$response = $this->_makeRequest($url, $params); /* @var $response DOMXPath */
 		if (!is_a($response, 'DOMXPath')) return null;
