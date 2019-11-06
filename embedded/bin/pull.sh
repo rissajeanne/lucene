@@ -23,8 +23,6 @@ else
   CONFIG_FILE="$1"
 fi
 
-echo $CONFIG_FILE
-
 # If no configuration file can be found then exit.
 if [ ! -r "$CONFIG_FILE" ]; then
   echo "Configuration file '$CONFIG_FILE' not found."
