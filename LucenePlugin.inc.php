@@ -852,6 +852,7 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		if ($this->getSetting(CONTEXT_SITE, 'autosuggest')) {
+			$templateMgr->assign('enableAutosuggest', true);
 			$templateMgr->display('extends:'.$template.'|'.$this->getTemplateResource('luceneSearch.tpl'));
 			return true;
 		}
