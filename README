@@ -176,7 +176,33 @@ download and install them before you can use the plug-in. The following
 paragraphs will explain how to do this. This will transform your OJS server into
 a Solr search server.
 
-  1) Secure your server (IMPORTANT):
+  1) Install java:
+     You'll need a working installation of the Java 8 Platform, Standard Edition
+     (J2SE) Runtime Environment, Version 1.8 or higher. If you are on Linux then
+     install a J2SE compliant Java package. If you are on Windows you may get
+     the latest J2SE version from http://java.com/en/download/index.jsp.
+
+  2) Download the Solr binaries:
+
+ 	If you are on Linux execute something like (from the OJS application directory):
+          #> cd plugins/generic/lucene/lib
+          #> wget https://archive.apache.org/dist/lucene/solr/8.1.1/solr-8.1.1.zip
+          #>  #> unzip solr-8.1.1.zip
+          (You may have to install the unzip tool first...)
+
+          This should create a folder solr-8.1.1 in your lib directory. If
+          you are on Linux then please create a symlink pointing to this directory,
+          e.g.:
+          #> ln -s solr-8.1.1 solr
+
+       If you are on Windows then download and unzip the file to the lib folder
+       using your favorite browser and zip tool. Then rename the solr-8.1.1 folder to
+       "solr" or use the Windows "mklink" tool to create a symlink to the
+       unzipped folder, e.g.:
+          C:\...\ojs> cd plugins\generic\lucene\lib
+          C:\...\lib> mklink /d solr solr-8.1.1
+
+  3) Secure your server (IMPORTANT):
      While we tried to make sure that our Solr configuration be secure by
      default, Solr has NOT been designed to be directly exposed to the internet.
      Please make sure that you have a firewall in place that denies public
@@ -200,31 +226,6 @@ a Solr search server.
      This command will change the file plugins/generic/lucene/embedded/solr81/security.json,
      so if you upload this file again, the password will be reset to SolrRocks
 
-  2) Install java:
-     You'll need a working installation of the Java 8 Platform, Standard Edition
-     (J2SE) Runtime Environment, Version 1.8 or higher. If you are on Linux then
-     install a J2SE compliant Java package. If you are on Windows you may get
-     the latest J2SE version from http://java.com/en/download/index.jsp.
-
-  3) Download the Solr binaries:
-
- 	If you are on Linux execute something like (from the OJS application directory):
-          #> cd plugins/generic/lucene/lib
-          #> wget https://archive.apache.org/dist/lucene/solr/8.1.1/solr-8.1.1.zip
-          #>  #> unzip solr-8.1.1.zip
-          (You may have to install the unzip tool first...)
-
-          This should create a folder solr-8.1.1 in your lib directory. If
-          you are on Linux then please create a symlink pointing to this directory,
-          e.g.:
-          #> ln -s solr-8.1.1 solr
-
-       If you are on Windows then download and unzip the file to the lib folder
-       using your favorite browser and zip tool. Then rename the solr-8.1.1 folder to
-       "solr" or use the Windows "mklink" tool to create a symlink to the
-       unzipped folder, e.g.:
-          C:\...\ojs> cd plugins\generic\lucene\lib
-          C:\...\lib> mklink /d solr solr-8.1.1
 
   4) Check your installation:
      We provide a script that finalizes the installation and helps you to make
@@ -238,7 +239,11 @@ a Solr search server.
          C:\...\ojs> cd plugins\generic\lucene\embedded\bin
          C:\...\lib> chkconfig.bat
 
-     If you get error messages then please return to step 3) and check your
+     Make sure that you have the right access rights to execute the scripts. You might have to set them:
+     	 #> cd plugins/generic/lucene/embedded/bin
+     	 #> chmod 774 *
+
+     If you get error messages then please return to step 2) and check your
      installation.
 
   5) Try starting the Solr server for the first time:
@@ -262,8 +267,8 @@ a Solr search server.
 
   6) Now open up your web browser and log into your OJS journal manager account.
 
-     Go to "Journal Manager -> System Plugins -> Generic Plugins" and enable the
-     "Lucene Search Plugin".
+     Go to "Settings -> Website -> Plugins" and enable the
+     "Lucene Search Plugin" (under "Generic Plugins").
 
      In embedded mode you do not have to configure anything in the plug-in
      unless you changed the password in step 1).
