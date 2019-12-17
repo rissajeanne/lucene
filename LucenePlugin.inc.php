@@ -508,7 +508,7 @@ class LucenePlugin extends GenericPlugin {
 				/* @var $sections DAOResultFactory */
 				if ($section != null) {
 					$sectionBoost = (float) $section->getData('rankingBoost');
-					if ($sectionBoost != 1.0) {
+					if ($sectionBoost != null && $sectionBoost != LUCENE_PLUGIN_DEFAULT_RANKING_BOOST) {
 						$searchRequest->addBoostFactor(
 						  'section_id', $section->getId(), $sectionBoost
 						);
