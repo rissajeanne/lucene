@@ -624,8 +624,8 @@ class SolrWebService extends XmlWebService {
 		$params = array(
 			'q' => $this->_instId . '-' . $articleId,
 			'mlt.fl' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
-			'qf' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
-			'df' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
+			'mlt.qf' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
+			'df' => 'submission_id',
 		);
 		$response = $this->_makeRequest($url, $params); /* @var $response DOMXPath */
 		if (!is_a($response, 'DOMXPath')) return null;
@@ -1023,6 +1023,9 @@ class SolrWebService extends XmlWebService {
 		// Prepare an XPath object.
 		assert(is_a($response, 'DOMDocument'));
 		$result = new DOMXPath($response);
+
+		/*$debug = $response->SaveXML();
+		print_r($debug);*/
 
 		// Return the result.
 		return $result;
@@ -1839,16 +1842,22 @@ class SolrWebService extends XmlWebService {
 		// Add a range search on the publication date (if set).
 		$fromDate = $searchRequest->getFromDate();
 		$toDate = $searchRequest->getToDate();
+
 		if (!(empty($fromDate) && empty($toDate))) {
 			if (empty($fromDate)) {
 				$fromDate = '*';
 			} else {
 				$fromDate = $this->_convertDate($fromDate);
+				//exclude the choosen day, the label says: Published after. So add one day
+				//$fromDate = $fromDate . '+1DAY';
+
 			}
 			if (empty($toDate)) {
 				$toDate = '*';
 			} else {
 				$toDate = $this->_convertDate($toDate);
+				//exclude the choosen day, the label says: Published after. So add one day
+				//$toDate = $toDate . '-1DAY';
 			}
 			// We do not cache this filter as reuse seems improbable.
 			$params['fq'][] = "{!cache=false}publicationDate_dt:[$fromDate TO $toDate]";
