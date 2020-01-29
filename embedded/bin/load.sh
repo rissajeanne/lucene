@@ -101,7 +101,7 @@ for FILENAME in `ls "$PULL_STAGING_DIR"`; do
       | grep -o '<str name="Total Documents Processed">[0-9]\+</str>' | grep -o '[0-9]\+'`; then
     true
   else
-    echo "configured DIH endpoint not available ... terminating"
+    echo "configured DIH endpoint $DIH_ENDPOINT not available ... terminating"
     exit 1
   fi
   echo -n "$ARTICLES_PROCESSED of $ARTICLES_FOUND articles processed ... "

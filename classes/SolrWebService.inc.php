@@ -424,16 +424,18 @@ class SolrWebService extends XmlWebService {
 			foreach ($doc->childNodes as $docField) {
 				// Get the document field
 				$docFieldAtts = $docField->attributes;
-				$fieldNameAtt = $docFieldAtts->getNamedItem('name');
+				if ($docFieldAtts != null) {
+					$fieldNameAtt = $docFieldAtts->getNamedItem('name');
 
-				switch($docField->tagName) {
-					case 'float':
-						$currentDoc[$fieldNameAtt->value] = (float)$docField->textContent;
-						break;
+					switch($docField->tagName) {
+						case 'float':
+							$currentDoc[$fieldNameAtt->value] = (float)$docField->textContent;
+							break;
 
-					case 'str':
-						$currentDoc[$fieldNameAtt->value] = $docField->textContent;
-						break;
+						case 'str':
+							$currentDoc[$fieldNameAtt->value] = $docField->textContent;
+							break;
+					}
 				}
 			}
 			$results[] = $currentDoc;
@@ -463,7 +465,8 @@ class SolrWebService extends XmlWebService {
 		// Read alternative spelling suggestions (if any).
 		$spellingSuggestion = null;
 		if ($searchRequest->getSpellcheck()) {
-			$alternativeSpellingNodeList = $response->query('/response/lst[@name="spellcheck"]/lst[@name="suggestions"]/str[@name="collation"]');
+			$alternativeSpellingNodeList = $response->query('/response/lst[@name="spellcheck"]/lst[@name="collations"]');
+
 			if ($alternativeSpellingNodeList->length == 1) {
 				$alternativeSpellingNode = $alternativeSpellingNodeList->item(0);
 				$spellingSuggestion = $alternativeSpellingNode->textContent;
@@ -483,7 +486,10 @@ class SolrWebService extends XmlWebService {
 					$indexArticleId = $highlightingNode->attributes->getNamedItem('name')->nodeValue;
 					$articleIdParts = explode('-', $indexArticleId);
 					$articleId = array_pop($articleIdParts);
-					$excerpt = $highlightingNode->firstChild->firstChild->textContent;
+					$excerpt = $highlightingNode->textContent;
+					if (empty($excerpt)) {
+						$excerpt = $highlightingNode->firstChild->firstChild->textContent;
+					}
 					if (is_numeric($articleId) && !empty($excerpt)) {
 						$highligthedArticles[$articleId] = $excerpt;
 					}
@@ -504,12 +510,14 @@ class SolrWebService extends XmlWebService {
 				$facetCategory = array_shift($facetFieldParts);
 				$facets[$facetCategory] = array();
 				foreach($facetFieldNode->childNodes as $facetNode) { /* @var $facetNode DOMElement */
-					$facet = $facetNode->attributes->getNamedItem('name')->nodeValue;
-					$facetCount = (integer)$facetNode->textContent;
-					// Only select facets that return results and are more selective than
-					// the current search criteria.
-					if (!empty($facet) && $facetCount > 0 && $facetCount < $totalResults) {
-						$facets[$facetCategory][$facet] = $facetCount;
+					if ($facetNode->attributes != null) {
+						$facet = $facetNode->attributes->getNamedItem('name')->nodeValue;
+						$facetCount = (integer)$facetNode->textContent;
+						// Only select facets that return results and are more selective than
+						// the current search criteria.
+						if (!empty($facet) && $facetCount > 0 && $facetCount < $totalResults) {
+							$facets[$facetCategory][$facet] = $facetCount;
+						}
 					}
 				}
 			}
@@ -517,28 +525,34 @@ class SolrWebService extends XmlWebService {
 			// Read range-based facets.
 			$facetsNodeList = $response->query('/response/lst[@name="facet_counts"]/lst[@name="facet_ranges"]/lst');
 			foreach($facetsNodeList as $facetFieldNode) { /* @var $facetFieldNode DOMElement */
-				$facetField = $facetFieldNode->attributes->getNamedItem('name')->nodeValue;
-				$facetFieldParts = explode('_', $facetField);
-				$facetCategory = array_shift($facetFieldParts);
-				$facets[$facetCategory] = array();
-				foreach($facetFieldNode->childNodes as $rangeInfoNode) { /* @var $rangeInfoNode DOMElement */
-					// Search for the "counts" node in the range info.
-					if($rangeInfoNode->attributes->getNamedItem('name')->nodeValue == 'counts') {
-						// Run through all ranges.
-						foreach($rangeInfoNode->childNodes as $facetNode) { /* @var $facetNode DOMElement */
-							// Retrieve and format the date range facet.
-							$facet = $facetNode->attributes->getNamedItem('name')->nodeValue;
-							$facet = date('Y', strtotime(substr($facet, 0, 10)));
-							$facetCount = (integer)$facetNode->textContent;
-							// Only select ranges that return results and are more selective than
-							// the current search criteria.
-							if ($facetCount > 0 && $facetCount < $totalResults) {
-								$facets[$facetCategory][$facet] = $facetCount;
+				if ($facetFieldNode->attributes != null) {
+					$facetField = $facetFieldNode->attributes->getNamedItem('name')->nodeValue;
+					$facetFieldParts = explode('_', $facetField);
+					$facetCategory = array_shift($facetFieldParts);
+					$facets[$facetCategory] = array();
+					foreach($facetFieldNode->childNodes as $rangeInfoNode) { /* @var $rangeInfoNode DOMElement */
+						// Search for the "counts" node in the range info.
+						if ($rangeInfoNode->attributes != null) {
+							if($rangeInfoNode->attributes->getNamedItem('name')->nodeValue == 'counts') {
+								// Run through all ranges.
+								foreach($rangeInfoNode->childNodes as $facetNode) { /* @var $facetNode DOMElement */
+									// Retrieve and format the date range facet.
+									if ($facetNode->attributes != null) {
+										$facet = $facetNode->attributes->getNamedItem('name')->nodeValue;
+										$facet = date('Y', strtotime(substr($facet, 0, 10)));
+										$facetCount = (integer)$facetNode->textContent;
+										// Only select ranges that return results and are more selective than
+										// the current search criteria.
+										if ($facetCount > 0 && $facetCount < $totalResults) {
+											$facets[$facetCategory][$facet] = $facetCount;
+										}
+									}
+								}
+
+								// We do not need the other children.
+								break;
 							}
 						}
-
-						// We do not need the other children.
-						break;
 					}
 				}
 			}
@@ -609,7 +623,9 @@ class SolrWebService extends XmlWebService {
 		$url = $this->_getInterestingTermsUrl();
 		$params = array(
 			'q' => $this->_instId . '-' . $articleId,
-			'mlt.fl' => $this->_expandFieldList(array('title', 'abstract'))
+			'mlt.fl' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
+			'mlt.qf' => $this->_expandFieldList(array('title', 'abstract', 'galleyFullText')),
+			'df' => 'submission_id',
 		);
 		$response = $this->_makeRequest($url, $params); /* @var $response DOMXPath */
 		if (!is_a($response, 'DOMXPath')) return null;
@@ -1007,6 +1023,9 @@ class SolrWebService extends XmlWebService {
 		// Prepare an XPath object.
 		assert(is_a($response, 'DOMDocument'));
 		$result = new DOMXPath($response);
+
+		/*$debug = $response->SaveXML();
+		print_r($debug);*/
 
 		// Return the result.
 		return $result;
@@ -1668,6 +1687,7 @@ class SolrWebService extends XmlWebService {
 		$params = array(
 			'defType' => 'edismax',
 			'qf' => $fieldList,
+			'df' => $fieldList,
 			// NB: mm=1 is equivalent to implicit OR
 			// This deviates from previous OJS practice, please see
 			// http://pkp.sfu.ca/wiki/index.php/OJSdeSearchConcept#Query_Parser
@@ -1737,6 +1757,15 @@ class SolrWebService extends XmlWebService {
 		} else {
 			$params['q'] = $subQuery;
 		}
+
+		//since v8 of SOLR, The eDisMax parser by default no longer allows subqueries that specify a Solr
+		//parser using either local parameters, or the older _query_ magic field trick.
+		//see: https://lucene.apache.org/solr/guide/8_0/the-extended-dismax-query-parser.html#extended-dismax-parameters
+		$params['uf'] = '* _query_';
+
+		$params['qf'] = $fieldList;
+		$params['df'] = $fieldList;
+
 		$params[$fieldAlias] = $searchPhrase;
 		return $params;
 	}
@@ -1813,16 +1842,22 @@ class SolrWebService extends XmlWebService {
 		// Add a range search on the publication date (if set).
 		$fromDate = $searchRequest->getFromDate();
 		$toDate = $searchRequest->getToDate();
+
 		if (!(empty($fromDate) && empty($toDate))) {
 			if (empty($fromDate)) {
 				$fromDate = '*';
 			} else {
 				$fromDate = $this->_convertDate($fromDate);
+				//exclude the choosen day, the label says: Published after. So add one day
+				//$fromDate = $fromDate . '+1DAY';
+
 			}
 			if (empty($toDate)) {
 				$toDate = '*';
 			} else {
 				$toDate = $this->_convertDate($toDate);
+				//exclude the choosen day, the label says: Published after. So add one day
+				//$toDate = $toDate . '-1DAY';
 			}
 			// We do not cache this filter as reuse seems improbable.
 			$params['fq'][] = "{!cache=false}publicationDate_dt:[$fromDate TO $toDate]";
@@ -1873,19 +1908,21 @@ class SolrWebService extends XmlWebService {
 		if ($nodeList->length == 0) return array();
 		$suggestionNode = $nodeList->item(0);
 		foreach($suggestionNode->childNodes as $childNode) {
-			$nodeType = $childNode->attributes->getNamedItem('name')->value;
-			switch($nodeType) {
-				case 'startOffset':
-				case 'endOffset':
-					$$nodeType = ((int)$childNode->textContent);
-					break;
+			if ($childNode->attributes != null) {
+				$nodeType = $childNode->attributes->getNamedItem('name')->value;
+				switch($nodeType) {
+					case 'startOffset':
+					case 'endOffset':
+						$$nodeType = ((int)$childNode->textContent);
+						break;
 
-				case 'suggestion':
-					$suggestions = array();
-					foreach($childNode->childNodes as $suggestionNode) {
-						$suggestions[] = $suggestionNode->textContent;
-					}
-					break;
+					case 'suggestion':
+						$suggestions = array();
+						foreach($childNode->childNodes as $suggestionNode) {
+							$suggestions[] = $suggestionNode->textContent;
+						}
+						break;
+				}
 			}
 		}
 

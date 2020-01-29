@@ -33,12 +33,9 @@ class EmbeddedServer {
 	 */
 	function isInstalled() {
 		// Check solr installation.
-		$solrWar = $this->_getPluginDirectory() . DIRECTORY_SEPARATOR . 'embedded' . DIRECTORY_SEPARATOR . 'webapps' . DIRECTORY_SEPARATOR . 'solr.war';
-		if (!is_readable($solrWar)) return false;
-
-		// Check jetty installation.
-		$jettyJar = $this->_getPluginDirectory() . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'jetty' . DIRECTORY_SEPARATOR . 'start.jar';
-		if (!is_readable($jettyJar))	return false;
+		return true;
+		$solrExe = $this->_getPluginDirectory() . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'solr' . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'solr';
+		if (!is_readable($solrExe)) return false;
 
 		return true;
 	}

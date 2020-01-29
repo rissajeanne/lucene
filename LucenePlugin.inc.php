@@ -508,7 +508,7 @@ class LucenePlugin extends GenericPlugin {
 				/* @var $sections DAOResultFactory */
 				if ($section != null) {
 					$sectionBoost = (float) $section->getData('rankingBoost');
-					if ($sectionBoost != 1.0) {
+					if ($sectionBoost != null && $sectionBoost != LUCENE_PLUGIN_DEFAULT_RANKING_BOOST) {
 						$searchRequest->addBoostFactor(
 						  'section_id', $section->getId(), $sectionBoost
 						);
@@ -852,6 +852,7 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		if ($this->getSetting(CONTEXT_SITE, 'autosuggest')) {
+			$templateMgr->assign('enableAutosuggest', true);
 			$templateMgr->display('extends:'.$template.'|'.$this->getTemplateResource('luceneSearch.tpl'));
 			return true;
 		}

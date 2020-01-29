@@ -10,17 +10,13 @@
 EXEC_PATH=`dirname $0`
 source "$EXEC_PATH/script-startup"
 
-if [ ! -e $SOLR_PIDFILE ]; then
-  echo "Solr PID-file not found. Is Solr stopped? Has the PID-file been deleted?"
-  exit 1
-fi
+# The deployment directory
+DEPLOYMENT_DIR="$PLUGIN_DIR/embedded"
+
+SOLR_HOME="$DEPLOYMENT_DIR/solr81"
+SOLR_DATA="$LUCENE_FILES/data"
+SOLR_PID_DIR="$LUCENE_FILES"
+
 
 # Stop the solr process.
-SOLR_PID=`cat $SOLR_PIDFILE`
-if [ ! -z "$SOLR_PID" -a -e "/proc/$SOLR_PID" ]; then
-  kill $SOLR_PID
-  echo "Stopped solr."
-else
-  echo "Solr not running."
-  exit 1
-fi
+SOLR_INCLUDE="$PLUGIN_DIR/embedded/etc/solr.in.sh" SOLR_HOME="$SOLR_HOME" SOLR_PID_DIR="$SOLR_PID_DIR"  SOLR_DATA_HOME="$SOLR_DATA" $PLUGIN_DIR/lib/solr/bin/solr stop

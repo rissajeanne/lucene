@@ -18,22 +18,13 @@ ln -sf ../lib/solr/example/webapps/ "$PLUGIN_DIR/embedded/webapps"
 
 ERROR=false
 
-# Check availability of jetty.
-if [ ! -e "$PLUGIN_DIR/lib/jetty/start.jar" ]; then
-  echo "Jetty was not correctly installed. Please make sure that the jetty"
-  echo "installation is available in"
-  echo "'$PLUGIN_DIR/lib/jetty'."
-  echo "This directory should contain the file 'start.jar'."
-  ERROR=true
-fi
-
 # Check availability of solr.
-if [ ! -e "$PLUGIN_DIR/embedded/webapps/solr.war" ]; then
+if [ ! -e "$PLUGIN_DIR/lib/solr/server/start.jar" ]; then
   echo "Solr was not correctly installed. Please make sure that the solr"
   echo "installation is available in"
   echo "'$PLUGIN_DIR/lib/solr'."
-  echo "The directory 'example/webapps' therein should contain the file"
-  echo "'solr.war'."
+  echo "The directory 'server' therein should contain the file"
+  echo "'start.jar'."
   ERROR=true
 fi
 

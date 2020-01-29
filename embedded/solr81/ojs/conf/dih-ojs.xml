@@ -40,19 +40,20 @@
       }
       if (textToAppend === '') return;
 
-      var docFields = context.getSessionAttribute('docFields', context.SCOPE_DOC);
+      var docFields = context.getSessionAttribute('docFields', 'document');
       if (docFields === null) {
         docFields = [];
       }
       if (docFields.indexOf(fieldName) === -1) {
         docFields.push(fieldName);
-        context.setSessionAttribute('docFields', docFields, context.SCOPE_DOC);
+        context.setSessionAttribute('docFields', docFields, 'document');
+
         var fieldValue = textToAppend;
       } else {
-        var fieldValue = context.getSessionAttribute(fieldName, context.SCOPE_DOC);
+        var fieldValue = context.getSessionAttribute(fieldName, 'document');
         fieldValue += ' ' + textToAppend;
       }
-      context.setSessionAttribute(fieldName, fieldValue, context.SCOPE_DOC);
+      context.setSessionAttribute(fieldName, fieldValue, 'document');
     }
 
     /**
@@ -183,11 +184,13 @@
       // to search authors but we prefer to keep our schema simple (one less field
       // type necessary). 
       var authorsConcat = '';
-      for (var iA=0, lenA=authors.size(); iA<lenA; iA++) {
-        if (authorsConcat !== '') {
-          authorsConcat += '; ';
-        }
-        authorsConcat += String(authors.get(iA));
+      if (authors != null) {
+          for (var iA=0, lenA=authors.size(); iA<lenA; iA++) {
+            if (authorsConcat !== '') {
+              authorsConcat += '; ';
+            }
+            authorsConcat += String(authors.get(iA));
+          }
       }
       row.put('authors_txt', authorsConcat);
       row.put('authors_txtsort', authorsConcat);
@@ -316,13 +319,12 @@
      */
     function postProcessArticle(row, context) {
       var docFieldName, docFieldValue;
-      var docFields = context.getSessionAttribute('docFields', context.SCOPE_DOC);
-      if (docFields === null) return row;
+      var docFields = context.getSessionAttribute('docFields', 'document');
 
       // Add document-level fields to the document.
       for (var iD=0, lenD=docFields.length; iD<lenD; iD++) {
         docFieldName = docFields[iD];
-        docFieldValue = context.getSessionAttribute(docFieldName, context.SCOPE_DOC);
+        docFieldValue = context.getSessionAttribute(docFieldName, 'document');
         row.put(docFieldName, docFieldValue);
       }
       return row;

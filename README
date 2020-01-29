@@ -1,8 +1,3 @@
-===========
-= WARNING =
-===========
-This plugin is UNRELEASED and currently non-functional!
-
 Contents
 --------
 
@@ -34,8 +29,7 @@ distributions. These projects are governed by the Apache License 2.0. We
 therefore included a copy of this license in the root directory of this plug-in,
 see LICENSE-APACHE-2.0.txt.
 
-For more details please visit the Jetty and Solr web sites:
-- <http://www.eclipse.org/jetty/>
+For more details please visit the Solr web site:
 - <https://lucene.apache.org/solr/>
 
 
@@ -144,7 +138,7 @@ necessary installation requirements to install Solr. This is the OJS server if
 you decide to deploy in embedded server mode or the central search server if you
 deploy in central server mode:
 
-- Operating System: Any operating system that supports J2SE 1.5 or greater
+- Operating System: Any operating system that supports J2SE 1.8 or greater
   (this includes all recent versions of Linux and Windows).
 
 - Disk Space: The disk your Solr server will reside on should have at least
@@ -183,79 +177,56 @@ download and install them before you can use the plug-in. The following
 paragraphs will explain how to do this. This will transform your OJS server into
 a Solr search server.
 
-  1) Secure your server (IMPORTANT):
+  1) Install java:
+     You'll need a working installation of the Java 8 Platform, Standard Edition
+     (J2SE) Runtime Environment, Version 1.8 or higher. If you are on Linux then
+     install a J2SE compliant Java package. If you are on Windows you may get
+     the latest J2SE version from http://java.com/en/download/index.jsp.
+
+  2) Download the Solr binaries:
+
+ 	If you are on Linux execute something like (from the OJS application directory):
+          #> cd plugins/generic/lucene/lib
+          #> wget https://archive.apache.org/dist/lucene/solr/8.1.1/solr-8.1.1.zip
+          #>  #> unzip solr-8.1.1.zip
+          (You may have to install the unzip tool first...)
+
+          This should create a folder solr-8.1.1 in your lib directory. If
+          you are on Linux then please create a symlink pointing to this directory,
+          e.g.:
+          #> ln -s solr-8.1.1 solr
+
+       If you are on Windows then download and unzip the file to the lib folder
+       using your favorite browser and zip tool. Then rename the solr-8.1.1 folder to
+       "solr" or use the Windows "mklink" tool to create a symlink to the
+       unzipped folder, e.g.:
+          C:\...\ojs> cd plugins\generic\lucene\lib
+          C:\...\lib> mklink /d solr solr-8.1.1
+
+  3) Secure your server (IMPORTANT):
      While we tried to make sure that our Solr configuration be secure by
      default, Solr has NOT been designed to be directly exposed to the internet.
      Please make sure that you have a firewall in place that denies public
      access to IP port 8983. If for some reason you do not have a firewall in
      place right now, then make sure you change the default Solr admin password
-     immediately:
+     immediately.
 
-     - Edit plugins/generic/lucene/embedded/etc/realm.properties
+     In the standard configuration Basic Authentication is used, and configured
+     in the file plugins/generic/lucene/embedded/solr81/security.json.
+     The standard admin username and password are solr and SolrRocks
 
-     - Change the line "admin: please change,content_updater,admin" to
-       "admin: xxxxxxx,content_updater,admin" where xxxxxxx is to be replaced
-       with a password you choose.
+     If you want to change to another authentication method, please consult the
+     documentation at
+     https://lucene.apache.org/solr/guide/8_1/authentication-and-authorization-plugins.htm
 
-  2) Install java:
-     You'll need a working installation of the Java 2 Platform, Standard Edition
-     (J2SE) Runtime Environment, Version 1.5 or higher. If you are on Linux then
-     install a J2SE compliant Java package. If you are on Windows you may get
-     the latest J2SE version from http://java.com/en/download/index.jsp.
+     To change the standard password, use the following command from the commandline
+     and replace PLEASE CHANGE with the new password
 
-  3) Download the Jetty and Solr binaries:
+     curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
 
-     - Jetty: Get the latest Jetty 6 binary from http://get.jenv.mvnsearch.org/jetty/
-       and unzip it into plugins/generic/lucene/lib in your OJS application
-       directory.
+     This command will change the file plugins/generic/lucene/embedded/solr81/security.json,
+     so if you upload this file again, the password will be reset to SolrRocks
 
-       We are using version 6.1.26 here as an example but the latest version may
-       be different. Please change the following commands accordingly.
-
-       If you are on Linux execute something like (from the OJS application directory):
-          #> cd plugins/generic/lucene/lib
-          #> wget http://get.jenv.mvnsearch.org/download/jetty/jetty-6.1.26.zip
-          #> unzip jetty-6.1.26.zip
-
-       (You may have to install the unzip tool first...)
-
-       This should create a folder jetty-6.1.26 in your lib directory. If you
-       are on Linux then please create a symlink pointing to this directory,
-       e.g.:
-          #> ln -s jetty-6.1.26 jetty
-
-       If you are on Windows then download and unzip the file to the lib folder
-       using your favorite browser and zip tool. Then rename the Jetty folder to
-       "jetty" or use the Windows "mklink" tool to create a symlink to the
-       unzipped folder, e.g.:
-          C:\...\ojs> cd plugins\generic\lucene\lib
-          C:\...\lib> mklink /d jetty jetty-6.1.26
-
-       Please make sure that you find the file "start.jar" in the jetty folder.
-       If not, you may have to unwrap the unzipped file hierarchy.
-
-     - Solr: Get the latest Solr 3.6.2 binary from an Apache download mirror and unzip
-       it into plugins/generic/lucene/lib in your OJS application directory.
-
-       If you are on Linux execute something like (from the OJS application
-       directory):
-          #> cd plugins/generic/lucene/lib
-          #> wget http://archive.apache.org/dist/lucene/solr/3.6.2/apache-solr-3.6.2.zip
-          #> unzip apache-solr-3.6.2.zip
-
-       This should create a folder apache-solr-3.6.2 in your lib directory. If
-       you are on Linux then please create a symlink pointing to this directory,
-       e.g.:
-          #> ln -s apache-solr-3.6.2 solr
-
-       On Windows download and unzip the file to the lib folder. Then rename the
-       Solr folder to "solr" or use the Windows "mklink" tool to create a
-       symlink to the unzipped folder, e.g.:
-          C:\...\ojs> cd plugins\generic\lucene\lib
-          C:\...\lib> mklink /d solr apache-solr-3.6.2
-
-       Please make sure that you find the "example" folder below the solr
-       folder. If not, you may have to unwrap the unzipped file hierarchy.
 
   4) Check your installation:
      We provide a script that finalizes the installation and helps you to make
@@ -269,7 +240,11 @@ a Solr search server.
          C:\...\ojs> cd plugins\generic\lucene\embedded\bin
          C:\...\lib> chkconfig.bat
 
-     If you get error messages then please return to step 3) and check your
+     Make sure that you have the right access rights to execute the scripts. You might have to set them:
+     	 #> cd plugins/generic/lucene/embedded/bin
+     	 #> chmod 774 *
+
+     If you get error messages then please return to step 2) and check your
      installation.
 
   5) Try starting the Solr server for the first time:
@@ -279,7 +254,7 @@ a Solr search server.
          #> cd plugins/generic/lucene/embedded/bin
          #> ./start.sh
 
-     You should receive the message "Solr started." and executing:
+     You should receive the message "Started Solr server on port 8983 (pid=XXXX). Happy searching!" and executing:
          #> ps -ef | grep solr
      you should see the java process of your running Solr instance.
 
@@ -293,8 +268,8 @@ a Solr search server.
 
   6) Now open up your web browser and log into your OJS journal manager account.
 
-     Go to "Journal Manager -> System Plugins -> Generic Plugins" and enable the
-     "Lucene Search Plugin".
+     Go to "Settings -> Website -> Plugins" and enable the
+     "Lucene Search Plugin" (under "Generic Plugins").
 
      In embedded mode you do not have to configure anything in the plug-in
      unless you changed the password in step 1).
@@ -371,7 +346,7 @@ specific to the OJS Lucene/Solr plug-in:
 
      In any case you'll have to look at the Solr core configuration in solr.xml
      and you'll have to configure the corresponding search handlers in
-     solrconfig.xml.
+     security.json.
 
      You may also want to change the BASIC authentication password in
      realm.properties. But please do not rely on BASIC authentication alone to
@@ -456,13 +431,14 @@ the following:
 
 
 - Once the server is running, check whether your index contains data. To do so,
-  open a browser window and navigate to the URL 'http://localhost:8983/solr/ojs/
-  admin/luke'. The browser should ask you for the user name and password you
+  open a browser window and navigate to the URL 'http://localhost:8983/solr/.
+  The browser should ask you for the user name and password you
   configured for your Solr web server. Once you entered your credentials, you
-  should see an XML that gives details about the index content. The field
-  'numDocs' shows how many articles have actually been indexed. And the
-  remaining XML can give you an idea whether title, abstract, full text, etc.
-  have been correctly indexed.
+  should see a page with information about your SOLR-instance.
+  In the left menu, you find a Core-Selector dropdown. After selecting the OJS Core,
+  you will find details about the index content. The field 'numDocs' shows how many
+  articles have actually been indexed. And the remaining XML can give you an idea
+  whether title, abstract, full text, etc. have been correctly indexed.
 
   If your index is incomplete then try the following steps:
 
@@ -477,8 +453,7 @@ the following:
 
      #> php tools/rebuildSearchIndex.php -d
 
-  5) Check the index again via the URL 'http://localhost:8983/solr/ojs/admin/
-     luke'.
+  5) Check the index again via the URL 'http://localhost:8983/solr/#/ojs/core-overview'.
 
   6) Execute a test search request in OJS.
 
@@ -500,7 +475,7 @@ the following:
   or by executing rebuildSearchIndex.php with the -d flag from the Commandline.
 
 - If the previous steps didn't give you a working search index then have a look
-  at the file 'files/lucene/solr-java.log'. This is the log written by the Solr
+  at the file 'files/lucene/solr.log'. This is the log written by the Solr
   server. Sometimes a solution to your problem may be obvious from the error
   messages, e.g. in the case of permission problems or erroneous symlinks. If
   you have difficulties in interpreting error messages in the log then please
@@ -589,7 +564,8 @@ you can switch to the more complex but also more scalable pull configuration.
 To do so you have to:
 - edit the configuration file ('plugins/generic/lucene/embedded/etc/pull.conf')
   of the pull processing script on the Solr server (see the inline comments
-  there),
+  there), especially change the Authentification Credentials if you have
+  changed them,
 - enable pull-processing in the Lucene plugin settings of all OJS clients,
 - schedule the pull download script ('plugins/generic/lucene/embedded/bin/
   pull.sh') on the Solr server, e.g. as a cron job. We recommend scheduling
@@ -617,7 +593,7 @@ execute the following actions in order:
    processed and archived.
 
 5) If you get rejected files then check your configuration file and if that
-   doesn't help look at the file files/lucene/solr-java.log for some indication
+   doesn't help look at the file files/lucene/solr.log for some indication
    of what could have gone wrong.
 
 
@@ -774,7 +750,7 @@ configuration will deal automatically with new languages.
 
 To add additional stopwords you have to find the stopword list corresponding to
 the language you are customizing. You find the default stopword lists in the
-folder 'plugins/generic/lucene/embedded/solr/conf'. You can edit these files
+folder 'plugins/generic/lucene/embedded/solr81/conf/lang'. You can edit these files
 manually and then restart the Solr process. This should be enough to introduce
 the new stopwords.
 
