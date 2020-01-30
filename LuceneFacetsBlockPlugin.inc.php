@@ -157,10 +157,10 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 		if (!$hasFacets) return '';
 
 		$templateMgr->assign('facets', $facets);
-        $templateMgr->addJavaScript(
-          'luceneAccordion',
-          $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/LuceneAccordion.js'
-        );
+		$templateMgr->addJavaScript(
+			'luceneAccordion',
+			$request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/LuceneAccordion.js'
+		);
 		return parent::getContents($templateMgr, $request);
 	}
 
@@ -176,5 +176,4 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 		return $this->_lucenePlugin;
 	}
 }
-
 

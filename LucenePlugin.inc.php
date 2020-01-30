@@ -110,38 +110,38 @@ class LucenePlugin extends GenericPlugin {
 
 			// Register callbacks (data-access level).
 			HookRegistry::register('articledao::getAdditionalFieldNames', array($this,
-			  'callbackArticleDaoAdditionalFieldNames'
+				'callbackArticleDaoAdditionalFieldNames'
 			));
 			$customRanking = (boolean) $this->getSetting(CONTEXT_SITE, 'customRanking');
 			if ($customRanking) {
 				HookRegistry::register('sectiondao::getAdditionalFieldNames', array($this,
-				  'callbackSectionDaoAdditionalFieldNames'
+					'callbackSectionDaoAdditionalFieldNames'
 				));
 			}
 
 			// Register callbacks (controller-level).
 			//these are current.
 			HookRegistry::register('ArticleSearch::getResultSetOrderingOptions', array($this,
-			  'callbackGetResultSetOrderingOptions'
+				'callbackGetResultSetOrderingOptions'
 			));
 			HookRegistry::register('SubmissionSearch::retrieveResults', array($this, 'callbackRetrieveResults'));
 			HookRegistry::register('ArticleSearchIndex::articleMetadataChanged', array($this,
-			  'callbackArticleMetadataChanged'
+				'callbackArticleMetadataChanged'
 			));
 			HookRegistry::register('ArticleSearchIndex::submissionFileChanged', array($this,
-			  'callbackSubmissionFileChanged'
+				'callbackSubmissionFileChanged'
 			));
 			HookRegistry::register('ArticleSearchIndex::submissionFileDeleted', array($this,
-			  'callbackSubmissionFileDeleted'
+				'callbackSubmissionFileDeleted'
 			));
 			HookRegistry::register('ArticleSearchIndex::submissionFilesChanged', array($this,
-			  'callbackSubmissionFilesChanged'
+				'callbackSubmissionFilesChanged'
 			));
 
 			HookRegistry::register('ArticleSearchIndex::submissionDeleted', array($this, 'callbackArticleDeleted'));
 			HookRegistry::register('ArticleSearchIndex::articleDeleted', array($this, 'callbackArticleDeleted'));
 			HookRegistry::register('ArticleSearchIndex::articleChangesFinished', array($this,
-			  'callbackArticleChangesFinished'
+				'callbackArticleChangesFinished'
 			));
 			HookRegistry::register('ArticleSearchIndex::rebuildIndex', array($this, 'callbackRebuildIndex'));
 			HookRegistry::register('ArticleSearch::getSimilarityTerms', array($this, 'callbackGetSimilarityTerms'));
@@ -154,7 +154,7 @@ class LucenePlugin extends GenericPlugin {
 				HookRegistry::register('sectionform::readuservars', array($this, 'callbackSectionFormReadUserVars'));
 				HookRegistry::register('sectionform::execute', array($this, 'callbackSectionFormExecute'));
 				HookRegistry::register('Templates::Manager::Sections::SectionForm::AdditionalMetadata', array($this,
-				  'callbackTemplateSectionFormAdditionalMetadata'
+					'callbackTemplateSectionFormAdditionalMetadata'
 				));
 			}
 
@@ -168,12 +168,12 @@ class LucenePlugin extends GenericPlugin {
 
 			//used to show alterative spelling suggestions
 			HookRegistry::register('Templates::Search::SearchResults::PreResults', array($this,
-			  'callbackTemplatePreResults'
+				'callbackTemplatePreResults'
 			));
 
 			//used to show additional filters for selected facet values
 			HookRegistry::register('Templates::Search::SearchResults::AdditionalFilters', array($this,
-			  'callbackTemplateAdditionalFilters'
+				'callbackTemplateAdditionalFilters'
 			));
 
 
@@ -181,15 +181,15 @@ class LucenePlugin extends GenericPlugin {
 			//As Templates::Search::SearchResults::AdditionalArticleLinks has been removed
 			//from OJS 3, we also need this same hook to display additionalArticleLinks .
 			HookRegistry::register('Templates::Issue::Issue::Article', array($this,
-			  'callbackTemplateSearchResultHighligtedText'
+				'callbackTemplateSearchResultHighligtedText'
 			));
 			HookRegistry::register('Templates::Issue::Issue::Article', array($this,
-			  'callbackTemplateSimilarDocumentsLinks'
+				'callbackTemplateSimilarDocumentsLinks'
 			));
 
 			//Does not seem to be called anymore. Either has to be added to core search again, or we add it some other way only for lucene
 			HookRegistry::register('Templates::Search::SearchResults::SyntaxInstructions', array($this,
-			  'callbackTemplateSyntaxInstructions'
+				'callbackTemplateSyntaxInstructions'
 			));
 
 			// Instantiate the web service.
@@ -259,18 +259,18 @@ class LucenePlugin extends GenericPlugin {
 		import('lib.pkp.classes.linkAction.request.AjaxModal');
 
 		return array_merge(
-		  $this->getEnabled() ? array(
-			new LinkAction(
-			  'settings',
-			  new AjaxModal(
-				$router->url($request, null, null, 'manage', null, array_merge($actionArgs, array('verb' => 'settings'))),
-				$this->getDisplayName()
-			  ),
-			  __('manager.plugins.settings'),
-			  null
-			),
-		  ) : array(),
-		  parent::getActions($request, $actionArgs)
+			$this->getEnabled() ? array(
+				new LinkAction(
+					'settings',
+					new AjaxModal(
+						$router->url($request, null, null, 'manage', null, array_merge($actionArgs, array('verb' => 'settings'))),
+						$this->getDisplayName()
+					),
+					__('manager.plugins.settings'),
+					null
+				),
+			) : array(),
+			parent::getActions($request, $actionArgs)
 		);
 	}
 
@@ -391,9 +391,9 @@ class LucenePlugin extends GenericPlugin {
 		// Check the operation.
 		$op = $args[1];
 		$publicOps = array(
-		  'queryAutocomplete',
-		  'pullChangedArticles',
-		  'similarDocuments',
+			'queryAutocomplete',
+			'pullChangedArticles',
+			'similarDocuments',
 		);
 		if (!in_array($op, $publicOps)) return;
 
@@ -510,7 +510,7 @@ class LucenePlugin extends GenericPlugin {
 					$sectionBoost = (float) $section->getData('rankingBoost');
 					if ($sectionBoost != null && $sectionBoost != LUCENE_PLUGIN_DEFAULT_RANKING_BOOST) {
 						$searchRequest->addBoostFactor(
-						  'section_id', $section->getId(), $sectionBoost
+							'section_id', $section->getId(), $sectionBoost
 						);
 					}
 				}
@@ -726,11 +726,11 @@ class LucenePlugin extends GenericPlugin {
 		$acceptedValues = array_keys($this->_getRankingBoostOptions());
 		$form =& $params[0];
 		$form->addCheck(
-		  new FormValidatorInSet(
-			$form, 'rankingBoostOption', FORM_VALIDATOR_REQUIRED_VALUE,
-			'plugins.generic.lucene.sectionForm.rankingBoostInvalid',
-			$acceptedValues
-		  )
+			new FormValidatorInSet(
+				$form, 'rankingBoostOption', FORM_VALIDATOR_REQUIRED_VALUE,
+				'plugins.generic.lucene.sectionForm.rankingBoostInvalid',
+				$acceptedValues
+			)
 		);
 
 		return false;
@@ -870,8 +870,8 @@ class LucenePlugin extends GenericPlugin {
 		// LucenePlugin::callbackRetrieveResults(), see there.
 		$templateMgr->assign('spellingSuggestion', $this->_spellingSuggestion);
 		$templateMgr->assign(
-		  'spellingSuggestionUrlParams',
-		  array($this->_spellingSuggestionField => $this->_spellingSuggestion)
+			'spellingSuggestionUrlParams',
+			array($this->_spellingSuggestionField => $this->_spellingSuggestion)
 		);
 
 		$templateMgr->display($this->getTemplateResource('preResults.tpl'));
@@ -894,7 +894,7 @@ class LucenePlugin extends GenericPlugin {
 				//author is already available in standard filtersection, so we don't show that again
 				if ($currentFacet != "authors") {
 					$selectedFacets[$currentFacet] = array('facetDisplayName' => $facetDisplayName,
-					  'facetValue' => $currentValue
+						'facetValue' => $currentValue
 					);
 				}
 			}
@@ -932,7 +932,7 @@ class LucenePlugin extends GenericPlugin {
 		// highlighted result).
 		$output =& $params[2];
 		$output .= '<div class="plugins_generic_lucene_highlighting">...&nbsp;'
-		  . trim($this->_highlightedArticles[$articleId]) . '&nbsp;..."</div>';
+			. trim($this->_highlightedArticles[$articleId]) . '&nbsp;..."</div>';
 
 		return false;
 	}
@@ -954,21 +954,21 @@ class LucenePlugin extends GenericPlugin {
 		}
 
 		$urlParams = array(
-		  'articleId' => $article->getId()
+			'articleId' => $article->getId()
 		);
 
 		// Create a URL that links to "similar documents".
 		$request =& PKPApplication::getRequest();
 		$router =& $request->getRouter();
 		$simdocsUrl = $router->url(
-		  $request, null, 'lucene', 'similarDocuments', null, $urlParams
+			$request, null, 'lucene', 'similarDocuments', null, $urlParams
 		);
 
 		// Return a link to the URL (a template seems overkill here).
 		$output =& $params[2];
 		$output .= '<div class="plugins_generic_lucene_similardocuments"><a href="' . $simdocsUrl . '" class="file">'
-		  . __('plugins.generic.lucene.results.similarDocuments')
-		  . '</a></div>';
+			. __('plugins.generic.lucene.results.similarDocuments')
+			. '</a></div>';
 
 		return false;
 	}
@@ -1008,11 +1008,11 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function _getResultSetOrderingOptions($journal) {
 		$resultSetOrderingOptions = array(
-		  'score' => __('plugins.generic.lucene.results.orderBy.relevance'),
-		  'authors' => __('plugins.generic.lucene.results.orderBy.author'),
-		  'issuePublicationDate' => __('plugins.generic.lucene.results.orderBy.issue'),
-		  'publicationDate' => __('plugins.generic.lucene.results.orderBy.date'),
-		  'title' => __('plugins.generic.lucene.results.orderBy.article')
+			'score' => __('plugins.generic.lucene.results.orderBy.relevance'),
+			'authors' => __('plugins.generic.lucene.results.orderBy.author'),
+			'issuePublicationDate' => __('plugins.generic.lucene.results.orderBy.issue'),
+			'publicationDate' => __('plugins.generic.lucene.results.orderBy.date'),
+			'title' => __('plugins.generic.lucene.results.orderBy.article')
 		);
 
 		// Only show the "journal title" option if we have several journals.
@@ -1030,8 +1030,8 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function _getResultSetOrderingDirectionOptions() {
 		return array(
-		  'asc' => __('plugins.generic.lucene.results.orderDir.asc'),
-		  'desc' => __('plugins.generic.lucene.results.orderDir.desc')
+			'asc' => __('plugins.generic.lucene.results.orderDir.asc'),
+			'desc' => __('plugins.generic.lucene.results.orderDir.desc')
 		);
 	}
 
@@ -1081,13 +1081,13 @@ class LucenePlugin extends GenericPlugin {
 		if (!is_array($this->_enabledFacetCategories)) {
 			$this->_enabledFacetCategories = array();
 			$availableFacetCategories = array(
-			  'discipline',
-			  'subject',
-			  'type',
-			  'coverage',
-			  'journalTitle',
-			  'authors',
-			  'publicationDate'
+				'discipline',
+				'subject',
+				'type',
+				'coverage',
+				'journalTitle',
+				'authors',
+				'publicationDate'
 			);
 			foreach ($availableFacetCategories as $facetCategory) {
 				if ($this->getSetting(CONTEXT_SITE, 'facetCategory' . ucfirst($facetCategory))) {
@@ -1273,7 +1273,7 @@ class LucenePlugin extends GenericPlugin {
 		$request = Application::getRequest();
 		$site = $request->getSite();
 		$mail->assignParams(
-		  array('siteName' => $site->getLocalizedTitle(), 'error' => $error)
+			array('siteName' => $site->getLocalizedTitle(), 'error' => $error)
 		);
 
 		// Send to the site's tech contact.
@@ -1289,12 +1289,11 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function _getRankingBoostOptions() {
 		return array(
-		  0 => __('plugins.generic.lucene.sectionForm.ranking.never'),
-		  1 => __('plugins.generic.lucene.sectionForm.ranking.low'),
-		  2 => __('plugins.generic.lucene.sectionForm.ranking.normal'),
-		  4 => __('plugins.generic.lucene.sectionForm.ranking.high')
+			0 => __('plugins.generic.lucene.sectionForm.ranking.never'),
+			1 => __('plugins.generic.lucene.sectionForm.ranking.low'),
+			2 => __('plugins.generic.lucene.sectionForm.ranking.normal'),
+			4 => __('plugins.generic.lucene.sectionForm.ranking.high')
 		);
 	}
-
 }
 
