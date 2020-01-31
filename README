@@ -42,7 +42,7 @@ are:
 
 - Support for multi-lingual search. The plug-in provides language-aware
   stemming of search phrases. You can define language-specific stopword and
-  synonym lists. And languages like Chinese, Japanese or Corean will be
+  synonym lists. And languages like Chinese, Japanese or Korean will be
   supported.
 
 - Additional search features: The plug-in provides additional search features
@@ -219,8 +219,10 @@ a Solr search server.
      documentation at
      https://lucene.apache.org/solr/guide/8_1/authentication-and-authorization-plugins.htm
 
-     To change the standard password, use the following command from the commandline
-     and replace PLEASE CHANGE with the new password
+     One way to change the password once the server is running (i.e. after you
+     have completed step 5) is to use curl. To do this, complete step 5 and use
+     the following command from the commandline, replacing PLEASE CHANGE with
+     the new password:
 
      curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
 
@@ -266,13 +268,16 @@ a Solr search server.
          C:\...\ojs> wmic process get Caption,CommandLine | findstr solr
      This should show you the java process running Solr.
 
+     This might be a good time to change your admin password if you haven't
+     already; see step 3.
+
   6) Now open up your web browser and log into your OJS journal manager account.
 
      Go to "Settings -> Website -> Plugins" and enable the
      "Lucene Search Plugin" (under "Generic Plugins").
 
      In embedded mode you do not have to configure anything in the plug-in
-     unless you changed the password in step 1).
+     except for the admin password (see step 3).
 
      In this case go to the plug-ins setting page and configure the password
      accordingly.
@@ -283,8 +288,7 @@ a Solr search server.
      to rebuild your index.
 
      On Linux and from the OJS directory this becomes:
-        #> cd tools
-        #> php rebuildSearchIndex.php -d
+        #> php tools/rebuildSearchIndex.php -d
 
      You should see output similar to this:
         # LucenePlugin: Clearing index ... done
