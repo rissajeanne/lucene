@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @file plugins/generic/lucene/LuceneHandler.inc.php
+ * @file LuceneHandler.inc.php
  *
- * Copyright (c) 2014-2018 Simon Fraser University
- * Copyright (c) 2003-2018 John Willinsky
+ * Copyright (c) 2014-2020 Simon Fraser University
+ * Copyright (c) 2003-2020 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LuceneHandler
@@ -108,45 +108,45 @@ class LuceneHandler extends Handler {
 	}
 
 
-    /**
-     * If the "similar documents" feature is enabled then this
-     * handler redirects to a search query that shows documents
-     * similar to the one identified by an article id in the
-     * request.
-     * @param $args array
-     * @param $request Request
-     */
-    function similarDocuments($args, &$request) {
-        $this->validate(null, $request);
+	/**
+	 * If the "similar documents" feature is enabled then this
+	 * handler redirects to a search query that shows documents
+	 * similar to the one identified by an article id in the
+	 * request.
+	 * @param $args array
+	 * @param $request Request
+	 */
+	function similarDocuments($args, &$request) {
+		$this->validate(null, $request);
 
-        // Retrieve the ID of the article that
-        // we want similar documents for.
-        $articleId = $request->getUserVar('articleId');
+		// Retrieve the ID of the article that
+		// we want similar documents for.
+		$articleId = $request->getUserVar('articleId');
 
-        // Check error conditions.
-        // - The "similar documents" feature is not enabled.
-        // - We got a non-numeric article ID.
-        $lucenePlugin = $this->_getLucenePlugin();
-        if (!($lucenePlugin->getSetting(0, 'simdocs')
-          && is_numeric($articleId))) {
-            $request->redirect(null, 'search');
-        }
+		// Check error conditions.
+		// - The "similar documents" feature is not enabled.
+		// - We got a non-numeric article ID.
+		$lucenePlugin = $this->_getLucenePlugin();
+		if (!($lucenePlugin->getSetting(0, 'simdocs')
+			&& is_numeric($articleId))) {
+			$request->redirect(null, 'search');
+		}
 
-        // Identify "interesting" terms of the
-        // given article.
-        $solrWebService = $lucenePlugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
-        $searchTerms = $solrWebService->getInterestingTerms($articleId);
-        if (empty($searchTerms)) {
-            $request->redirect(null, 'search');
-        }
+		// Identify "interesting" terms of the
+		// given article.
+		$solrWebService = $lucenePlugin->getSolrWebService(); /* @var $solrWebService SolrWebService */
+		$searchTerms = $solrWebService->getInterestingTerms($articleId);
+		if (empty($searchTerms)) {
+			$request->redirect(null, 'search');
+		}
 
-        // Redirect to a search query with these
-        // terms.
-        $searchParams = array(
-          'query' => implode(' ', $searchTerms),
-        );
-        $request->redirect(null, 'search', 'search', null, $searchParams);
-    }
+		// Redirect to a search query with these
+		// terms.
+		$searchParams = array(
+			'query' => implode(' ', $searchTerms),
+		);
+		$request->redirect(null, 'search', 'search', null, $searchParams);
+	}
 
 
 	//
@@ -194,5 +194,4 @@ class LuceneHandler extends Handler {
 		return PluginRegistry::getPlugin('generic', LUCENE_PLUGIN_NAME);
 	}
 }
-
 

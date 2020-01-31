@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @file plugins/generic/lucene/classes/SolrWebService.inc.php
+ * @file classes/SolrWebService.inc.php
  *
- * Copyright (c) 2014-2018 Simon Fraser University
- * Copyright (c) 2003-2018 John Willinsky
+ * Copyright (c) 2014-2020 Simon Fraser University
+ * Copyright (c) 2003-2020 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SolrWebService
@@ -166,18 +166,18 @@ class SolrWebService extends XmlWebService {
 	 * back-end will update it during the next batch update.
 	 * @param $articleId Integer
 	 */
-    function markArticleChanged($articleId) {
-        if(!is_numeric($articleId)) {
-            assert(false);
-            return;
-        }
+	function markArticleChanged($articleId) {
+		if(!is_numeric($articleId)) {
+			assert(false);
+			return;
+		}
 
-        // Mark the article "changed".
-        $articleDao =DAORegistry::getDAO('ArticleDAO'); /* @var $articleDao ArticleDAO */
-        $articleDao->updateSetting(
-          $articleId, 'indexingState', SOLR_INDEXINGSTATE_DIRTY, 'bool'
-        );
-    }
+		// Mark the article "changed".
+		$articleDao =DAORegistry::getDAO('ArticleDAO'); /* @var $articleDao ArticleDAO */
+		$articleDao->updateSetting(
+			$articleId, 'indexingState', SOLR_INDEXINGSTATE_DIRTY, 'bool'
+		);
+	}
 
 	/**
 	 * Mark the given journal for re-indexing.
@@ -1412,72 +1412,72 @@ class SolrWebService extends XmlWebService {
 		}
 
 		// Add disciplines.
-        $submissionDisciplineDao = DAORegistry::getDAO('SubmissionDisciplineDAO');
-        $disciplines = $submissionDisciplineDao->getDisciplines($article->getId(), $supportedLocales);
+		$submissionDisciplineDao = DAORegistry::getDAO('SubmissionDisciplineDAO');
+		$disciplines = $submissionDisciplineDao->getDisciplines($article->getId(), $supportedLocales);
 
-        foreach ($disciplines as $locale => $discipline) {
-            if (empty($discipline)) {
-                unset($disciplines[$locale]);
-            }
-        }
+		foreach ($disciplines as $locale => $discipline) {
+			if (empty($discipline)) {
+				unset($disciplines[$locale]);
+			}
+		}
 
 		if (!empty($disciplines)) {
 			$disciplineList = XMLCustomWriter::createElement($articleDoc, 'disciplineList');
-            $locales = array_keys($disciplines);
-            foreach($locales as $locale) {
-                $discipline = '';
-                if (isset($disciplines[$locale])) {
-                    foreach($disciplines[$locale] as $localizedDiscipline) {
-                        $disciplineNode = XMLCustomWriter::createChildWithText($articleDoc, $disciplineList, 'discipline', $localizedDiscipline);
-                        XMLCustomWriter::setAttribute($disciplineNode, 'locale', $locale);
-                    }
-                }
-            }
+			$locales = array_keys($disciplines);
+			foreach($locales as $locale) {
+				$discipline = '';
+				if (isset($disciplines[$locale])) {
+					foreach($disciplines[$locale] as $localizedDiscipline) {
+						$disciplineNode = XMLCustomWriter::createChildWithText($articleDoc, $disciplineList, 'discipline', $localizedDiscipline);
+						XMLCustomWriter::setAttribute($disciplineNode, 'locale', $locale);
+					}
+				}
+			}
 			XMLCustomWriter::appendChild($articleNode, $disciplineList);
 		}
 
-        $submissionSubjectDao = DAORegistry::getDAO('SubmissionSubjectDAO');
-        $subjects =  $submissionSubjectDao->getSubjects($article->getId(), $supportedLocales);
-        foreach ($subjects as $locale => $subject) {
-            if (empty($subject)) {
-                unset($subjects[$locale]);
-            }
-        }
+		$submissionSubjectDao = DAORegistry::getDAO('SubmissionSubjectDAO');
+		$subjects = $submissionSubjectDao->getSubjects($article->getId(), $supportedLocales);
+		foreach ($subjects as $locale => $subject) {
+			if (empty($subject)) {
+				unset($subjects[$locale]);
+			}
+		}
 
-        // in OJS2, keywords and subjects where put together into the subject Facet.
-        // For now, I do the same here. TODO: Decide if this is wanted.
-        $submissionKeywordDAO = DAORegistry::getDAO('SubmissionKeywordDAO');
-        $keywords = $submissionKeywordDAO->getKeywords($article->getId(), $supportedLocales);
-        foreach($keywords as $locale => $keyword) {
-            if (empty($keyword)) {
-                unset($keywords[$locale]);
-            }
-        }
+		// in OJS2, keywords and subjects where put together into the subject Facet.
+		// For now, I do the same here. TODO: Decide if this is wanted.
+		$submissionKeywordDAO = DAORegistry::getDAO('SubmissionKeywordDAO');
+		$keywords = $submissionKeywordDAO->getKeywords($article->getId(), $supportedLocales);
+		foreach($keywords as $locale => $keyword) {
+			if (empty($keyword)) {
+				unset($keywords[$locale]);
+			}
+		}
 
-        // Add subjects and keywords.
+		// Add subjects and keywords.
 		if (!empty($subjects) || !empty($keywords)) {
 			$subjectList = XMLCustomWriter::createElement($articleDoc, 'subjectList');
 
 			if (!is_array($subjects)) $subjects = array();
 			if (!is_array($keywords)) $keywords = array();
-            $locales = array_unique(array_merge(array_keys($subjects), array_keys($keywords)));
+			$locales = array_unique(array_merge(array_keys($subjects), array_keys($keywords)));
 			foreach($locales as $locale) {
-                $subject = '';
+				$subject = '';
 				if (isset($subjects[$locale])) {
-                    foreach($subjects[$locale] as $localizedSubject) {
-                        if (!empty($subject)) $subject .= '; ';
-                        $subject .= $localizedSubject;
-                    }
+					foreach($subjects[$locale] as $localizedSubject) {
+						if (!empty($subject)) $subject .= '; ';
+						$subject .= $localizedSubject;
+					}
 				}
-                if (isset($keywords[$locale])) {
-                    foreach($keywords[$locale] as $localizedKeyword) {
-                        if (!empty($subject)) $subject .= '; ';
-                        $subject .= $localizedKeyword;
-                    }
-                }
+				if (isset($keywords[$locale])) {
+					foreach($keywords[$locale] as $localizedKeyword) {
+						if (!empty($subject)) $subject .= '; ';
+						$subject .= $localizedKeyword;
+					}
+				}
 
-                $subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $subject);
-                XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
+				$subjectNode = XMLCustomWriter::createChildWithText($articleDoc, $subjectList, 'subject', $subject);
+				XMLCustomWriter::setAttribute($subjectNode, 'locale', $locale);
 
 			}
 			XMLCustomWriter::appendChild($articleNode, $subjectList);
@@ -1552,37 +1552,37 @@ class SolrWebService extends XmlWebService {
 		}
 
 		// We need a PageRouter to build file URLs.
-        $router = $request->getRouter(); /* @var $router PageRouter */
-        if (!is_a($router, 'PKPKPageRouter')) {
-            $router = new PKPPageRouter();
-            $application = Application::getApplication();
-            $router->setApplication($application);
-        }
+		$router = $request->getRouter(); /* @var $router PageRouter */
+		if (!is_a($router, 'PKPKPageRouter')) {
+			$router = new PKPPageRouter();
+			$application = Application::getApplication();
+			$router->setApplication($application);
+		}
 
 
-        $galleys = array();
-        $articleGalleyDao = DAORegistry::getDAO('ArticleGalleyDAO'); /* @var $articleGalleyDao ArticleGalleyDAO */
-        $galleys = $articleGalleyDao->getBySubmissionId($article->getId())->toArray();
-        $galleyList = null;
-        foreach ($galleys as $galley) {
-            if ($galley->getFileId()) {
-                $locale = $galley->getLocale();
-                $galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', array(intval($article->getBestArticleId()), intval($galley->getBestGalleyId())));
+		$galleys = array();
+		$articleGalleyDao = DAORegistry::getDAO('ArticleGalleyDAO'); /* @var $articleGalleyDao ArticleGalleyDAO */
+		$galleys = $articleGalleyDao->getBySubmissionId($article->getId())->toArray();
+		$galleyList = null;
+		foreach ($galleys as $galley) {
+			if ($galley->getFileId()) {
+				$locale = $galley->getLocale();
+				$galleyUrl = $router->url($request, $journal->getPath(), 'article', 'download', array(intval($article->getBestArticleId()), intval($galley->getBestGalleyId())));
 
-                //TODO: Remove next line before finalizing
+				//TODO: Remove next line before finalizing
 				//This is only necessary when testing from a VM with port mappings for port 80. BaseUrl has port 8000, but if the server makes the connection it should use port 80
-                $galleyUrl = str_replace(':8000', ':80', $galleyUrl);
-                if (!empty($locale) && !empty($galleyUrl)) {
-                    if (is_null($galleyList)) {
-                        $galleyList = XMLCustomWriter::createElement($articleDoc, 'galleyList');
-                    }
-                    $galleyNode = XMLCustomWriter::createElement($articleDoc, 'galley');
-                    XMLCustomWriter::setAttribute($galleyNode, 'locale', $locale);
-                    XMLCustomWriter::setAttribute($galleyNode, 'fileName', $galleyUrl);
-                    XMLCustomWriter::appendChild($galleyList, $galleyNode);
-                }
-            }
-        }
+				$galleyUrl = str_replace(':8000', ':80', $galleyUrl);
+				if (!empty($locale) && !empty($galleyUrl)) {
+					if (is_null($galleyList)) {
+						$galleyList = XMLCustomWriter::createElement($articleDoc, 'galleyList');
+					}
+					$galleyNode = XMLCustomWriter::createElement($articleDoc, 'galley');
+					XMLCustomWriter::setAttribute($galleyNode, 'locale', $locale);
+					XMLCustomWriter::setAttribute($galleyNode, 'fileName', $galleyUrl);
+					XMLCustomWriter::appendChild($galleyList, $galleyNode);
+				}
+			}
+		}
 
 		// Wrap the galley XML as CDATA.
 		if (!is_null($galleyList)) {
@@ -1949,7 +1949,7 @@ class SolrWebService extends XmlWebService {
 	 */
 	function _getFacetingAutosuggestions($url, $searchRequest, $userInput, $fieldName) {
 		// Remove special characters from the user input.
-		$searchTerms = strtr($userInput, '"()+-|&!', '        ');
+		$searchTerms = strtr($userInput, '"()+-|&!', '		');
 
 		// Cut off the last search term.
 		$searchTerms = explode(' ', $searchTerms);
@@ -2057,5 +2057,4 @@ class SolrWebService extends XmlWebService {
 		return true;
 	}
 }
-
 

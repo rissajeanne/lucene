@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @file plugins/generic/lucene/LuceneFacetsBlockPlugin.inc.php
+ * @file LuceneFacetsBlockPlugin.inc.php
  *
- * Copyright (c) 2014-2018 Simon Fraser University
- * Copyright (c) 2003-2018 John Willinsky
+ * Copyright (c) 2014-2020 Simon Fraser University
+ * Copyright (c) 2003-2020 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LuceneFacetsBlockPlugin
@@ -157,10 +157,10 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 		if (!$hasFacets) return '';
 
 		$templateMgr->assign('facets', $facets);
-        $templateMgr->addJavaScript(
-          'luceneAccordion',
-          $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/LuceneAccordion.js'
-        );
+		$templateMgr->addJavaScript(
+			'luceneAccordion',
+			$request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/LuceneAccordion.js'
+		);
 		return parent::getContents($templateMgr, $request);
 	}
 
@@ -176,5 +176,4 @@ class LuceneFacetsBlockPlugin extends BlockPlugin {
 		return $this->_lucenePlugin;
 	}
 }
-
 
