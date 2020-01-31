@@ -831,7 +831,7 @@ class LucenePlugin extends GenericPlugin {
 		// Get the request.
 		$request = Application::getRequest();
 		// Get the context
-		$journal =& $request->getContext();
+		$journal = $request->getContext();
 
 		// Assign our private stylesheet.
 		/** @var TemplateManager */
@@ -958,8 +958,8 @@ class LucenePlugin extends GenericPlugin {
 		);
 
 		// Create a URL that links to "similar documents".
-		$request =& PKPApplication::getRequest();
-		$router =& $request->getRouter();
+		$request = PKPApplication::getRequest();
+		$router = $request->getRouter();
 		$simdocsUrl = $router->url(
 			$request, null, 'lucene', 'similarDocuments', null, $urlParams
 		);
@@ -1048,7 +1048,7 @@ class LucenePlugin extends GenericPlugin {
 	 */
 	function _getResultSetOrdering($journal) {
 		// Retrieve the request.
-		$request =& Application::getRequest();
+		$request = Application::getRequest();
 
 		// Order field.
 		$orderBy = $request->getUserVar('orderBy');
