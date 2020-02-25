@@ -182,8 +182,10 @@ a Solr search server.
      (J2SE) Runtime Environment, Version 1.8 or higher. If you are on Linux then
      install a J2SE compliant Java package. If you are on Windows you may get
      the latest J2SE version from http://java.com/en/download/index.jsp.
+  
+  2) Install the OJS Lucene Plugin either from the OJS plugin gallery or from https://github.com/ojsde/lucene
 
-  2) Download the Solr binaries:
+  3) Download the Solr binaries:
 
  	If you are on Linux execute something like (from the OJS application directory):
           #> cd plugins/generic/lucene/lib
@@ -203,7 +205,7 @@ a Solr search server.
           C:\...\ojs> cd plugins\generic\lucene\lib
           C:\...\lib> mklink /d solr solr-8.1.1
 
-  3) Secure your server (IMPORTANT):
+  4) Secure your server (IMPORTANT):
      While we tried to make sure that our Solr configuration be secure by
      default, Solr has NOT been designed to be directly exposed to the internet.
      Please make sure that you have a firewall in place that denies public
@@ -230,7 +232,7 @@ a Solr search server.
      so if you upload this file again, the password will be reset to SolrRocks
 
 
-  4) Check your installation:
+  5) Check your installation:
      We provide a script that finalizes the installation and helps you to make
      sure that you correctly installed Jetty and Solr.
 
@@ -249,7 +251,7 @@ a Solr search server.
      If you get error messages then please return to step 2) and check your
      installation.
 
-  5) Try starting the Solr server for the first time:
+  6) Try starting the Solr server for the first time:
      Go to the directory plugins/generic/lucene/embedded/bin and execute the
      start script there. On Linux this would be (from the OJS application
      directory):
@@ -270,8 +272,10 @@ a Solr search server.
 
      This might be a good time to change your admin password if you haven't
      already; see step 3.
+     
+     Alternatively you can start the Solr server from the Lucene plugin settings page.
 
-  6) Now open up your web browser and log into your OJS journal manager account.
+  7) Now open up your web browser and log into your OJS journal manager account.
 
      Go to "Settings -> Website -> Plugins" and enable the
      "Lucene Search Plugin" (under "Generic Plugins").
@@ -282,7 +286,7 @@ a Solr search server.
      In this case go to the plug-ins setting page and configure the password
      accordingly.
 
-  7) Build your lucene index:
+  8) Build your lucene index:
 
      Back to the command line go to the tools directory and execute the script
      to rebuild your index.
@@ -303,7 +307,7 @@ a Solr search server.
      Please make sure that the output really includes the "LucenePlugin" string.
      Otherwise your plug-in was not correctly activated.
 
-  8) Execute some searches
+  9) Execute some searches
 
      Go to your OJS web frontend and test whether searching with Solr works as
      expected.
