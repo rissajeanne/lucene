@@ -205,7 +205,53 @@ a Solr search server.
           C:\...\ojs> cd plugins\generic\lucene\lib
           C:\...\lib> mklink /d solr solr-8.1.1
 
-  4) Secure your server (IMPORTANT):
+  4) Check your installation:
+     We provide a script that finalizes the installation and helps you to make
+     sure that you correctly installed Jetty and Solr.
+
+     On Linux please execute (from the OJS directory):
+         #> cd plugins/generic/lucene/embedded/bin
+         #> ./chkconfig.sh
+
+     On Windows this would be:
+         C:\...\ojs> cd plugins\generic\lucene\embedded\bin
+         C:\...\lib> chkconfig.bat
+
+     Make sure that you have the right access rights to execute the scripts. You might have to set them:
+     	 #> cd plugins/generic/lucene/embedded/bin
+     	 #> chmod 774 *
+
+     If you get error messages then please return to step 2) and check your
+     installation.
+
+  5) Try starting the Solr server for the first time:
+     Go to the directory plugins/generic/lucene/embedded/bin and execute the
+     start script there. On Linux this would be (from the OJS application
+     directory):
+         #> cd plugins/generic/lucene/embedded/bin
+         #> ./start.sh
+
+     To start the Solr server as a user different from root (recommended) use:
+	 #> sudo su -p -l <username> -s /bin/bash -c "./start.sh" 
+
+     You should receive the message "Started Solr server on port 8983 (pid=XXXX). Happy searching!" and executing:
+         #> ps -ef | grep solr
+     you should see the java process of your running Solr instance.
+
+     On Windows this becomes:
+         C:\...\ojs> cd plugins\generic\lucene\embedded\bin
+         C:\...\lib> start.bat
+
+     And to check that Solr is actually running execute:
+         C:\...\ojs> wmic process get Caption,CommandLine | findstr solr
+     This should show you the java process running Solr.
+
+     This might be a good time to change your admin password if you haven't
+     already; see step 3.
+     
+     Alternatively you can start the Solr server from the Lucene plugin settings page.
+
+  6) Secure your server (IMPORTANT):
      While we tried to make sure that our Solr configuration be secure by
      default, Solr has NOT been designed to be directly exposed to the internet.
      Please make sure that you have a firewall in place that denies public
@@ -226,65 +272,22 @@ a Solr search server.
      the following command from the commandline, replacing PLEASE CHANGE with
      the new password:
 
-     curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
+     Temporarily make security.json writeable:
+	#> sudo chmod g+w security.json
+     Chnage password:
+	#> curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
+     Secure credentials file:
+	#> sudo chmod g-w security.json  
 
      This command will change the file plugins/generic/lucene/embedded/solr81/security.json,
      so if you upload this file again, the password will be reset to SolrRocks
-
-
-  5) Check your installation:
-     We provide a script that finalizes the installation and helps you to make
-     sure that you correctly installed Jetty and Solr.
-
-     On Linux please execute (from the OJS directory):
-         #> cd plugins/generic/lucene/embedded/bin
-         #> ./chkconfig.sh
-
-     On Windows this would be:
-         C:\...\ojs> cd plugins\generic\lucene\embedded\bin
-         C:\...\lib> chkconfig.bat
-
-     Make sure that you have the right access rights to execute the scripts. You might have to set them:
-     	 #> cd plugins/generic/lucene/embedded/bin
-     	 #> chmod 774 *
-
-     If you get error messages then please return to step 2) and check your
-     installation.
-
-  6) Try starting the Solr server for the first time:
-     Go to the directory plugins/generic/lucene/embedded/bin and execute the
-     start script there. On Linux this would be (from the OJS application
-     directory):
-         #> cd plugins/generic/lucene/embedded/bin
-         #> ./start.sh
-
-     You should receive the message "Started Solr server on port 8983 (pid=XXXX). Happy searching!" and executing:
-         #> ps -ef | grep solr
-     you should see the java process of your running Solr instance.
-
-     On Windows this becomes:
-         C:\...\ojs> cd plugins\generic\lucene\embedded\bin
-         C:\...\lib> start.bat
-
-     And to check that Solr is actually running execute:
-         C:\...\ojs> wmic process get Caption,CommandLine | findstr solr
-     This should show you the java process running Solr.
-
-     This might be a good time to change your admin password if you haven't
-     already; see step 3.
-     
-     Alternatively you can start the Solr server from the Lucene plugin settings page.
 
   7) Now open up your web browser and log into your OJS journal manager account.
 
      Go to "Settings -> Website -> Plugins" and enable the
      "Lucene Search Plugin" (under "Generic Plugins").
 
-     In embedded mode you do not have to configure anything in the plug-in
-     except for the admin password (see step 3).
-
-     In this case go to the plug-ins setting page and configure the password
-     accordingly.
+     Enter the search endpoint as: http://127.0.0.1:8983/solr/ojs/search and provide the admin username and password (see step 6).
 
   8) Build your lucene index:
 
