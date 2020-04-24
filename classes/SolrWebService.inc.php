@@ -1571,7 +1571,7 @@ class SolrWebService extends XmlWebService {
 
 				//TODO: Remove next line before finalizing
 				//This is only necessary when testing from a VM with port mappings for port 80. BaseUrl has port 8000, but if the server makes the connection it should use port 80
-				$galleyUrl = str_replace(':8000', ':80', $galleyUrl);
+				//$galleyUrl = str_replace(':8000', ':80', $galleyUrl);
 				if (!empty($locale) && !empty($galleyUrl)) {
 					if (is_null($galleyList)) {
 						$galleyList = XMLCustomWriter::createElement($articleDoc, 'galleyList');
