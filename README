@@ -468,6 +468,8 @@ the following:
 
   6) Execute a test search request in OJS.
 
+- If your indexing went through but you inly find metadata and no galley content 
+  please verify your OJS "Site Access Options". Only public content will be index by Solr. 
 
 - If your index contains data and you still do not get any search results in OJS
   then try deleting your cache.
