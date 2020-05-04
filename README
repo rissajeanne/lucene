@@ -173,9 +173,11 @@ deploy in central server mode:
 As we do not want to unnecessarily blow up our default OJS distribution and want
 to make sure that you always install the latest release of Solr, we do not
 distribute the Solr/Jetty java binaries with this plug-in. You'll have to
-download and install them before you can use the plug-in. The following
-paragraphs will explain how to do this. This will transform your OJS server into
-a Solr search server.
+download and install them before you can use the plug-in. This also allows you to run one Solr server
+for multiple OJS installations.
+The following paragraphs will explain how to do this. This will transform your OJS server into
+a Solr search server. If you already installed the Solr server for one of your installations and just want
+to install the plugin for another OJS installation you can ommit steps 1) and 3) - 5).
 
   1) Install java:
      You'll need a working installation of the Java 8 Platform, Standard Edition
@@ -184,6 +186,12 @@ a Solr search server.
      the latest J2SE version from http://java.com/en/download/index.jsp.
   
   2) Install the OJS Lucene Plugin either from the OJS plugin gallery or from https://github.com/ojsde/lucene
+  
+     If you install the OJS Lucene plugin for an additional OJS installation (i.e. you
+     already have a running Solr server) please create a symbolic link to the installation
+     of you Solr server:
+     
+     #> ln -s <path to your OJS installation containg the Solr server installation>/plugins/generic/lucene/lib/solr-8.1.1 solr
 
   3) Download the Solr binaries:
 
