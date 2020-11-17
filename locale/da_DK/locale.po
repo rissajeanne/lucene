@@ -1,0 +1,343 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-09-25T07:22:34+00:00\n"
+"PO-Revision-Date: 2020-09-25T07:22:34+00:00\n"
+"Language: \n"
+
+msgid "plugins.generic.lucene.displayName"
+msgstr "Lucene søge-plugin"
+
+msgid "plugins.generic.lucene.description"
+msgstr "Lucene-plugin’en understøtter flersproget søgning, forbedrer søgerelevansen, foretager hurtigere indeksering og giver bedre skalerbarhed mm."
+
+msgid "plugins.generic.lucene.faceting.displayName"
+msgstr "Lucene Faceting"
+
+msgid "plugins.generic.lucene.faceting.facetBlockTitle"
+msgstr "Lucene Faceting Block"
+
+msgid "plugins.generic.lucene.faceting.description"
+msgstr "Faceting Block Plugin for Lucene"
+
+msgid "plugins.generic.lucene.faceting.title"
+msgstr "forfin din søgning"
+
+msgid "plugins.generic.lucene.faceting.discipline"
+msgstr "Fagområde"
+
+msgid "plugins.generic.lucene.faceting.subject"
+msgstr "Nøgleord"
+
+msgid "plugins.generic.lucene.faceting.type"
+msgstr "Metode/Tilgang"
+
+msgid "plugins.generic.lucene.faceting.coverage"
+msgstr "Dækning"
+
+msgid "plugins.generic.lucene.faceting.journalTitle"
+msgstr "Tidsskrift"
+
+msgid "plugins.generic.lucene.faceting.authors"
+msgstr "Forfatter"
+
+msgid "plugins.generic.lucene.faceting.publicationDate"
+msgstr "Udgivelsesdato"
+
+msgid "plugins.generic.lucene.message.coreNotFound"
+msgstr "Den ønskede kerne '{$core}' blev ikke fundet på Solr-serveren. Er den online?"
+
+msgid "plugins.generic.lucene.message.indexingIncomplete"
+msgstr "Der opstod en fejl under indeksering: Færdigbehandlet {$numProcessed} ud af en mængde på {$batchCount} ({$numDeleted} slettede dokumenter i denne batch)."
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "Indeks med {$numDocs} dokumenter online."
+
+msgid "plugins.generic.lucene.message.pullIndexingDisabled"
+msgstr "Pull-indeksering er ikke aktiveret. Aktivér det i Lucene-plugin-indstillingerne."
+
+msgid "plugins.generic.lucene.message.searchServiceOffline"
+msgstr "Beklageligvis er OJS-søgetjenesten i øjeblikket offline."
+
+msgid "plugins.generic.lucene.message.techAdminInformed"
+msgstr "Den tekniske administrator af dette tidsskrift er blevet informeret om problemet."
+
+msgid "plugins.generic.lucene.message.webServiceError"
+msgstr "Lucene-webtjenesten returnerede en fejl."
+
+msgid "plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache"
+msgstr "Kunne ikke slette ’field cache’. Udfør 'rm cache/fc-plugins-lucene-fieldCache.php' manuelt under behørig tilladelse."
+
+msgid "plugins.generic.lucene.rebuildIndex.pullResult"
+msgstr "{$numMarked} artikler markeret til opdatering"
+
+msgid "plugins.generic.lucene.rebuildIndex.pullWarning"
+msgstr "Advarsel: Søgeindekset er i øjeblikket tomt, fordi pull-indekseringen er aktiv. Du skal vente, indtil SOLR-serveren udtrækker ændringerne eller udfører pull.sh og derefter load.sh-scriptet fra kommandolinjen."
+
+msgid "plugins.generic.lucene.rebuildIndex.rebuildDictionaries"
+msgstr "Genopbygning af ordbøger"
+
+msgid "plugins.generic.lucene.rebuildIndex.updateBoostFile"
+msgstr "Opdatering af brugsstatistisk-data"
+
+msgid "plugins.generic.lucene.results.didYouMean"
+msgstr "Mente du"
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Sorter resultater efter"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Relevans"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Forfatter"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Nummer"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Udgivelsesdato"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Tidsskriftstitel"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Artikeltitel"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "Stigende"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "Faldende"
+
+msgid "plugins.generic.lucene.results.similarDocuments"
+msgstr "tilsvarende dokumenter"
+msgid "plugins.generic.lucene.results.syntaxInstructions"
+msgstr ""
+"Søgetips: <ul>\n"
+"\t\t\t<li>I søgetermerne skelnes der ikke mellem store og små bogstaver</li>\n"
+"\t\t\t<li>Almene ord ignoreres</li>\n"
+"\t\t\t<li>Som standard returneres artikler, der indeholder <em>ethvert</em> ord, der indgår i søgningen (dvs. <em>ELLER</em> er underforstået)</li>\n"
+"\t\t\t<li>Sørg for at et specifikt ord findes i en artikel ved at sætte et <strong>+</strong> foran; fx + <em>tidsskrift + adgang videnskabelig akademisk</em></li>\n"
+"\t\t\t<li>Kombinér flere ord med <em>OG</ em> for at finde artikler, der indeholder alle udtryk; fx <em>uddannelse og forskning</ em></li>\n"
+"\t\t\t<li>Udeluk et ord ved at sætte et <strong>-</ strong> eller et <em>IKKE</ em> foran; fx <em>online -politik </ em> eller <em>online IKKE politik </ em></li>\n"
+"\t\t\t<li>Søg efter en specifik sætning ved at sætte den i anførselstegn; fx <em>\"open access publicering\"</ em>. Tip: Når du anvender kinesiske eller japanske ord, kan du finde specifikke ordkombinationer i blandede sprogfelter, f.eks. \"??\".</li>\n"
+"\t\t\t<li>Brug parentes til at oprette mere komplekse forespørgsler; fx <em>arkiv ((tidsskrift OG konference) IKKE afhandlinger)</ em></li>\n"
+"\t\t </ul>"
+
+msgid "plugins.generic.lucene.settings"
+msgstr "Indstillinger"
+
+msgid "plugins.generic.lucene.settings.autosuggest"
+msgstr "'Foreslå automatisk' (Vis en dynamisk drop-down-menu med forslag til søgeord, mens du indtaster en søgeforespørgsel)"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeExplanation"
+msgstr ""
+"<strong>Kontrollér om ord giver resultater</ strong>: Foreslå kun ord, der rent faktisk vil generere et søgeresultat. Forslag vil være\n"
+"\t\tkryds-kontrolleret op imod det aktuelle tidsskrift og ord, der allerede er indtastet i andre søgefelter.<br />\n"
+"\t\t<strong>Brug global ordbog</ strong>: Dette er hurtigere, bruger færre ressourcer på serveren og skaleres derfor bedre\n"
+"\t\tI forbindelse med omfattende installationer. Forslag kan imidlertid indeholde irrelevante ord, f.eks. fra andre tidsskrifter eller søgeord, der ikke genererer\n"
+"\t\tsøgeresultater."
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeFaceting"
+msgstr "Tjek om ord findes i søgeresultat"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeSuggester"
+msgstr "Brug global ordbog"
+
+msgid "plugins.generic.lucene.settings.customRanking"
+msgstr "Brugerdefineret rangering (indstil individuelle rangerings-markeringer ud for hver tidsskriftssektion)"
+
+msgid "plugins.generic.lucene.settings.description"
+msgstr ""
+"Lucene-plugin’en bruger Lucene-søgeindekset via en Solr-server. Denne konfigurationsside giver dig mulighed for at konfigurere adgang til Solr-serveren.\n"
+"\t\t<strong>Sørg for at du læser plugin’ens README-fil (plugins/generic/lucene/README), før du forsøger at ændre standardkonfigurationen.</strong>\n"
+"\t\tHvis du bruger det integrerede scenarie bag en firewall som forklaret i README-filen, kan du formentlig efterlade alle konfigurationsparametre uændret."
+
+msgid "plugins.generic.lucene.settings.dictionaryRebuild"
+msgstr "Genopbyg ordbøger"
+
+msgid "plugins.generic.lucene.settings.faceting"
+msgstr "Facettering (vis en navigationsboks med ekstra filtre til optimering af din søgning)"
+
+msgid "plugins.generic.lucene.settings.facetingSelectCategory"
+msgstr "Du kan vælge bestemte facetkategorier (den tilsvarende metadata skal være tilvalgt under indeksering i tidsskriftsopsætning, trin 3.4). (I OJS 3 gælder det Indstillinger > Workflow > Manuskriptmetadata)"
+
+msgid "plugins.generic.lucene.settings.featureDescription"
+msgstr "Lucene-plugin'en indeholder flere valgfrie søgefunktioner. De fleste af disse funktioner er aktiveret som standard, men kan deaktiveres eller finjusteres."
+
+msgid "plugins.generic.lucene.settings.highlighting"
+msgstr "Fremhævelse (vis et kort uddrag af hver artikels fulde tekst, der indeholder søgeordene)"
+
+msgid "plugins.generic.lucene.settings.indexAdministration"
+msgstr "Indeksadministration"
+
+msgid "plugins.generic.lucene.settings.indexRebuild"
+msgstr "Genopbyg indeks"
+
+msgid "plugins.generic.lucene.settings.indexRebuild.confirm"
+msgstr "Genopbygning af indekset og/eller ordbøgerne kan tage lang tid. Er du sikker på, at du vil fortsætte?"
+
+msgid "plugins.generic.lucene.settings.indexRebuildAllJournals"
+msgstr "Genopbyg indeks til alle tidsskrifter"
+
+msgid "plugins.generic.lucene.settings.indexRebuildDescription"
+msgstr "Hvis dit Lucene-indeks blev forældet eller ødelagt, kan du genindeksere dine data for hvert enkelt tidsskrift eller for samtlige tidsskrifter på denne installation. Ordbøger skal, når du bruger automatisk forslag eller alternative staveforslag, genopbygges efter store indeksopdateringer. (Se plugins/generic/lucene/README for detaljer og måder at automatisere disse processer på.)"
+
+msgid "plugins.generic.lucene.settings.indexRebuildJournal"
+msgstr "Genopbyg indeks til tidsskrift \"{$journalName}\""
+
+msgid "plugins.generic.lucene.settings.indexRebuildMessages"
+msgstr "Output fra den sidste genopbygning af indeks:"
+
+msgid "plugins.generic.lucene.settings.instantSearch"
+msgstr "Lynsøgning (returnerer søgeresultater øjeblikkeligt, når en bruger skriver en søgeforespørgsel - OBS: bruger betydelige serverressourcer)"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "Unikt Installations-ID"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr "Indtast et ID, der unikt identificerer denne OJS-installation i forhold til Solr-søgeserveren."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr "Hvis du bruger en central søge-server, skal du sørge for, at der er et unikt installations-id for hver OJS-installation, der deler det samme søgeindeks. Dette kan være en vilkårlig tekst, men den skal være forskellig for hver involveret OJS-server (f.eks. serverens statiske IP-adresse, hvis du har en OJS-installation pr. server)."
+
+msgid "plugins.generic.lucene.settings.internalError"
+msgstr "Ugyldigt valg."
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "Lucene Plugin: Indstillinger"
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "Password"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "Indtast password til Solr-serveren."
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr "Indtast et gyldigt password for at få adgang til Solr-søgeserveren."
+
+msgid "plugins.generic.lucene.settings.pullIndexing"
+msgstr "Pull-indeksering (dette er en avanceret funktion, se README-filen for mere information)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricEnabled"
+msgstr "Rangering efter brugsstatistik (dine '{$metricName}' statistiske data vil blive brugt til at påvirke rangordningen)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricDisabled"
+msgstr "Rangering efter brugsstatistik (aktivér mindst én statistik-/rapporterings-plugin og vælg en \"main metric\" i webstedets indstillinger for at aktivere denne mulighed)"
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "Søgepunkts-URL"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr "Solr-søgepunktet består af serverens URL og en søgeagent (’handler’). Se standardindstillingen som et eksempel på dette. Du skal kun ændre dette, hvis du bruger en central søge-server."
+
+msgid "plugins.generic.lucene.settings.searchEndpointRequired"
+msgstr "Indtast en gyldig URL, der repræsenterer det søgepunkt (Solr søge-server og søgeagent (handler)), du gerne vil oprette forbindelse til."
+
+msgid "plugins.generic.lucene.settings.searchFeatures"
+msgstr "Søgefunktions-konfiguration"
+
+msgid "plugins.generic.lucene.settings.serverNotAvailable"
+msgstr ""
+"Du kan ikke administrere Solr-serveren fra webgrænsefladen i øjeblikket.<br/>\n"
+"\t\t<br/>\n"
+"\t\tMulige årsager kan være:\t<ul>\n"
+"\t\t\t<li>Du har muligvis ikke en integreret server installeret i dette OJS-tilfælde (se 'plugins/generic/lucene/README' for detaljer).</li>\n"
+"\t\t\t<li>Installationen af din integrerede server kan være ufuldstændig. Kontrollér, at katalogerne 'plugins/generic/lucene/lib/solr' og 'plugins/generic/lucene/ ib/jetty' faktisk indeholder (eller peger på) installationsfilerne til solr/pier.</li>\n"
+"\t\t\t<li>Følgende serveradministrations-scripts, 'start.sh', 'stop.sh' og 'check.sh' i 'plugins/generic/lucene/embedded/bin' er muligvis ikke eksekverbare. Kontrollér adgangsmærkerne for disse filer.</li>\n"
+"\t\t\t<li>Filerne i 'files/lucene/' er muligvis ikke skrivbare for din webservers bruger. Kontrollér adgangsmærkerne for disse filer.</li>\n"
+"\t\t\t<li>En integreret solr-proces kører måske allerede, men under en anden OJS-bruger. Det betyder, at du ikke kan tilrette processen fra PHP.</li>\n"
+"\t\t\t<li>Din PHP-konfiguration tillader muligvis ikke scriptudførelse. Kontrollér indstillingerne 'safe_mode' og 'disabled_function' i din php.ini. Hvis du ikke har adgang til din php.ini, kan du effektuere scriptene manuelt for at starte/stoppe serveren.</li>\n"
+"\t\t</ul>"
+
+msgid "plugins.generic.lucene.settings.simdocs"
+msgstr "’Mere af samme slags’ (vis et link \"lignende dokumenter\" for hvert søgeresultat)"
+
+msgid "plugins.generic.lucene.settings.solrServerSettings"
+msgstr "Solr-serverindstillinger"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricEnabled"
+msgstr "Sortering efter brugsstatistik (dine '{$metricName}' statistiske data vil blive brugt til at sortere efter popularitet)"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricDisabled"
+msgstr "Sortering efter brugsstatistik (aktivér mindst én statistik-/rapporterings-plugin og vælg en \"main metric\" i webstedsindstillingerne for at aktivere denne indstilling)"
+
+msgid "plugins.generic.lucene.settings.spellcheck"
+msgstr "Alternative staveforslag (vis alternative søgeord)"
+
+msgid "plugins.generic.lucene.settings.startStopServer"
+msgstr "Solr server-administration"
+
+msgid "plugins.generic.lucene.settings.startServer"
+msgstr "Start server"
+
+msgid "plugins.generic.lucene.settings.stopServer"
+msgstr "Stop server"
+
+msgid "plugins.generic.lucene.settings.updateBoostFile"
+msgstr "Opdatér rangerings-data"
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDescription"
+msgstr "Brugerstatistik skal kopieres regelmæssigt til Solr-serveren, f.eks. dagligt eller månedligt - afhængigt af hvor ofte du opdaterer statistikken. Det gør du ved at klikke på knappen ovenfor. Du kan også automatisere denne opgave (se 'plugins/generic/lucene/README' for detaljer)."
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDisabled"
+msgstr ""
+"Brugerstatistik skal kopieres regelmæssigt til Solr-serveren. Du kan i øjeblikket ikke opdatere brugsstatistik fra webgrænsefladen.<br/>\n"
+"\t\t<br/>\n"
+"\t\tMulige årsager kan være:\n"
+"\t\t<ul>\n"
+"\t\t\t<li>Hvis du bruger pull-indeksering, vil indeksopdaterings-cron-jobbet på den eksterne server (\"pull.sh\") automatisk opdatere statistiske data, når de udføres (se 'plugins/generic/lucene/README' for detaljer).</li>\n"
+"\t\t\t<li>Din webserver har muligvis ikke skrivetilladelser til mappen 'filer/lucene/data'. Sørg for, at både webserveren og solr-serveren har adgang til denne mappe og opdatér denne side.</li>\n"
+"\t\t</ul>"
+
+msgid "plugins.generic.lucene.settings.usageStatistics"
+msgstr "Brugsstatistik"
+
+msgid "plugins.generic.lucene.settings.useProxySettings"
+msgstr "Proxy-indstillinger"
+
+msgid "plugins.generic.lucene.settings.useProxySettingsInstructions"
+msgstr "Brug proxy-indstillinger fra filen config.inc.php til Solr webservice-anmodninger."
+
+msgid "plugins.generic.lucene.settings.username"
+msgstr "Brugernavn"
+
+msgid "plugins.generic.lucene.settings.usernameInstructions"
+msgstr "Solr-søgeserveren bruger HTTP BASIC-godkendelse. Indtast brugernavnet."
+
+msgid "plugins.generic.lucene.settings.usernameRequired"
+msgstr "Indtast et gyldigt brugernavn for at få godkendt adgang til Solr-søgeserveren (kolonner er ikke tilladt)."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoost"
+msgstr "Brugerdefineret rangeringsvægtning"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInstructions"
+msgstr ""
+"Lucene/Solr-søge plugin’en gør det muligt at justere den relative vægtning af artikler i resultatlisten\n"
+"af en søgeforespørgsel. En højere (eller lavere) placeringsvægtning sætter ikke artikler i dette\n"
+"afsnit ovenfor (eller nedenfor) alle andre artikler. Men de vil\n"
+"rangere bedre (eller værre) end de ellers ville\n"
+"uden den foretagne justering. Ved at vælge muligheden \"vis aldrig\" udelukkes artikler helt\n"
+"i dette afsnit fra søgeresultater."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInvalid"
+msgstr "Vælg en gyldig brugerdefineret rangerinsvægtning."
+
+msgid "plugins.generic.lucene.sectionForm.ranking.never"
+msgstr "Vis aldrig"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.low"
+msgstr "Rangér lavere"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.normal"
+msgstr "Normal"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.high"
+msgstr "Rangér højere"

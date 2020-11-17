@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-11-17T11:28:58+00:00\n"
+"PO-Revision-Date: 2020-11-17T11:28:58+00:00\n"
+"Language: \n"
+
+msgid "plugins.generic.lucene.displayName"
+msgstr "Dodatak: Lucene pretraga"
+
+msgid "plugins.generic.lucene.description"
+msgstr "Lucene dodatak obezbeđuje višejezičnu podršku, unapređuje rezultate pretrage, obezbeđuje brže indeksiranje i bolju skalabilnost."
+
+msgid "plugins.generic.lucene.settings"
+msgstr "Podešavanja"
+
+msgid "plugins.generic.lucene.settings.description"
+msgstr ""
+"<p>Dodatak Lucene pristupa Lucene indeksu pretrage preko Solr servera. Ova stranica Vam omogućava da podesite pristup Solr serveru.</p>\n"
+"\t\t<p><strong>Molimo Vas da pročitate README fajl (plugins/generic/lucene/README) pre no što pokušate da promenite zadatu konfiguraciju.</strong></p>\n"
+"\t\t<p>Ako koristite ugrađeni scenario iza firewall-a, kao što je objašnjeno u README fajlu onda je najbolje da ostavite konfiguracijske parametre nepromenjene.</p>"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "Jedinstveni instalacioni ID"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr "Unesite ID koji jedinstveno identifikuje ovu instalaciju OJS-a na solr serveru."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr "Ako koristite centralni server za pretragu onda ćete morati obezbediti jedinstveni ID instalacije za svaku OJS instalaciju koja koristi indeks pretrage. To može biti bilo koji proizvoljni tekst, ali to mora da bude drugačiji za svaki OJS server (npr. statičku serversku IP adresu ako imate jednu OJS instalaciju po serveru)."
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "Lucene dodatak: Solr server podešavanja"
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "Lozinka"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "Unesite lozinku za solr server."
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr "Unesite ispravnu lozinku."
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "Pretraži krajnji URL"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr "Krajnja tačka Solr pretrage se sastoji od URL adrese servera i podrške za pretraživanje. Pogledajte podešavanja kao primer. Promenite ovo samo ako koristite centralni server za pretragu."
+
+msgid "plugins.generic.lucene.settings.searchEndpointRequired"
+msgstr "Unesite ispravan URL koji predstavlja krajnju tačku pretrage na koju želite da se povežete."
+
+msgid "plugins.generic.lucene.settings.username"
+msgstr "Korisničko ime"
+
+msgid "plugins.generic.lucene.settings.usernameInstructions"
+msgstr "Solr server koristi HTTP BASIC tip autentifikacije, unesite korisničko ime."
+
+msgid "plugins.generic.lucene.settings.usernameRequired"
+msgstr "Unesite ispravno korisničko ime (kolone nisu dozvoljene)."
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Poređaj rezultate po"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Relevantnosti"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Autoru"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Broju"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Datumu objavljivanja"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Naslovu časopisa"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Naslovu članka"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "Rastuće"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "Opadajuće"
+
+msgid "plugins.generic.lucene.results.syntaxInstructions"
+msgstr ""
+"Saveti za pretragu: <ul>\n"
+"<li> Termini ne zavise od veličine slova (veliko/malo) </p>\n"
+"<li> Uobičajene reči su ignorisane </li>\n"
+"<li> Podrazumevano, članci koji sadrže <em> bilo koji </em> izraz u upitu su prikazani kao rezultat pretrage ( tj. <em> OR </em> se podrazumeva) </p>\n"
+"<li> Uverite se da reč postoji u članku tako što joj dajete prefiks <strong>+</strong>, npr. <em>+časopis+pristup naučno akademski</em></p>\n"
+"<li> Kombinujte više reči sa <em>AND</em> da biste pronašli članke koji sadrže sve uslove, npr. <em>obrazovanje AND istraživanje</em></p>\n"
+"<li> Izuzmite reč tako da je prefiks <strong> - </strong> ili <em> NOT</em >, npr. <em>onlajn -politika</em> ili <em>OnLine NOT politika</em></p>\n"
+"<li> Traži tačnu frazu stavljajući je u navodnike, npr. <em> \"otvoreni pristup\" </em></p>\n"
+"<li> Koristite zagrade da kreirate složenije upite, npr. <em>arhiva ((časopis AND konferencija) NOT teze)</em></p>\n"
+"</p>"
+
+msgid "plugins.generic.lucene.error.searchServiceOffline"
+msgstr "Na žalost OJS sistem pretrage trenutno ne radi, administrator sistema je obavešten o ovome."
+
+msgid "plugins.generic.lucene.error.coreNotFound"
+msgstr "Traženo jezgro '{$core}' nije pronađeno na solr serveru, da li ste sigurni da je server online?"
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "Indeksiraj sa {$numDocs} dokumentima onlajn."
