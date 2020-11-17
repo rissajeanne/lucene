@@ -1,0 +1,347 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-11-17T11:28:33+00:00\n"
+"PO-Revision-Date: 2020-11-17T11:28:33+00:00\n"
+"Language: \n"
+
+msgid "plugins.generic.lucene.displayName"
+msgstr "Модуль поиска «Lucene»"
+
+msgid "plugins.generic.lucene.description"
+msgstr "Обеспечивает поддержку нескольких языков, улучшает релевантность результатов поиска, ускоряет индексацию, улучшает масштабирование и так далее."
+
+msgid "plugins.generic.lucene.faceting.title"
+msgstr "уточните поисковый запрос"
+
+msgid "plugins.generic.lucene.faceting.discipline"
+msgstr "Дисциплина"
+
+msgid "plugins.generic.lucene.faceting.subject"
+msgstr "Ключевое слово"
+
+msgid "plugins.generic.lucene.faceting.type"
+msgstr "Метод/Подход"
+
+msgid "plugins.generic.lucene.faceting.coverage"
+msgstr "Охват"
+
+msgid "plugins.generic.lucene.faceting.journalTitle"
+msgstr "Журнал"
+
+msgid "plugins.generic.lucene.faceting.authors"
+msgstr "Автор"
+
+msgid "plugins.generic.lucene.faceting.publicationDate"
+msgstr "Дата публикации"
+
+msgid "plugins.generic.lucene.message.coreNotFound"
+msgstr "Запрошенное ядро «{$core}» не было найдено на сервере Solr. Оно подключено?"
+
+msgid "plugins.generic.lucene.message.indexingIncomplete"
+msgstr "Произошла ошибка в процессе индексации: Обработано {$numProcessed} из пакета в {$batchCount} ({$numDeleted} удаленных документов в этом пакете)."
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "Индекс с {$numDocs} документами подключен."
+
+msgid "plugins.generic.lucene.message.pullIndexingDisabled"
+msgstr "Самостоятельная индексация сервером отключена. Пожалуйста, включите ее в настройках модуля «Lucene»."
+
+msgid "plugins.generic.lucene.message.searchServiceOffline"
+msgstr "К сожалению, служба поиска OJS сейчас отключена."
+
+msgid "plugins.generic.lucene.message.techAdminInformed"
+msgstr "Технический администратор этого журнала был проинформирован о проблеме."
+
+msgid "plugins.generic.lucene.message.webServiceError"
+msgstr "Веб-служба Lucene вернула ошибку."
+
+msgid "plugins.generic.lucene.rebuildIndex.couldNotDeleteFieldCache"
+msgstr "Не удается удалить кэш полей. Пожалуйста, выполните «rm cache/fc-plugins-lucene-fieldCache.php» вручную с соответствующими правами."
+
+msgid "plugins.generic.lucene.rebuildIndex.pullResult"
+msgstr "{$numMarked} статей помечено для обновления"
+
+msgid "plugins.generic.lucene.rebuildIndex.rebuildDictionaries"
+msgstr "Перестройка словарей"
+
+msgid "plugins.generic.lucene.rebuildIndex.updateBoostFile"
+msgstr "Обновление данных статистики использования"
+
+msgid "plugins.generic.lucene.results.didYouMean"
+msgstr "Вы имели в виду"
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Упорядочить результат по "
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Релевантности"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Авторам"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Выпускам"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Дате публикации"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Названию журнала"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Названию статьи"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "По возрастанию"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "По убыванию"
+
+msgid "plugins.generic.lucene.results.similarDocuments"
+msgstr "похожие документы"
+
+msgid "plugins.generic.lucene.results.syntaxInstructions"
+msgstr ""
+"\n"
+"\t\t<h4>Советы по поиску:</h4><ul>\n"
+"\t\t\t<li>Поиск производится независимо от регистра (заглавные и строчные буквы не различаются)</li>\n"
+"\t\t\t<li>Общие слова игнорируются</li>\n"
+"\t\t\t<li>По умолчанию, в результатах поиска возвращаются статьи, содержащие <em>любое</em> слово из запроса (то есть, предполагается условие <em>OR</em>)</li>\n"
+"\t\t\t<li>Если слово должно обязательно присутствовать в статье, поставьте в начале знак <strong>+</strong>, например, <em>+журнал +доступ научный академический</em></li>\n"
+"\t\t\t<li>Чтобы найти статьи, содержащие все слова, соединяйте их с помощью <em>AND</em>, например, <em>образование AND исследование</em></li>\n"
+"\t\t\t<li>Чтобы слово не попадало в результаты поиска, поставьте перед ним знак <strong>-</strong> или <em>NOT</em>, например, <em>онлайн -политика</em> или <em>онлайн NOT политика</em></li>\n"
+"\t\t\t<li>Для поиска точной фразы, заключите ее в кавычки, например, <em>\"Открытый доступ к изданиям\"</em>. Подсказка: заключение в кавычки китайских или японских слов поможет вам найти точное совпадение в полях с несколькими языками, например, \"中国\".</li> \n"
+"\t\t\t<li>Используйте круглые скобки для построения более сложных запросов, например, <em>архив ((журнал AND конференция) NOT тезисы)</em></li>\n"
+"\t\t </ul>\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings"
+msgstr "Настройки"
+
+msgid "plugins.generic.lucene.settings.autosuggest"
+msgstr "Автоподстановка (показывать раскрывающийся список с динамически меняющимися предлагаемыми поисковыми терминами в процессе ввода поискового запроса)"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeExplanation"
+msgstr ""
+"\n"
+"\t\t<strong>Проверять термины на результат</strong>: Предлагаются только термины, которые действительно дадут результаты при поиске. Предложения будут \n"
+"\t\tперепроверены по текущему журналу и терминам, уже введенным в другие поисковые поля.<br />\n"
+"\t\t<strong>Использовать глобальный словарь</strong>: Этот вариант быстрее, требует меньше ресурсов сервера при поиске и, следовательно, лучше масштабируется \n"
+"\t\tна больших инсталляциях. Хотя предложения могут содержать неподходящие термины, то есть термины из других журналов или термины, которые не дают \n"
+"\t\tрезультатов при поиске.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeFaceting"
+msgstr "Проверять термины на результат"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeSuggester"
+msgstr "Использовать глобальный словарь"
+
+msgid "plugins.generic.lucene.settings.customRanking"
+msgstr "Пользовательское ранжирование (установить индивидуальные веса ранжирования для разделов журнала)"
+
+msgid "plugins.generic.lucene.settings.description"
+msgstr ""
+"\n"
+"\t\tМодуль «Lucene» получает доступ к индексу поиска Lucene через сервер Solr. Эта страница конфигурации позволяет вам настроить доступ к серверу Solr.\n"
+"\t\t<strong>Пожалуйста убедитесь, что вы прочитали файл README модуля (plugins/generic/lucene/README) до того, как попытаетесь изменить конфигурацию по умолчанию.</strong>\n"
+"\t\tЕсли вы используете сценарий встраивания, находясь за брандмауэром, как описано в файле README, то возможно вам стоит оставить все параметры настройки без изменений.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.dictionaryRebuild"
+msgstr "Перестроить словари"
+
+msgid "plugins.generic.lucene.settings.faceting"
+msgstr "Фасетизация (отобразить блок навигации с дополнительными фильтрами для уточнения вашего поиска)"
+
+msgid "plugins.generic.lucene.settings.facetingSelectCategory"
+msgstr "Вы можете выбрать конкретные категории фасетов (соответствующие метаданные должны быть выбраны для индексирования на шаге 3.4 установки журнала)"
+
+msgid "plugins.generic.lucene.settings.featureDescription"
+msgstr ""
+"\n"
+"\t\tМодуль «Lucene» предоставляет несколько дополнительных возможностей для поиска. Большинство из этих возможностей включены по умолчанию, но могут быть отключены или иначе настроены.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.highlighting"
+msgstr "Выделение (показывать небольшой фрагмент полного текста каждой статьи, содержащий ключевые слова из поискового запроса)"
+
+msgid "plugins.generic.lucene.settings.indexAdministration"
+msgstr "Администрирование индекса"
+
+msgid "plugins.generic.lucene.settings.indexRebuild"
+msgstr "Перестроить индекс"
+
+msgid "plugins.generic.lucene.settings.indexRebuild.confirm"
+msgstr "Перестройка индекса и/или словарей может занять длительное время. Вы уверены, что хотите продолжить?"
+
+msgid "plugins.generic.lucene.settings.indexRebuildAllJournals"
+msgstr "Перестроить индекс для всех журналов"
+
+msgid "plugins.generic.lucene.settings.indexRebuildDescription"
+msgstr "Если ваш индекс Lucene оказался устаревшим или поврежденным, Вы можете переиндексиовать данные для журнала или для всех журналов этой инсталляции. Словари должны быть перестроены после больших обновлений индекса, если используется автоподстановка или предложения альтернативного написания. (Смотрите plugins/generic/lucene/README о подробностях и путях автоматизации этих процессов.)"
+
+msgid "plugins.generic.lucene.settings.indexRebuildJournal"
+msgstr "Перестроить индекс для журнала «{$journalName}»"
+
+msgid "plugins.generic.lucene.settings.indexRebuildMessages"
+msgstr "Результаты последнего перестраивания индекса:"
+
+msgid "plugins.generic.lucene.settings.instantSearch"
+msgstr "Мгновенный поиск (сразу возвращает результаты поиска, когда пользователь вводит поисковый запрос - особенность: использует значительные ресурсы сервера)"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "Уникальный ID инсталляции"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr "Пожалуйста, введите ID, который уникальным образом идентифицирует эту инсталляцию OJS для поискового сервера Solr."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr "Если вы используете централизованный поисковый сервер, то вам необходимо будет задать уникальный ID инсталляции для каждой из инсталляций OJS, использующих одинаковый поисковый индекс. Это может быть любой произвольный текст, но он должен быть разным для каждого из участвующих серверов OJS (например, статический IP-адрес сервера, если у вас на каждом сервере установлена одна инсталляция OJS)."
+
+msgid "plugins.generic.lucene.settings.internalError"
+msgstr "Неправильный выбор."
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "Модуль «Lucene»: Настройки"
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "Пароль"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "Пожалуйста, введите пароль сервера Solr."
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr "Пожалуйста, введите правильный пароль для аутентификации сервера поиска Solr."
+
+msgid "plugins.generic.lucene.settings.pullIndexing"
+msgstr "Самостоятельная индексация сервером (pull indexing — это расширенная возможность, более подробную информацию можно найти в файле README)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricEnabled"
+msgstr "Ранжировать по статистике использования (Статистические данные метрики «{$metricName}» будут влиять на ранжирование результатов)"
+
+msgid "plugins.generic.lucene.settings.rankingByMetricDisabled"
+msgstr "Ранжировать по статистике использования (пожалуйста, активируйте по крайней мере один модуль статистики/отчетов и выберите «главную метрику» в настройках сайта, чтобы включить этот параметр)"
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "URL-адрес конечной точки поиска"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr "Конечная точка поиска Solr состоит из URL-адреса сервера и обработчика поиска. В качестве примера воспользуйтесь настройкой по умолчанию. Измените ее только в случае использования централизованного поискового сервера."
+
+msgid "plugins.generic.lucene.settings.searchEndpointRequired"
+msgstr "Пожалуйста, введите правильный URL-адрес, представляющий конечную точку поиска (поисковый сервер Solr и обработчик поиска), к которой вы хотите подключиться."
+
+msgid "plugins.generic.lucene.settings.searchFeatures"
+msgstr "Настройка возможностей поиска"
+
+msgid "plugins.generic.lucene.settings.serverNotAvailable"
+msgstr ""
+"\n"
+"\t\tСейчас вы не можете администрировать сервер Solr через веб-интерфейс.<br/>\n"
+"\t\t<br/>\n"
+"\t\tВозможные причины:\n"
+"\t\t<ul>\n"
+"\t\t\t<li>У вас может быть не установлен встроенный сервер в эту инсталляцию OJS (подробности смотрите в «plugins/generic/lucene/README»).</li>\n"
+"\t\t\t<li>Установка вашего встроенного сервера может быть неполной. Пожалуйста проверьте, что каталоги «plugins/generic/lucene/lib/solr» и «plugins/generic/lucene/lib/jetty» действительно содержат (или указывают) на файлы установки solr/jetty.</li>\n"
+"\t\t\t<li>Скрипты администрирования сервера «start.sh», «stop.sh» и «check.sh» в «plugins/generic/lucene/embedded/bin» могут не иметь прав на выполнение. Проверьте установку разрешений для этих файлов. {$canExecuteResult}</li>\n"
+"\t\t\t<li>Файлы в «files/lucene/» могут быть не доступны для записи пользователю вашего веб-сервера. Проверьте установку разрешений для этих файлов. {$filesAreWriteableResult}</li>\n"
+"\t\t\t<li>Встроенный процесс solr может быть уже запущен, но под другим пользователем операционной системы. Это означает, что вы не можете управлять процессом из PHP. {$solrIsRunningUnderPHPUser}</li>\n"
+"\t\t\t<li>Ваша конфигурация PHP может запрещать выполнение скриптов. Проверьте настройки «safe_mode» и «disabled_function» в вашем php.ini. Если у вас нет доступа к вашему php.ini, то вы можете вручную выполнять скрипты для запуска/остановки сервера. {$safemodeOrExecDisabled}</li>\n"
+"\t\t</ul>\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.simdocs"
+msgstr "«Еще похожих» (показывать ссылку «похожие документы» для каждого результата поиска)"
+
+msgid "plugins.generic.lucene.settings.solrServerSettings"
+msgstr "Настройки сервера Solr"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricEnabled"
+msgstr "Сортировать по статистике использования (Статистические данные метрики «{$metricName}» будут использоваться для сортировки по популярности)"
+
+msgid "plugins.generic.lucene.settings.sortingByMetricDisabled"
+msgstr "Сортировать по статистике использования (пожалуйста, активируйте по крайней мере один модуль статистики/отчетов и выберите «главную метрику» в настройках сайта, чтобы включить этот параметр)"
+
+msgid "plugins.generic.lucene.settings.spellcheck"
+msgstr "Предложения альтернативного написания (показывать альтернативные поисковые термины)"
+
+msgid "plugins.generic.lucene.settings.startStopServer"
+msgstr "Администрирование сервера Solr"
+
+msgid "plugins.generic.lucene.settings.startServer"
+msgstr "Запустить сервер"
+
+msgid "plugins.generic.lucene.settings.stopServer"
+msgstr "Остановить сервер"
+
+msgid "plugins.generic.lucene.settings.updateBoostFile"
+msgstr "Обновить данные ранжирования"
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDescription"
+msgstr "Статистика использования должна регулярно копироваться на сервер Solr, например ежедневно или ежемесячно в зависимости от того, как часто вы обновляете статистику. Для этого щелкните на кнопке выше. Вы можете автоматизировать эту задачу (подробности смотрите в «plugins/generic/lucene/README»)."
+
+msgid "plugins.generic.lucene.settings.updateBoostFileDisabled"
+msgstr ""
+"\n"
+"\t\tСтатистика использования должна регулярно копироваться на сервер Solr. Сейчас вы не можете обновить статистику использования через веб-интерфейс.<br/>\n"
+"\t\t<br/>\n"
+"\t\tВозможные причины:\n"
+"\t\t<ul>\n"
+"\t\t\t<li>Если вы используете самостоятельную индексацию сервером (pull indexing) задача cron по обновлению индекса на удаленном сервере («pull.sh») будет автоматически обновлять статистические данные при каждом запуске (подробности смотрите в «plugins/generic/lucene/README»).</li>\n"
+"\t\t\t<li>У вашего сервера нет прав на запись в каталог «files/lucene/data». Убедитесь, что и веб-сервер, и сервер solr имеют доступ к этому каталогу и обновите эту страницу.</li>\n"
+"\t\t</ul>\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.usageStatistics"
+msgstr "Статистика использования"
+
+msgid "plugins.generic.lucene.settings.useProxySettings"
+msgstr "Настройки прокси-сервера"
+
+msgid "plugins.generic.lucene.settings.useProxySettingsInstructions"
+msgstr "Использовать настройки прокси-сервера из файла config.inc.php для запросов веб-службы Solr."
+
+msgid "plugins.generic.lucene.settings.username"
+msgstr "Имя пользователя"
+
+msgid "plugins.generic.lucene.settings.usernameInstructions"
+msgstr "Поисковый сервер Solr использует аутентификацию HTTP BASIC. Пожалуйста, введите имя пользователя."
+
+msgid "plugins.generic.lucene.settings.usernameRequired"
+msgstr "Пожалуйста, введите правильное имя пользователя для аутентификации поискового сервера Solr (двоеточия запрещены)."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoost"
+msgstr "Пользовательский вес ранжирования"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInstructions"
+msgstr ""
+"\n"
+"\t\tМодуль поиска Lucene/Solr позволяет вам изменять относительную важность статей в списке результатов\n"
+"\t\tпоискового запроса. Настройка более высокого (или низкого) веса ранжирования не приведет к тому, что статьи из этого \n"
+"\t\tраздела окажутся выше (или ниже) всех остальных статей. Однако, это приведет к тому, что эти статьи будут оказываться в результатах поиска выше (или ниже), чем если бы они оказались\n"
+"\t\tбез выполнения этой настройки. Установка этого параметра в значение «Никогда не показывать» приведет к полному исключению статей\n"
+"\t\tэтого раздела из результатов поиска.\n"
+"\t"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInvalid"
+msgstr "Пожалуйста, введите правильный пользовательский вес ранжирования."
+
+msgid "plugins.generic.lucene.sectionForm.ranking.never"
+msgstr "Никогда не показывать"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.low"
+msgstr "Низкий ранг"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.normal"
+msgstr "Нормальный"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.high"
+msgstr "Высокий ранг"
