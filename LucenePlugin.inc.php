@@ -191,7 +191,9 @@ class LucenePlugin extends GenericPlugin {
 			HookRegistry::register('Templates::Search::SearchResults::SyntaxInstructions', array($this,
 				'callbackTemplateSyntaxInstructions'
 			));
-
+            HookRegistry::register('Publication::unpublish', array($this,
+                'callbackUnpublish'
+            ));
 			// Instantiate the web service.
 			$searchHandler = $this->getSetting(CONTEXT_SITE, 'searchEndpoint');
 			$username = $this->getSetting(CONTEXT_SITE, 'username');
@@ -463,6 +465,7 @@ class LucenePlugin extends GenericPlugin {
 		$searchRequest->setJournal($journal);
 		$searchRequest->setFromDate($fromDate);
 		$searchRequest->setToDate($toDate);
+        $searchRequest->setAuthors($keywords[1]);
 		$searchRequest->setOrderBy($orderBy);
 		$searchRequest->setOrderDir($orderDir == 'asc' ? true : false);
 		$searchRequest->setPage($page);
@@ -642,7 +645,13 @@ class LucenePlugin extends GenericPlugin {
 
 		return true;
 	}
+    function callbackUnpublish($hookName, $params) {
+        list($newPublication, $publication, $submission) = $params;
 
+        $solrWebService = $this->getSolrWebService();
+        $solrWebService->deleteArticleFromIndex($submission->getId());
+        return true;
+    }
 	/**
 	 * @see ArticleSearchIndex::articleChangesFinished()
 	 */
@@ -1007,16 +1016,25 @@ class LucenePlugin extends GenericPlugin {
 	 * @return array
 	 */
 	function _getResultSetOrderingOptions($journal) {
-		$resultSetOrderingOptions = array(
-			'score' => __('plugins.generic.lucene.results.orderBy.relevance'),
-			'authors' => __('plugins.generic.lucene.results.orderBy.author'),
-			'issuePublicationDate' => __('plugins.generic.lucene.results.orderBy.issue'),
-			'publicationDate' => __('plugins.generic.lucene.results.orderBy.date'),
-			'title' => __('plugins.generic.lucene.results.orderBy.article')
-		);
+		$resultSetOrderingOptions = array();
+		if ($this->getSetting(CONTEXT_SITE, 'orderByRelevance')) {
+			$resultSetOrderingOptions['score'] =  __('plugins.generic.lucene.results.orderBy.relevance');
+		}
+		if ($this->getSetting(CONTEXT_SITE, 'orderByAuthor')) {
+			$resultSetOrderingOptions['authors'] =  __('plugins.generic.lucene.results.orderBy.author');
+		}
+		if ($this->getSetting(CONTEXT_SITE, 'orderByIssue')) {
+			$resultSetOrderingOptions['issuePublicationDate'] =  __('plugins.generic.lucene.results.orderBy.issue');
+		}
+		if ($this->getSetting(CONTEXT_SITE, 'orderByDate')) {
+			$resultSetOrderingOptions['publicationDate'] =  __('plugins.generic.lucene.results.orderBy.date');
+		}
+		if ($this->getSetting(CONTEXT_SITE, 'orderByArticle')) {
+			$resultSetOrderingOptions['title'] =  __('plugins.generic.lucene.results.orderBy.article');
+		}
 
 		// Only show the "journal title" option if we have several journals.
-		if (!is_a($journal, 'Journal')) {
+		if (!is_a($journal, 'Journal') && $this->getSetting(CONTEXT_SITE, 'orderByJournal')) {
 			$resultSetOrderingOptions['journalTitle'] = __('plugins.generic.lucene.results.orderBy.journal');
 		}
 
@@ -1133,7 +1151,7 @@ class LucenePlugin extends GenericPlugin {
 			else {
 				$journalDao = DAORegistry::getDAO('JournalDAO');
 				/* @var $journalDao JournalDAO */
-				$journalIterator = $journalDao->getAll();
+				$journalIterator = $journalDao->getAll(true);
 				$journals = $journalIterator->toArray();
 			}
 
@@ -1172,7 +1190,7 @@ class LucenePlugin extends GenericPlugin {
 						}
 						$this->_indexingMessage($log, '.', $messages);
 						$numIndexed += $articlesInBatch;
-					} while ($articlesInBatch > 0);
+					} while ($articlesInBatch == SOLR_INDEXING_MAX_BATCHSIZE );
 					$this->_indexingMessage($log, ' ' . __('search.cli.rebuildIndex.result', array('numIndexed' => $numIndexed)) . PHP_EOL, $messages);
 				}
 			}
@@ -1296,4 +1314,3 @@ class LucenePlugin extends GenericPlugin {
 		);
 	}
 }
-
