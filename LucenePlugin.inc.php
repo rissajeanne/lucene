@@ -188,10 +188,10 @@ class LucenePlugin extends GenericPlugin {
 			));
 
 			//Does not seem to be called anymore. Either has to be added to core search again, or we add it some other way only for lucene
-            HookRegistry::register('Templates::Search::SearchResults::SyntaxInstructions', array($this,
+			HookRegistry::register('Templates::Search::SearchResults::SyntaxInstructions', array($this,
 				'callbackTemplateSyntaxInstructions'
 			));
-            HookRegistry::register('Publication::unpublish', array($this,
+			HookRegistry::register('Publication::unpublish', array($this,
                 'callbackUnpublish'
             ));
 			// Instantiate the web service.
