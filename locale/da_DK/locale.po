@@ -341,3 +341,24 @@ msgstr "Normal"
 
 msgid "plugins.generic.lucene.sectionForm.ranking.high"
 msgstr "Rangér højere"
+
+msgid "plugins.generic.lucene.settings.orderby"
+msgstr "Sorter resultater efter"
+
+msgid "plugins.generic.lucene.settings.orderBy.relevance"
+msgstr "Relevans"
+
+msgid "plugins.generic.lucene.settings.orderBy.author"
+msgstr "Forfatter"
+
+msgid "plugins.generic.lucene.settings.orderBy.issue"
+msgstr "Nummer"
+
+msgid "plugins.generic.lucene.settings.orderBy.date"
+msgstr "Udgivelsesdato"
+
+msgid "plugins.generic.lucene.settings.orderBy.journal"
+msgstr "Tidsskriftstitel"
+
+msgid "plugins.generic.lucene.settings.orderBy.article"
+msgstr "Artikeltitel"

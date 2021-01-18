@@ -357,3 +357,24 @@ msgstr "Normal"
 
 msgid "plugins.generic.lucene.sectionForm.ranking.high"
 msgstr "Rank Higher"
+
+msgid "plugins.generic.lucene.settings.orderBy"
+msgstr "Order results by"
+
+msgid "plugins.generic.lucene.settings.orderBy.relevance"
+msgstr "Relevance"
+
+msgid "plugins.generic.lucene.settings.orderBy.author"
+msgstr "Author"
+
+msgid "plugins.generic.lucene.settings.orderBy.issue"
+msgstr "Issue"
+
+msgid "plugins.generic.lucene.settings.orderBy.date"
+msgstr "Publication Date"
+
+msgid "plugins.generic.lucene.settings.orderBy.journal"
+msgstr "Journal Title"
+
+msgid "plugins.generic.lucene.settings.orderBy.article"
+msgstr "Article Title"
