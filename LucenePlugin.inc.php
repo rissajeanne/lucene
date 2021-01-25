@@ -465,7 +465,7 @@ class LucenePlugin extends GenericPlugin {
 		$searchRequest->setJournal($journal);
 		$searchRequest->setFromDate($fromDate);
 		$searchRequest->setToDate($toDate);
-		$searchRequest->setAuthors($keywords[1]);
+		$searchRequest->setAuthors(urlencode($keywords[1]));
 		$searchRequest->setOrderBy($orderBy);
 		$searchRequest->setOrderDir($orderDir == 'asc' ? true : false);
 		$searchRequest->setPage($page);
