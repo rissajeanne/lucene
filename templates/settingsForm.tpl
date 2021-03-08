@@ -31,8 +31,13 @@
 		<span class="instruct">{translate key="plugins.generic.lucene.settings.instIdInstructions"}</span>
 		{fbvFormSection list=true}
 			{fbvElement type="checkbox" id="useProxySettings" value="1" checked=$useProxySettings label="plugins.generic.lucene.settings.useProxySettings"}
+			<span class="instruct">{translate key="plugins.generic.lucene.settings.useProxySettingsInstructions"}</span>
 		{/fbvFormSection}
-		<span class="instruct">{translate key="plugins.generic.lucene.settings.useProxySettingsInstructions"}</span>
+
+		{fbvFormSection list=true}
+			{fbvElement type="checkbox" id="useSolr7" value="1" checked=$useSolr7 label="plugins.generic.lucene.settings.solr7"}
+			<span class="instruct">{translate key="plugins.generic.lucene.settings.useSolr7SettingsInstructions"}</span>
+		{/fbvFormSection}
 	{/fbvFormArea}
 
 	{fbvFormArea id="luceneSearchFeatures" title="plugins.generic.lucene.settings.searchFeatures"}

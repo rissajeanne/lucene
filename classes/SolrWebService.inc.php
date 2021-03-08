@@ -876,9 +876,9 @@ class SolrWebService extends XmlWebService {
 	 *  an alternative query string (if any) and the number of hits for this
 	 *  string. Null if an error occurred while querying the server.
 	 */
-	function retrieveResults($searchRequest, &$totalResults) {
+	function retrieveResults($searchRequest, &$totalResults, $solr7 = false) {
 		// Construct the main query.
-		$params = $this->_getSearchQueryParameters($searchRequest);
+		$params = $this->_getSearchQueryParameters($searchRequest, $solr7);
 
 		// If we have no filters at all then return an
 		// empty result set.
@@ -1144,7 +1144,7 @@ class SolrWebService extends XmlWebService {
 	 * @return array|null A parameter array or null if something
 	 *  went wrong.
 	 */
-	function _getSearchQueryParameters($searchRequest) {
+	function _getSearchQueryParameters($searchRequest, $solr7 = false) {
 		// Pre-filter and translate query phrases.
 		$subQueries = array();
 		foreach($searchRequest->getQuery() as $fieldList => $searchPhrase) {
@@ -1157,7 +1157,7 @@ class SolrWebService extends XmlWebService {
 
 		// We differentiate between simple and multi-phrase queries.
 		$subQueryCount = count($subQueries);
-		if ($subQueryCount == 1) {
+		if ($subQueryCount == 1 || $solr7) {
 			// Use a simplified query that allows us to provide
 			// alternative spelling suggestions.
 			$fieldList = key($subQueries);

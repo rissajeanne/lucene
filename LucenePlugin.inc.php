@@ -465,7 +465,7 @@ class LucenePlugin extends GenericPlugin {
 		$searchRequest->setJournal($journal);
 		$searchRequest->setFromDate($fromDate);
 		$searchRequest->setToDate($toDate);
-		$searchRequest->setAuthors(urlencode($keywords[1]));
+		$searchRequest->setAuthors($keywords[1]);
 		$searchRequest->setOrderBy($orderBy);
 		$searchRequest->setOrderDir($orderDir == 'asc' ? true : false);
 		$searchRequest->setPage($page);
@@ -523,7 +523,7 @@ class LucenePlugin extends GenericPlugin {
 
 		// Call the solr web service.
 		$solrWebService = $this->getSolrWebService();
-		$result = $solrWebService->retrieveResults($searchRequest, $totalResults);
+		$result = $solrWebService->retrieveResults($searchRequest, $totalResults, $this->getSetting(CONTEXT_SITE, 'useSolr7'));
 		if (is_null($result)) {
 			$error = $solrWebService->getServiceMessage();
 			$this->_informTechAdmin($error, $journal, true);

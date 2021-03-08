@@ -158,7 +158,8 @@ class LuceneSettingsForm extends Form {
 			'orderByIssue',
 			'orderByDate',
 			'orderByArticle',
-			'orderByJournal'
+			'orderByJournal',
+			'useSolr7',
         );
     }
 

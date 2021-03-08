@@ -378,3 +378,9 @@ msgstr "Journal Title"
 
 msgid "plugins.generic.lucene.settings.orderBy.article"
 msgstr "Article Title"
+
+msgid "plugins.generic.lucene.settings.solr7"
+msgstr "Use Solr 7"
+
+msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
+msgstr "Check if your are using Solr 7"

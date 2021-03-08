@@ -362,3 +362,9 @@ msgstr "Tidsskriftstitel"
 
 msgid "plugins.generic.lucene.settings.orderBy.article"
 msgstr "Artikeltitel"
+
+msgid "plugins.generic.lucene.settings.solr7"
+msgstr "Køre på Solr 7"
+
+msgid "plugins.generic.lucene.settings.useSolr7SettingsInstructions"
+msgstr "Check hvis du bruger Solr 7 "
