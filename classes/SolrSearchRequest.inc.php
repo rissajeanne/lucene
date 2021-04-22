@@ -48,6 +48,7 @@ class SolrSearchRequest {
 	 */
 	var $_fromDate = null;
 
+    var $_authors = null;
 	/**
 	 * @var string Timestamp representing the last publication date to be
 	 *  included in the result set. Null means: No limitation.
@@ -213,6 +214,21 @@ class SolrSearchRequest {
 	function setFromDate($fromDate) {
 		$this->_fromDate = $fromDate;
 	}
+    /**
+     * Get the authors to be queried.
+     * @return Authors
+     */
+    function getAuthors() {
+        return $this->_authors;
+    }
+
+    /**
+     * Set the authors to be queried
+     * @param $journal Authors
+     */
+    function setAuthors($authors) {
+        $this->_authors = $authors;
+    }
 
 	/**
 	 * Get the last publication date
@@ -413,4 +429,3 @@ class SolrSearchRequest {
 		}
 	}
 }
-

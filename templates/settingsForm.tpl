@@ -31,8 +31,13 @@
 		<span class="instruct">{translate key="plugins.generic.lucene.settings.instIdInstructions"}</span>
 		{fbvFormSection list=true}
 			{fbvElement type="checkbox" id="useProxySettings" value="1" checked=$useProxySettings label="plugins.generic.lucene.settings.useProxySettings"}
+			<span class="instruct">{translate key="plugins.generic.lucene.settings.useProxySettingsInstructions"}</span>
 		{/fbvFormSection}
-		<span class="instruct">{translate key="plugins.generic.lucene.settings.useProxySettingsInstructions"}</span>
+
+		{fbvFormSection list=true}
+			{fbvElement type="checkbox" id="useSolr7" value="1" checked=$useSolr7 label="plugins.generic.lucene.settings.solr7"}
+			<span class="instruct">{translate key="plugins.generic.lucene.settings.useSolr7SettingsInstructions"}</span>
+		{/fbvFormSection}
 	{/fbvFormArea}
 
 	{fbvFormArea id="luceneSearchFeatures" title="plugins.generic.lucene.settings.searchFeatures"}
@@ -60,6 +65,16 @@
 			{fbvElement type="checkbox" id="customRanking" value="1" checked=$customRanking label="plugins.generic.lucene.settings.customRanking"}
 			{fbvElement type="checkbox" id="pullIndexing" value="1" checked=$pullIndexing label="plugins.generic.lucene.settings.pullIndexing"}
 		{/fbvFormSection}
+	{fbvFormSection list=true}
+		<label for="orderby">{translate key="plugins.generic.lucene.settings.orderby"}</label><br />
+		{fbvElement type="checkbox" id="orderByRelevance" value="1" checked=$orderByRelevance label="plugins.generic.lucene.settings.orderby.relevance"}
+		{fbvElement type="checkbox" id="orderByAuthor" value="1" checked=$orderByAuthor label="plugins.generic.lucene.settings.orderby.author"}
+		{fbvElement type="checkbox" id="orderByIssue" value="1" checked=$orderByIssue label="plugins.generic.lucene.settings.orderby.issue"}
+		{fbvElement type="checkbox" id="orderByDate" value="1" checked=$orderByDate label="plugins.generic.lucene.settings.orderby.date"}
+		{fbvElement type="checkbox" id="orderByArticle" value="1" checked=$orderByArticle label="plugins.generic.lucene.settings.orderby.article"}
+		{fbvElement type="checkbox" id="orderByJournal" value="1" checked=$orderByJournal label="plugins.generic.lucene.settings.orderby.journal"}
+	{/fbvFormSection}
+
 	{/fbvFormArea}
 
 	{fbvFormButtons}
@@ -91,8 +106,8 @@
 				return confirmation;
 				{rdelim}
 		</script>
-		<input type="submit" name="rebuildIndex" {if !$serverIsRunning}disabled="disabled"{/if} value="{translate key="plugins.generic.lucene.settings.indexRebuild"}" onclick="rebuildIndexClick()" class="action" /><br/>
-		<input type="submit" name="rebuildDictionaries" {if !$serverIsRunning}disabled="disabled"{/if} value="{translate key="plugins.generic.lucene.settings.dictionaryRebuild"}" onclick="rebuildIndexClick()" class="action" /><br/>
+		<input type="submit" name="rebuildIndex" value="{translate key="plugins.generic.lucene.settings.indexRebuild"}" onclick="rebuildIndexClick()" class="action" /><br/>
+		<input type="submit" name="rebuildDictionaries"  value="{translate key="plugins.generic.lucene.settings.dictionaryRebuild"}" onclick="rebuildIndexClick()" class="action" /><br/>
 		<br/>
 		{if $rebuildIndexMessages}
 			<div id="rebuildIndexMessage">

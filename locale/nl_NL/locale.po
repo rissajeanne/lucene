@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-11-17T11:27:43+00:00\n"
+"PO-Revision-Date: 2020-11-17T11:27:43+00:00\n"
+"Language: \n"
+
+msgid "plugins.generic.lucene.displayName"
+msgstr "Lucene zoeken plugin"
+
+msgid "plugins.generic.lucene.description"
+msgstr "De Lucene plugin levert ondersteuning voor meertaligheid, betere zoekrelevantie, snellere indexering, betere schaalbaarheid en meer."
+
+msgid "plugins.generic.lucene.settings"
+msgstr "Instellingen"
+
+msgid "plugins.generic.lucene.settings.description"
+msgstr ""
+"<p>De Lucene plugin benadert de Lucene zoekindex via een Solr server. Op deze configuratiepagina  stelt u de toegang tot de Solr server in.</p>\n"
+"\t\t<p><strong>Lees het README van deze plugin (plugins/generic/lucene/README) voordat u de standaardconfiguratie wijzigt.</strong></p>\n"
+"\t\t<p>Als u het  embedded scenario behind a firewall gebruikt zoals beschreven in het README bestand, dan kunt u waarschijnlijk alle parameters ongemoeid laten.</p>"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "Unieke installatie-ID"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr "Geef een ID dat deze OJS installatie uniek identificeert voor de solr zoekserver."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr "Als u een centrale zoek-server gebruikt, dan moet u een unieke ID opgeven voor iedere OJS installatie die gebruik maakt van dezelfde zoekindex.  Dit kan een willekeurige tekst zijn, zolang die maar uniek is voor ieder OJS installatie. (bv. het statische IP adres van de server, als u één OJS installatie per server hebt)."
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "Lucene plugin: Solr server instellingen"
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "Wachtwoord"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "Geef het wachtwoord voor de solr server."
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr "geef een geldig wachtwoord om bij de solr zoekserver te authenticeren."
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "Search Endpoint URL"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr "Het Solr search endpoint bestaat uit de URL van de server en een search handler. Zie de standaardinstelllingen voor een voorbeeld. Verander deze alleen als u gebruik maakt van een centrale zoek-server."
+
+msgid "plugins.generic.lucene.settings.searchEndpointRequired"
+msgstr "Geef een geldige URL voor het  search endpoint (solr search server en search handler) waar u mee wilt verbinden."
+
+msgid "plugins.generic.lucene.settings.username"
+msgstr "Gebruikersnaam"
+
+msgid "plugins.generic.lucene.settings.usernameInstructions"
+msgstr "De Solr search server gebruikt HTTP BASIC authenticate. Geef de gebruikersnaam."
+
+msgid "plugins.generic.lucene.settings.usernameRequired"
+msgstr "Geef een geldige gebruikersnaam om te authenticeren bij de solr search server (dubbele punt is niet toegestaan)."
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "Sorteer resultaten op"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "Relevantie"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "Auteur"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "Nummer"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "Publicatiedatum"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "Tijdschrifttitel"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "Artikeltitel"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "Oplopend"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "Aflopend"
+
+msgid "plugins.generic.lucene.results.syntaxInstructions"
+msgstr ""
+"Zoektips: <ul>\n"
+"<li>Zoektermen zijn niet hoofdlettergevoelig</li>\n"
+"<li>Veelvoorkomende woorden worden genegeerd</li>\n"
+"<li>Standaard worden resultaten getoond als <em>een</em> term uit de zoekvraag wordt gevonden (dus: <em>OR</em> is impliciet)</li>\n"
+"<li>Als alleen resultaten wilt als een woord in een artikel voorkomt, zet er dan een <strong>+</strong> voor, bv. <em>+journal +access scholarly academic</em></li>\n"
+"<li>Combineer meerdere woorden met  <em>AND</em>om artikelen te vinden die alle termen bevatten, bv. <em>education AND research</em></li>\n"
+"<li>Excludeeer een word door er <strong>-</strong> of <em>NOT</em> voor te zetten, bv. <em>online -politics</em> of <em>online NOT politics</em></li>\n"
+"<li>Zoek naar de exacte tekst door die tussen dubbele aanhalingstekens te zetten, bv. <em>\"open access publishing\"</em></li>\n"
+"<li>Gebruik ronde haakjes voor het construeren van  complex vragen, bv. <em>archive ((journal AND conference) NOT theses)</em></li>\n"
+"</ul>"
+
+msgid "plugins.generic.lucene.error.searchServiceOffline"
+msgstr "De OJS zoek-service is momenteel offline. De technische beheerder van dit tijdschrift is op de hoogte gesteld van dit probleem."
+
+msgid "plugins.generic.lucene.error.coreNotFound"
+msgstr "De gevraagde core '{$core}' is niet te vinden op de solr server. Is die online?"
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "Index met {$numDocs} documenten online."

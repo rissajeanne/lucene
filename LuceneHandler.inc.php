@@ -194,4 +194,3 @@ class LuceneHandler extends Handler {
 		return PluginRegistry::getPlugin('generic', LUCENE_PLUGIN_NAME);
 	}
 }
-

@@ -48,7 +48,7 @@ class LuceneSettingsForm extends Form {
 
 		// Search feature configuration.
 		$this->addCheck(new FormValidatorInSet($this, 'autosuggestType', FORM_VALIDATOR_REQUIRED_VALUE, 'plugins.generic.lucene.settings.internalError', array_keys($this->_getAutosuggestTypes())));
-		$binaryFeatureSwitches = $this->_getFormFields(TRUE);
+		$binaryFeatureSwitches = $this->_getFormFieldsBool();
 		foreach ($binaryFeatureSwitches as $binaryFeatureSwitch) {
 			$this->addCheck(new FormValidatorBoolean($this, $binaryFeatureSwitch, 'plugins.generic.lucene.settings.internalError'));
 		}
@@ -124,14 +124,53 @@ class LuceneSettingsForm extends Form {
 	 */
 	function execute() {
 		$plugin = $this->_plugin;
-		$formFields = $this->_getFormFields();
 		$formFields[] = 'password';
-		foreach ($formFields as $formField) {
-			$plugin->updateSetting(CONTEXT_SITE, $formField, $this->getData($formField), 'string');
-		}
+        $formFieldsString = $this->_getFormFieldsString();
+        $formFieldsBool = $this->_getFormFieldsBool();
+        foreach($formFieldsBool as $formField) {
+            $plugin->updateSetting(CONTEXT_SITE, $formField, $this->getData($formField), 'bool');
+        }
+        $formFieldsString[] = 'password';
+        foreach($formFieldsString as $formField) {
+            $plugin->updateSetting(CONTEXT_SITE, $formField, $this->getData($formField), 'string');
+        }
 	}
 
 
+	function _getFormFieldsBool() {
+        return  array(
+            'autosuggest',
+            'spellcheck',
+            'pullIndexing',
+            'simdocs',
+            'highlighting',
+            'facetCategoryDiscipline',
+            'facetCategorySubject',
+            'facetCategoryType',
+            'facetCategoryCoverage',
+            'facetCategoryJournalTitle',
+            'facetCategoryAuthors',
+            'facetCategoryPublicationDate',
+            'customRanking',
+            'useProxySettings',
+			'orderByRelevance',
+			'orderByAuthor',
+			'orderByIssue',
+			'orderByDate',
+			'orderByArticle',
+			'orderByJournal',
+			'useSolr7',
+        );
+    }
+
+    function _getFormFieldsString() {
+	    return array(
+            'searchEndpoint',
+            'username',
+            'instId',
+            'autosuggestType'
+        );
+    }
 	//
 	// Private helper methods
 	//
@@ -141,35 +180,8 @@ class LuceneSettingsForm extends Form {
 	 *  switches.
 	 * @return array
 	 */
-	function _getFormFields($booleanOnly = FALSE) {
-		$booleanFormFields = array(
-		  'autosuggest',
-		  'spellcheck',
-		  'pullIndexing',
-		  'simdocs',
-		  'highlighting',
-		  'facetCategoryDiscipline',
-		  'facetCategorySubject',
-		  'facetCategoryType',
-		  'facetCategoryCoverage',
-		  'facetCategoryJournalTitle',
-		  'facetCategoryAuthors',
-		  'facetCategoryPublicationDate',
-		  'customRanking',
-		  'useProxySettings'
-		);
-		$otherFormFields = array(
-		  'searchEndpoint',
-		  'username',
-		  'instId',
-		  'autosuggestType'
-		);
-		if ($booleanOnly) {
-			return $booleanFormFields;
-		}
-		else {
-			return array_merge($booleanFormFields, $otherFormFields);
-		}
+	function _getFormFields() {
+	    return array_merge($this->_getFormFieldsBool(), $this->_getFormFieldsString());
 	}
 
 	/**

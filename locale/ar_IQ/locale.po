@@ -1,0 +1,253 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-11-17T11:25:10+00:00\n"
+"PO-Revision-Date: 2020-11-17T11:25:10+00:00\n"
+"Language: \n"
+
+msgid "plugins.generic.lucene.displayName"
+msgstr "إضافة بحث Lucene"
+
+msgid "plugins.generic.lucene.description"
+msgstr "هذه الإضافة تقدم دعماً لتعدد اللغات، تحسن ما يتعلق بنتائج البحث، تسرع الفهرسة، تمكن التوسع بشكل أفضل، والمزيد غير ذلك."
+
+msgid "plugins.generic.lucene.faceting.displayName"
+msgstr "قالب Lucene"
+
+msgid "plugins.generic.lucene.faceting.description"
+msgstr "قالب كتلة الإضافة Lucene"
+
+msgid "plugins.generic.lucene.faceting.title"
+msgstr "تحسين عمليات البحث"
+
+msgid "plugins.generic.lucene.faceting.discipline"
+msgstr "التخصص العلمي"
+
+msgid "plugins.generic.lucene.faceting.subject"
+msgstr "الكلمة المفتاحية"
+
+msgid "plugins.generic.lucene.faceting.type"
+msgstr "الطريقة/المنهج"
+
+msgid "plugins.generic.lucene.faceting.coverage"
+msgstr "التغطية"
+
+msgid "plugins.generic.lucene.faceting.journalTitle"
+msgstr "المجلة"
+
+msgid "plugins.generic.lucene.faceting.authors"
+msgstr "المؤلف"
+
+msgid "plugins.generic.lucene.faceting.publicationDate"
+msgstr "تأريخ النشر"
+
+msgid "plugins.generic.lucene.message.coreNotFound"
+msgstr "لم يتم العثور على ما هو مطلوب: '{$core}' في ملقم المؤسسة العامة. هل هو متصل بالإنترنت حالياً؟"
+
+msgid "plugins.generic.lucene.message.indexingIncomplete"
+msgstr "حدث خطأ ما أثناء الفهرسة: تمت معالجة {$numProcessed} من أصل {$batchCount} ({$numDeleted} وثائق محذوفة من هذه الدفعة)."
+
+msgid "plugins.generic.lucene.message.indexOnline"
+msgstr "فهرسة {$numDocs} وثيقة على الإنترنت."
+
+msgid "plugins.generic.lucene.message.pullIndexingDisabled"
+msgstr "سحب الفهرسة غير ممكن. لطفاً قم بتمكينها في إعدادات إضافة Lucene."
+
+msgid "plugins.generic.lucene.message.searchServiceOffline"
+msgstr "للأسف، إن خدمة البحث لنظام المجلات المفتوحة غير متاحة على الإنترنت حالياً."
+
+msgid "plugins.generic.lucene.message.techAdminInformed"
+msgstr "لقد تم إبلاغ المدير التقني للمجلة عن هذه المشكلة."
+
+msgid "plugins.generic.lucene.message.webServiceError"
+msgstr "إن خدمة Lucene على الإنترنت أرجعت خطأً ما."
+
+msgid "plugins.generic.lucene.rebuildIndex.pullResult"
+msgstr "{$numMarked} مقالة مؤشرة للتحديث"
+
+msgid "plugins.generic.lucene.results.didYouMean"
+msgstr "هل تعني"
+
+msgid "plugins.generic.lucene.results.orderBy"
+msgstr "رتب النتائج حسب"
+
+msgid "plugins.generic.lucene.results.orderBy.relevance"
+msgstr "ذات صلة"
+
+msgid "plugins.generic.lucene.results.orderBy.author"
+msgstr "المؤلف"
+
+msgid "plugins.generic.lucene.results.orderBy.issue"
+msgstr "العدد"
+
+msgid "plugins.generic.lucene.results.orderBy.date"
+msgstr "تأريخ النشر"
+
+msgid "plugins.generic.lucene.results.orderBy.journal"
+msgstr "عنوان المجلة"
+
+msgid "plugins.generic.lucene.results.orderBy.article"
+msgstr "عنوان المؤلَّف"
+
+msgid "plugins.generic.lucene.results.orderDir.asc"
+msgstr "تصاعدياً"
+
+msgid "plugins.generic.lucene.results.orderDir.desc"
+msgstr "تنازلياً"
+
+msgid "plugins.generic.lucene.results.similarDocuments"
+msgstr "وثائق مشابهة"
+
+msgid "plugins.generic.lucene.results.syntaxInstructions"
+msgstr ""
+"\n"
+"\t\t<h4>تلميحات البحث:</h4><ul>\n"
+"\t\t\t<li>عبارات البحث حساسة للحروف الصغيرة والكبيرة</li>\n"
+"\t\t\t<li>يتم تجاهل الكلمات الشائعة</li>\n"
+"\t\t\t<li>بشكل إفتراضي، المقالات التي تتضمن <em>أي</em> من عبارات البحث ستظهر في النتائج (أي: <em>OR</em> هي المطبقة)</li>\n"
+"\t\t\t<li>لضمان وجود الكلمة في المقالة، إجعلها مسبقة بعلامة <strong>+</strong>؛ مثل: <em>+journal +access scholarly academic</em></li>\n"
+"\t\t\t<li>إجمع عدة كلمات بواسطة <em>AND</em> للعثور على المقالات التي تضمها جميعاً، مثل: <em>education AND research</em></li>\n"
+"\t\t\t<li>استثن كلمة ما عبر سبقها بعلامة <strong>-</strong> أو <em>NOT</em>؛ مثل: <em>online -politics</em> أو <em>online NOT politics</em></li>\n"
+"\t\t\t<li>إبحث عن جملة كاملة كما هي عبر وضعها بين علامات اقتباس؛ مثل: <em>\"open access publishing\"</em>. ملاحظة: وضع الكلمات الصينية أو اليابانية بين علامات الاقتباس يساعدك في العثور على كلمات مطابقة في حقول متعددة اللغات؛ مثل: \"中国\".</li> \n"
+"\t\t\t<li>استعمل الأقواس لإنشاء استعلامات بحث أكثر تعقيداً؛ مثل: <em>archive ((journal AND conference) NOT theses)</em></li>\n"
+"\t\t </ul>\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings"
+msgstr "الإعدادات"
+
+msgid "plugins.generic.lucene.settings.autosuggest"
+msgstr "إقترح آلياً (أظهر قائمة منسدلة متغيرة تعطي مقترحات لكلمات البحث أثناء إدخال استعلام البحث)"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeExplanation"
+msgstr ""
+"\n"
+"\t\t<strong>تتحقق من التعابير لخدمة النائج</strong>: إقترح فقط التعابير التي تقود فعلياً إلى إيجاد نتائج. المقترحات ستكون\n"
+"\t\tمدققة بالتقاطع مع محتويات المجلة الحالية والعبارات المدخلة سابقاً في حقول البحث الأخرى.<br />\n"
+"\t\t<strong>استعمل القاموس العام</strong>: أسرع، يستهلك موارد أقل من ملقم البحث، ولذلك يتوسع بشكل أفضل\n"
+"\t\tفي الأنظمة الكبيرة. قد تتضمن المقترحات عندها عبارات ليست ذات صلة، مع ذلك، مثل عبارات مستقاة من \n"
+"        مجلات أخرى، أو تلك التي قد لا تقود إلى نتائج ملموسة\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeFaceting"
+msgstr "تتحقق من التعابير لخدمة النائج"
+
+msgid "plugins.generic.lucene.settings.autosuggestTypeSuggester"
+msgstr "استعمل القاموس العام"
+
+msgid "plugins.generic.lucene.settings.customRanking"
+msgstr "تقييم مخصص (ضع أوزان تقييم مستقلة لكل قسم في المجلة)"
+
+msgid "plugins.generic.lucene.settings.description"
+msgstr ""
+"\n"
+"\t\tإن إضافة البحث Lucene تصل إلى فهرس البحث Lucene عبر ملقم المؤسسة. صفحة الإعداد هذه تتيح لك ضبط الوصول إلى ذلك الملقم.\n"
+"\t\t<strong>لطفاً، تأكد من أنك قرأت ملف الإضافة README (plugins/generic/lucene/README) قبل أن تقوم بتغيير الإعدادات الإفتراضية لها.</strong>\n"
+"\t\tإن كنت تستعمل طريقة التضمين خلف جدار الحماية كما هي مذكورة في ملف README، عندها قد يكون من الأفضل لك ترك كل الإعدادات الإفتراضية على حالها.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.faceting"
+msgstr "القولبة (إعرض صندوق تنقل مع تصفيات إضافية لتحسين نتائج البحث)"
+
+msgid "plugins.generic.lucene.settings.facetingSelectCategory"
+msgstr "بإمكانك اختيار فئات قولبة محددة (البيانات الوصفية ذات الصلة ينبغي أن تكون منتخبة للفهرسة عند الخطوة 3.4 من تهيئة المجلة)"
+
+msgid "plugins.generic.lucene.settings.featureDescription"
+msgstr ""
+"\n"
+"\t\tإن إضافة البحث Lucene تقدم ميزات بحث إختيارية متعددة. معظم هذه الميزات ممكن إفتراضياً، لكن بالإمكان تعطيلها أو تحسين ضبطها لاحقاً.\n"
+"\t"
+
+msgid "plugins.generic.lucene.settings.highlighting"
+msgstr "تسليط الضوء (يعرض مقتطفات قصيرة من النص الكامل لكل مقالة تتضمن الكلمات المستعلم عنها)"
+
+msgid "plugins.generic.lucene.settings.instId"
+msgstr "رمز التنصيب الفريد"
+
+msgid "plugins.generic.lucene.settings.instIdRequired"
+msgstr "لطفاً، أدخل الرمز التعريفي الفريد الذي يخص هذا التنصيب من نظام المجلات المفتوحة ليتم التعامل به مع ملقم بحث المؤسسة."
+
+msgid "plugins.generic.lucene.settings.instIdInstructions"
+msgstr "إن استعملت ملقم بحث مركزي، عندها عليك تقديم معرف تنصيب فريد لكل تنصيب من نظام المجلات المفتوحة لأنها ستتشارك في فهرس بحث واحد. ذلك سيكون أي نص عشوائي، غير أنه ينبغي أن لا يتكرر مع التنصيبات الأخرى المشاركة لملقم البحث (مثل: عنوان الملقم الثابت IP إن كان لديك تنصيب واحد من النظام لكل ملقم)."
+
+msgid "plugins.generic.lucene.settings.internalError"
+msgstr "إختيار خاطئ."
+
+msgid "plugins.generic.lucene.settings.luceneSettings"
+msgstr "إضافة Lucene: الإعدادات"
+
+msgid "plugins.generic.lucene.settings.password"
+msgstr "كلمة المرور"
+
+msgid "plugins.generic.lucene.settings.passwordInstructions"
+msgstr "لطفاً، أدخل كلمة المرور لملقم المؤسسة."
+
+msgid "plugins.generic.lucene.settings.passwordRequired"
+msgstr "لطفاً، أدخل كلمةالمرور الصحيحة للحصول على مصادقة ملقم بحث المؤسسة."
+
+msgid "plugins.generic.lucene.settings.pullIndexing"
+msgstr "سحب الفهرسة (هذه ميزة متقدمة، أنظر ملف README للمزيد من المعلومات)"
+
+msgid "plugins.generic.lucene.settings.searchEndpoint"
+msgstr "رابط الأجهزة الطرفية للبحث"
+
+msgid "plugins.generic.lucene.settings.searchEndpointInstructions"
+msgstr "إن رابط الإنترنت لملقم المؤسسة يضم رابط إنترنت الملقم ومعالج البحث. أنظر الإعدادات الإفتراضية كمثال. غيره فقط إذا كنت تستعمل ملقم بحث مركزي."
+
+msgid "plugins.generic.lucene.settings.searchEndpointRequired"
+msgstr "لطفاً، أدخل رابط إنترنت صحيح يمثل الأجهزة الطرفية للبحث (ملقم بحث المؤسسة ومعالج البحث) التي تريد الارتباط معها."
+
+msgid "plugins.generic.lucene.settings.searchFeatures"
+msgstr "إعدادات ميزات البحث"
+
+msgid "plugins.generic.lucene.settings.simdocs"
+msgstr "المزيد من ذلك (إعرض رابط \"وثائق مشابهة\" لكل نتيجة بحث)"
+
+msgid "plugins.generic.lucene.settings.solrServerSettings"
+msgstr "إعدادات ملقم المؤسسة"
+
+msgid "plugins.generic.lucene.settings.spellcheck"
+msgstr "مقترحات التهجئة البديلة (إعرض عبارات بحث بديلة)"
+
+msgid "plugins.generic.lucene.settings.username"
+msgstr "اسم المستخدم"
+
+msgid "plugins.generic.lucene.settings.usernameInstructions"
+msgstr "إن ملقم بحث المؤسسة يستعمل المصادقة الأساسية لـ HTTP. لطفاً، أدخل اسم المستخدم."
+
+msgid "plugins.generic.lucene.settings.usernameRequired"
+msgstr "لطفاً، أدخل اسم صحيحاً للمستخدم للحصول على مصادقة ملقم بحث المؤسسة (علامات الترقيم ممنوعة هنا)."
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoost"
+msgstr "وزن التقييم المخصص"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInstructions"
+msgstr ""
+"\n"
+"\t\tإن إضافة بحث Lucene تتيح لك تعديل أوزان ظهور المقالات في نتائج البحث\n"
+"\t\tللاستعلام التي يدخلها المستخدمون. ضبط وزن التقييم على درجة أعلى (أو أقل) لا يضع\n"
+"        المقالة التي في هذا القسم أعلى (أو أسفل) المقالات الأخرى، لكنها ستقيم أفضل\n"
+"        (أو أسوأ) مما ستحصل عليه من تقييم دون إجراء ذلك التعديل. ضبط هذا الخيار على\n"
+"        \"لا ترني أبداً\" سيستثني كلياً مقالات هذا القسم من نتائج البحث.\n"
+"\t"
+
+msgid "plugins.generic.lucene.sectionForm.rankingBoostInvalid"
+msgstr "لطفاً، إختر وزن تقييم مخصص صحيح."
+
+msgid "plugins.generic.lucene.sectionForm.ranking.never"
+msgstr "لا ترني أبداً"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.low"
+msgstr "قيمه أدنى"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.normal"
+msgstr "إعتيادي"
+
+msgid "plugins.generic.lucene.sectionForm.ranking.high"
+msgstr "قيمه أعلى"
