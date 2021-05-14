@@ -1,24 +1,10 @@
-This version of the Solr/Lucene plugin (master branch) has been tested with OJS 3.1.2
+
 
 Contents
 --------
 
-  1)  Welcome to the OJS Lucene/Solr Plug-In!
-  2)  Should I use the Lucene/Solr Plug-In?
-  3)  Decisions to take before enabling the Plug-In
-  4)  Embedded versus Remote Server Mode
-  5)  Embedded Server Mode: Installation and Configuration
-  6)  Central Server Mode: Installation and Configuration
-  7)  Troubleshooting
-  8)  Push versus Pull Indexing
-  9) Rebuilding your index, usage statistics and/or dictionaries
-  10) What else do I have to do to keep my index up to date?
-  11) Customizing Solr (additional languages, stopwords, etc.)
-  12) Subscription-Based Publications
-  13) Using facets
 
-
-1 Welcome to the OJS Lucene/Solr Plug-In!
+# Welcome to the OJS Lucene/Solr Plug-In!
 -----------------------------------------
 
 This README file contains important information with respect to the correct and
@@ -35,7 +21,7 @@ For more details please visit the Solr web site:
 - <https://lucene.apache.org/solr/>
 
 
-2 Should I use the Lucene/Solr Plug-In?
+# Should I use the Lucene/Solr Plug-In?
 ---------------------------------------
 
 The first decision to take is whether to use the plug-in at all. The main
@@ -67,7 +53,7 @@ then please do not use this plug-in. Tika is not able to parse PostScript
 documents.
 
 
-3 Decisions to take before enabling the Plug-In
+# Decisions to take before enabling the Plug-In
 -----------------------------------------------
 
 This plug-in is an adapter between OJS and the Solr search server. It requires a
@@ -92,7 +78,7 @@ The following sections will help you to take the right decisions with respect
 to these configuration alternatives.
 
 
-4 Embedded versus Remote Server Mode
+# Embedded versus Remote Server Mode
 ------------------------------------
 
 In embedded server mode, the Solr search server will run on the same server as
@@ -169,7 +155,7 @@ deploy in central server mode:
   ... exhausted' errors.
 
 
-5 Embedded Server Mode: Installation and Configuration
+# Embedded Server Mode: Installation and Configuration
 ------------------------------------------------------
 
 As we do not want to unnecessarily blow up our default OJS distribution and want
@@ -186,13 +172,13 @@ to install the plugin for another OJS installation you can ommit steps 1) and 3)
      (J2SE) Runtime Environment, Version 1.8 or higher. If you are on Linux then
      install a J2SE compliant Java package. If you are on Windows you may get
      the latest J2SE version from http://java.com/en/download/index.jsp.
-  
+
   2) Install the OJS Lucene Plugin either from the OJS plugin gallery or from https://github.com/ojsde/lucene
-  
+
      If you install the OJS Lucene plugin for an additional OJS installation (i.e. you
      already have a running Solr server) please create a symbolic link to the installation
      of you Solr server:
-     
+
      #> ln -s <path to your OJS installation containg the Solr server installation>/plugins/generic/lucene/lib/solr-8.1.1 solr
 
   3) Download the Solr binaries:
@@ -220,16 +206,16 @@ to install the plugin for another OJS installation you can ommit steps 1) and 3)
      sure that you correctly installed Jetty and Solr.
 
      On Linux please execute (from the OJS directory):
-         #> cd plugins/generic/lucene/embedded/bin
-         #> ./chkconfig.sh
+         > cd plugins/generic/lucene/embedded/bin
+         > ./chkconfig.sh
 
      On Windows this would be:
          C:\...\ojs> cd plugins\generic\lucene\embedded\bin
          C:\...\lib> chkconfig.bat
 
      Make sure that you have the right access rights to execute the scripts. You might have to set them:
-     	 #> cd plugins/generic/lucene/embedded/bin
-     	 #> chmod 774 *
+     	 > cd plugins/generic/lucene/embedded/bin
+     	 > chmod 774 *
 
      If you get error messages then please return to step 2) and check your
      installation.
@@ -238,14 +224,15 @@ to install the plugin for another OJS installation you can ommit steps 1) and 3)
      Go to the directory plugins/generic/lucene/embedded/bin and execute the
      start script there. On Linux this would be (from the OJS application
      directory):
-         #> cd plugins/generic/lucene/embedded/bin
-         #> ./start.sh
+
+      > cd plugins/generic/lucene/embedded/bin
+       > ./start.sh
 
      To start the Solr server as a user different from root (recommended) use:
-	 #> sudo su -p -l <username> -s /bin/bash -c "./start.sh" 
+	 > sudo su -p -l <username> -s /bin/bash -c "./start.sh"
 
      You should receive the message "Started Solr server on port 8983 (pid=XXXX). Happy searching!" and executing:
-         #> ps -ef | grep solr
+         > ps -ef | grep solr
      you should see the java process of your running Solr instance.
 
      On Windows this becomes:
@@ -258,7 +245,7 @@ to install the plugin for another OJS installation you can ommit steps 1) and 3)
 
      This might be a good time to change your admin password if you haven't
      already; see step 3.
-     
+
      Alternatively you can start the Solr server from the Lucene plugin settings page.
 
   6) Secure your server (IMPORTANT):
@@ -283,11 +270,11 @@ to install the plugin for another OJS installation you can ommit steps 1) and 3)
      the new password:
 
      Temporarily make security.json writeable:
-	#> sudo chmod g+w security.json
+	> sudo chmod g+w security.json
      Chnage password:
-	#> curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
+	> curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
      Secure credentials file:
-	#> sudo chmod g-w security.json  
+	> sudo chmod g-w security.json
 
      This command will change the file plugins/generic/lucene/embedded/solr81/security.json,
      so if you upload this file again, the password will be reset to SolrRocks
@@ -305,7 +292,7 @@ to install the plugin for another OJS installation you can ommit steps 1) and 3)
      to rebuild your index.
 
      On Linux and from the OJS directory this becomes:
-        #> php tools/rebuildSearchIndex.php -d
+        > php tools/rebuildSearchIndex.php -d
 
      You should see output similar to this:
         # LucenePlugin: Clearing index ... done
@@ -402,8 +389,8 @@ specific to the OJS Lucene/Solr plug-in:
      For each installation separately you'll have to drop to the command line,
      go to the tools directory and execute the script to rebuild your index for
      that installation:
-        #> cd tools
-        #> php rebuildSearchIndex.php -d
+        > cd tools
+        > php rebuildSearchIndex.php -d
 
      You should see output similar to this:
         # LucenePlugin: Clearing index ... done
@@ -434,7 +421,7 @@ the following:
 
 - Check whether your Solr server is really running:
 
-     #> ps -ef | grep solr
+     > ps -ef | grep solr
 
   If the server is not running then try the following steps:
 
@@ -446,7 +433,7 @@ the following:
 
   4) If your server is running then execute:
 
-     #> php tools/rebuildSearchIndex.php -d
+     > php tools/rebuildSearchIndex.php -d
 
   6) Execute a test search request in OJS.
 
@@ -472,21 +459,21 @@ the following:
 
   4) Execute the command:
 
-     #> php tools/rebuildSearchIndex.php -d
+     > php tools/rebuildSearchIndex.php -d
 
   5) Check the index again via the URL 'http://localhost:8983/solr/#/ojs/core-overview'.
 
   6) Execute a test search request in OJS.
 
-- If your indexing went through but you inly find metadata and no galley content 
-  please verify your OJS "Site Access Options". Only public content will be index by Solr. 
+- If your indexing went through but you inly find metadata and no galley content
+  please verify your OJS "Site Access Options". Only public content will be index by Solr.
 
 - If your index contains data and you still do not get any search results in OJS
   then try deleting your cache.
 
   You can execute:
 
-     #> rm cache/fc-plugins-lucene-fieldCache.php
+     > rm cache/fc-plugins-lucene-fieldCache.php
 
   Alternatively you can delete the cache via OJS' administrator tools.
 
@@ -536,7 +523,7 @@ being correctly INDEXED:
 
 If search is performing more slowly than anticipated check your custom ranking
 settings. If custom ranking is enabled, this will add an overhead to searches
-proportional to the size of your index. 
+proportional to the size of your index.
 
 
 8 Push versus Pull Indexing
@@ -687,20 +674,20 @@ There are two possibilities to execute these administrative tasks:
 
      To rebuild all journals without rebuilding dictionaries:
 
-       #> php tools/rebuildSearchIndex.php
+       > php tools/rebuildSearchIndex.php
 
      To rebuild only the dictionaries:
 
-       #> php tools/rebuildSearchIndex.php -d -n
+       > php tools/rebuildSearchIndex.php -d -n
 
      To rebuild the dictionaries, refresh usage statistics and re-index
      all journals of an installation:
 
-       #> php tools/rebuildSearchIndex.php -d -b
+       > php tools/rebuildSearchIndex.php -d -b
 
      To rebuild the index of a single journal without rebuilding dictionaries:
 
-       #> php tools/rebuildSearchIndex.php some-journal-path
+       > php tools/rebuildSearchIndex.php some-journal-path
 
 
    Automated maintenance:
