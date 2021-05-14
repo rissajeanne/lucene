@@ -235,18 +235,24 @@ If you are on Windows then download and unzip the file to the lib folder
        > ./start.sh
 
      To start the Solr server as a user different from root (recommended) use:
-	 > sudo su -p -l <username> -s /bin/bash -c "./start.sh"
+
+    	> sudo su -p -l <username> -s /bin/bash -c "./start.sh"
 
      You should receive the message "Started Solr server on port 8983 (pid=XXXX). Happy searching!" and executing:
-         > ps -ef | grep solr
-     you should see the java process of your running Solr instance.
+
+	    > ps -ef | grep solr
+
+	 you should see the java process of your running Solr instance.
 
      On Windows this becomes:
-         C:\...\ojs> cd plugins\generic\lucene\embedded\bin
-         C:\...\lib> start.bat
+
+        > C:\...\ojs> cd plugins\generic\lucene\embedded\bin
+        Y C:\...\lib> start.bat
 
      And to check that Solr is actually running execute:
-         C:\...\ojs> wmic process get Caption,CommandLine | findstr solr
+
+		> C:\...\ojs> wmic process get Caption,CommandLine | findstr solr
+
      This should show you the java process running Solr.
 
      This might be a good time to change your admin password if you haven't
@@ -276,46 +282,55 @@ If you are on Windows then download and unzip the file to the lib folder
      the new password:
 
      Temporarily make security.json writeable:
-	> sudo chmod g+w security.json
-     Chnage password:
-	> curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
-     Secure credentials file:
-	> sudo chmod g-w security.json
 
-     This command will change the file plugins/generic/lucene/embedded/solr81/security.json,
-     so if you upload this file again, the password will be reset to SolrRocks
+      > sudo chmod g+w security.json
+
+     Change password:
+
+		> curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
+
+     Secure credentials file:
+
+
+		> sudo chmod g-w security.json
+
+ This command will change the file plugins/generic/lucene/embedded/solr81/security.json, so if you upload this file again, the password will be reset to SolrRocks
 
   7) Now open up your web browser and log into your OJS journal manager account.
 
-     Go to "Settings -> Website -> Plugins" and enable the
-     "Lucene Search Plugin" (under "Generic Plugins").
+   >  Go to "Settings -> Website -> Plugins" and enable the
+   >  "Lucene Search Plugin" (under "Generic Plugins").
 
-     Enter the search endpoint as: http://127.0.0.1:8983/solr/ojs/search and provide the admin username and password (see step 6).
+Enter the search endpoint as: http://127.0.0.1:8983/solr/ojs/search and provide the admin username and password (see step 6).
 
   8) Build your lucene index:
 
      Back to the command line go to the tools directory and execute the script
      to rebuild your index.
 
-     On Linux and from the OJS directory this becomes:
+
+On Linux and from the OJS directory this becomes:
+
         > php tools/rebuildSearchIndex.php -d
 
-     You should see output similar to this:
-        # LucenePlugin: Clearing index ... done
-        # LucenePlugin: Indexing "lucene-test" ... 412 articles indexed
-        # LucenePlugin: Indexing "test" ... 536 articles indexed
-        # LucenePlugin: Rebuilding dictionaries ... done
+You should see output similar to this:
 
-     On Windows execute:
-         C:\...\ojs> cd tools
-         C:\...\tools> php rebuildSearchIndex.php -d
+	> LucenePlugin: Clearing index ... done
+        > LucenePlugin: Indexing "lucene-test" ... 412 articles indexed
+        > LucenePlugin: Indexing "test" ... 536 articles indexed
+        > LucenePlugin: Rebuilding dictionaries ... done
 
-     Please make sure that the output really includes the "LucenePlugin" string.
+On Windows execute:
+
+>         C:\...\ojs> cd tools
+>         C:\...\tools> php rebuildSearchIndex.php -d
+
+Please make sure that the output really includes the "LucenePlugin" string.
      Otherwise your plug-in was not correctly activated.
 
   9) Execute some searches
 
-     Go to your OJS web frontend and test whether searching with Solr works as
+>     Go to your OJS web frontend and test whether searching with Solr works as
      expected.
 
 
@@ -333,6 +348,7 @@ specific to the OJS Lucene/Solr plug-in:
   1) Please decide which journals you would like to collocate in which cores and
      make a list of required cores.
 
+
   2) Install Jetty and Solr binaries without configuring anything yet. You can
      always use the embedded installation from the plug-in as a guideline but
      you'll have to make your own choices with respect to the directory
@@ -341,6 +357,7 @@ specific to the OJS Lucene/Solr plug-in:
      install Jetty. Your OS distribution may also provide installation packages
      for Solr and Jetty, so use your own judgement to establish a basic
      installation adequate to your server environemnt.
+
 
   3) As a configuration baseline you can copy the files in "plugins/generic/
      lucene/embedded/etc" and "plugins/generic/lucene/embedded/solr" to the
@@ -385,7 +402,7 @@ specific to the OJS Lucene/Solr plug-in:
      Do not forget to change the BASIC HTTP authentication credentials if you
      changed them for your Solr server.
 
-     Finally you'll have to enter an installation ID that is unique within the
+     Finally, you'll have to enter an installation ID that is unique within the
      core that you'll index that OJS installation in. If you index journals from
      three different OJS installations in one core then you'll need three
      distinct installation IDs.
@@ -395,14 +412,15 @@ specific to the OJS Lucene/Solr plug-in:
      For each installation separately you'll have to drop to the command line,
      go to the tools directory and execute the script to rebuild your index for
      that installation:
+
         > cd tools
         > php rebuildSearchIndex.php -d
 
      You should see output similar to this:
-        # LucenePlugin: Clearing index ... done
-        # LucenePlugin: Indexing "lucene-test" ... 412 articles indexed
-        # LucenePlugin: Indexing "test" ... 536 articles indexed
-        # LucenePlugin: Rebuilding dictionaries ... done
+        > LucenePlugin: Clearing index ... done
+        > LucenePlugin: Indexing "lucene-test" ... 412 articles indexed
+        > LucenePlugin: Indexing "test" ... 536 articles indexed
+        > LucenePlugin: Rebuilding dictionaries ... done
 
      Please make sure that the output really includes the "LucenePlugin" string.
      Otherwise your plug-in was not correctly activated.
