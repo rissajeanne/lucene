@@ -18,7 +18,7 @@ therefore included a copy of this license in the root directory of this plug-in,
 see LICENSE-APACHE-2.0.txt.
 
 For more details please visit the Solr web site:
-- <https://lucene.apache.org/solr/>
+- https://lucene.apache.org/solr/
 
 
 # Should I use the Lucene/Solr Plug-In?
@@ -179,41 +179,47 @@ to install the plugin for another OJS installation you can ommit steps 1) and 3)
      already have a running Solr server) please create a symbolic link to the installation
      of you Solr server:
 
-     #> ln -s <path to your OJS installation containg the Solr server installation>/plugins/generic/lucene/lib/solr-8.1.1 solr
+     > ln -s <path to your OJS installation containg the Solr server installation>/plugins/generic/lucene/lib/solr-8.1.1 solr
 
   3) Download the Solr binaries:
 
- 	If you are on Linux execute something like (from the OJS application directory):
-          #> cd plugins/generic/lucene/lib
-          #> wget https://archive.apache.org/dist/lucene/solr/8.1.1/solr-8.1.1.zip
-          #>  #> unzip solr-8.1.1.zip
-          (You may have to install the unzip tool first...)
+ If you are on Linux execute something like (from the OJS application directory):
 
-          This should create a folder solr-8.1.1 in your lib directory. If
-          you are on Linux then please create a symlink pointing to this directory,
-          e.g.:
-          #> ln -s solr-8.1.1 solr
+	  > cd plugins/generic/lucene/lib
+	  > wget https://archive.apache.org/dist/lucene/solr/8.1.1/solr-8.1.1.zip
+	  > unzip solr-8.1.1.zip
+	  (You may have to install the unzip tool first...)
 
-       If you are on Windows then download and unzip the file to the lib folder
-       using your favorite browser and zip tool. Then rename the solr-8.1.1 folder to
-       "solr" or use the Windows "mklink" tool to create a symlink to the
-       unzipped folder, e.g.:
-          C:\...\ojs> cd plugins\generic\lucene\lib
-          C:\...\lib> mklink /d solr solr-8.1.1
+
+ This should create a folder solr-8.1.1 in your lib directory. If
+	  you are on Linux then please create a symlink pointing to this directory,
+	  e.g.:
+
+	  > ln -s solr-8.1.1 solr
+
+If you are on Windows then download and unzip the file to the lib folder
+	using your favorite browser and zip tool. Then rename the solr-8.1.1 folder to
+	"solr" or use the Windows "mklink" tool to create a symlink to the  unzipped folder, e.g.:
+
+	> C:\...\ojs> cd plugins\generic\lucene\lib
+    > C:\...\lib> mklink /d solr solr-8.1.1
 
   4) Check your installation:
      We provide a script that finalizes the installation and helps you to make
      sure that you correctly installed Jetty and Solr.
 
      On Linux please execute (from the OJS directory):
-         > cd plugins/generic/lucene/embedded/bin
+
+		> cd plugins/generic/lucene/embedded/bin
          > ./chkconfig.sh
 
      On Windows this would be:
+
          C:\...\ojs> cd plugins\generic\lucene\embedded\bin
          C:\...\lib> chkconfig.bat
 
      Make sure that you have the right access rights to execute the scripts. You might have to set them:
+
      	 > cd plugins/generic/lucene/embedded/bin
      	 > chmod 774 *
 
