@@ -1,11 +1,9 @@
 
 
-Contents
---------
+### Contents
 
 
-# Welcome to the OJS Lucene/Solr Plug-In!
------------------------------------------
+### Welcome to the OJS Lucene/Solr Plug-In!
 
 This README file contains important information with respect to the correct and
 secure installation of the OJS Lucene/Solr plug-in. Please make sure you read it
@@ -21,8 +19,7 @@ For more details please visit the Solr web site:
 - https://lucene.apache.org/solr/
 
 
-# Should I use the Lucene/Solr Plug-In?
----------------------------------------
+### Should I use the Lucene/Solr Plug-In?
 
 The first decision to take is whether to use the plug-in at all. The main
 advantages of the plug-in's search implementation over the default OJS search
@@ -53,8 +50,7 @@ then please do not use this plug-in. Tika is not able to parse PostScript
 documents.
 
 
-# Decisions to take before enabling the Plug-In
------------------------------------------------
+### Decisions to take before enabling the Plug-In
 
 This plug-in is an adapter between OJS and the Solr search server. It requires a
 working Solr server somewhere on your network.
@@ -78,8 +74,7 @@ The following sections will help you to take the right decisions with respect
 to these configuration alternatives.
 
 
-# Embedded versus Remote Server Mode
-------------------------------------
+### Embedded versus Remote Server Mode
 
 In embedded server mode, the Solr search server will run on the same server as
 OJS itself. If you have only a single OJS installation on your server then
@@ -155,8 +150,7 @@ deploy in central server mode:
   ... exhausted' errors.
 
 
-# Embedded Server Mode: Installation and Configuration
-------------------------------------------------------
+### Embedded Server Mode: Installation and Configuration
 
 As we do not want to unnecessarily blow up our default OJS distribution and want
 to make sure that you always install the latest release of Solr, we do not
@@ -283,16 +277,16 @@ If you are on Windows then download and unzip the file to the lib folder
 
      Temporarily make security.json writeable:
 
-      > sudo chmod g+w security.json
+     > sudo chmod g+w security.json
 
      Change password:
 
-		> curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
+	 > curl --user solr:SolrRocks http://localhost:8983/api/cluster/security/authentication -H 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE CHANGE"}}'
 
      Secure credentials file:
 
 
-		> sudo chmod g-w security.json
+	 > sudo chmod g-w security.json
 
  This command will change the file plugins/generic/lucene/embedded/solr81/security.json, so if you upload this file again, the password will be reset to SolrRocks
 
@@ -315,15 +309,15 @@ On Linux and from the OJS directory this becomes:
 
 You should see output similar to this:
 
-	> LucenePlugin: Clearing index ... done
-        > LucenePlugin: Indexing "lucene-test" ... 412 articles indexed
-        > LucenePlugin: Indexing "test" ... 536 articles indexed
-        > LucenePlugin: Rebuilding dictionaries ... done
+		> LucenePlugin: Clearing index ... done
+		> LucenePlugin: Indexing "lucene-test" ... 412 articles indexed
+		> LucenePlugin: Indexing "test" ... 536 articles indexed
+		> LucenePlugin: Rebuilding dictionaries ... done
 
 On Windows execute:
 
->         C:\...\ojs> cd tools
->         C:\...\tools> php rebuildSearchIndex.php -d
+		>         C:\...\ojs> cd tools
+		>         C:\...\tools> php rebuildSearchIndex.php -d
 
 Please make sure that the output really includes the "LucenePlugin" string.
      Otherwise your plug-in was not correctly activated.
@@ -334,8 +328,8 @@ Please make sure that the output really includes the "LucenePlugin" string.
      expected.
 
 
-6 Central Server Mode: Installation and Configuration
------------------------------------------------------
+### Central Server Mode: Installation and Configuration
+
 
 Solr can be installed and deployed in many different ways and there is no one
 best deployment for large OJS providers. You'll have to understand Solr
@@ -431,8 +425,8 @@ specific to the OJS Lucene/Solr plug-in:
      with Solr works as expected.
 
 
-7 Troubleshooting
------------------
+### Troubleshooting
+
 
 If you have trouble INSTALLING or CONFIGURING the Solr server then you may try
 the following:
@@ -474,12 +468,14 @@ the following:
 
   If your index is incomplete then try the following steps:
 
-  1) Stop the Solr server executing the script 'plugins/generic/lucene/embedded/
-     bin/stop.sh'.
+  1) Stop the Solr server executing the script
+	 > plugins/generic/lucene/embedded/bin/stop.sh
 
-  2) Completely delete the folder 'files/lucene'.
+  2) Completely delete the folder 'files/lucene
 
-  3) Execute the script 'plugins/generic/lucene/embedded/bin/start.sh'.
+  3) Execute the script
+
+    > plugins/generic/lucene/embedded/bin/start.sh
 
   4) Execute the command:
 
@@ -550,8 +546,8 @@ settings. If custom ranking is enabled, this will add an overhead to searches
 proportional to the size of your index.
 
 
-8 Push versus Pull Indexing
----------------------------
+### Push versus Pull Indexing
+
 
 Article indexing can be initiated on the client side (push processing) or on the
 server side (pull processing). Both options have their strengths and weaknesses.
@@ -631,8 +627,8 @@ execute the following actions in order:
    of what could have gone wrong.
 
 
-9 Rebuilding your index, dictionaries and/or usage statistics
---------------------------------------------------------------
+### Rebuilding your index, dictionaries and/or usage statistics
+
 
 There are a few maintenance operations that cannot be fully automated
 out-of-the-box:
@@ -678,7 +674,7 @@ There are two possibilities to execute these administrative tasks:
 
    The script has the following usage pattern:
 
-     php tools/rebuildSearchIndex.php [options] [journal_path]
+   >  php tools/rebuildSearchIndex.php [options] [journal_path]
 
    journal_path:
 
@@ -688,11 +684,14 @@ There are two possibilities to execute these administrative tasks:
 
    The options are:
 
-     -d     Rebuild dictionaries.
-     -b     Update usage statistics (see Ranking by Usage Statistics, above).
-     -n     Do not re-index any articles. If this option is given together
+    > -d     Rebuild dictionaries.
+
+    > -b     Update usage statistics (see Ranking by Usage Statistics, above).
+
+    > -n     Do not re-index any articles. If this option is given together
             with a journal path then the journal path will be ignored.
-     -h     Display usage information.
+
+    > -h     Display usage information.
 
    Examples:
 
@@ -726,7 +725,7 @@ There are two possibilities to execute these administrative tasks:
    section there. The page has appropriate inline help.
 
 
-10 What else do I have to do to keep my index up to date?
+### What else do I have to do to keep my index up to date?
 ---------------------------------------------------------
 
 Once correctly installed and running, the Solr/Lucene plug-in does not require
@@ -734,7 +733,7 @@ any further maintenance. Just monitor performance and resource usage of the Solr
 server as you would for any other process.
 
 
-11 Customizing Solr (additional languages, stopwords, etc.)
+### Customizing Solr (additional languages, stopwords, etc.)
 -----------------------------------------------------------
 
 All Solr configuration files come with inline comments that hint you about what
