@@ -169,7 +169,7 @@ corresponding memory parameters in the start script
 swapping occur on your machine then you'll probably have to install
 more physical RAM.
 
--   PHP configuration: The plug-in relies on the PHP curl. Please
+- PHP configuration: The plug-in relies on the PHP curl. Please
 activate it before enabling the plug-in. If you have a large OJS
 installation then rebuilding your index (see the dedicated chapter)
 may require lots of memory. Please increase the 'memory\_limit' in
@@ -202,9 +202,7 @@ If you install the OJS Lucene plugin for an additional OJS
 installation (i.e. you already have a running Solr server) please
 create a symbolic link to the installation of you Solr server:
 
-> ln -s
-> <path to your OJS installation containg the Solr server installation>/plugins/generic/lucene/lib/solr-8.1.1
-> solr
+> ln -s  $OJS_INSTALL_PATH/plugins/generic/lucene/lib/solr-8.1.1> solr
 
 3)  Download the Solr binaries:
 
@@ -212,8 +210,11 @@ If you are on Linux execute something like (from the OJS application
 directory):
 
 > cd plugins/generic/lucene/lib
+
 > wget https://archive.apache.org/dist/lucene/solr/8.1.1/solr-8.1.1.zip
+
 > unzip solr-8.1.1.zip
+
 (You may have to install the unzip tool first...)
 
 This should create a folder solr-8.1.1 in your lib directory. If you are
@@ -227,6 +228,7 @@ folder to "solr" or use the Windows "mklink" tool to create a symlink to
 the unzipped folder, e.g.:
 
 > C:\...\ojs> cd plugins\generic\lucene\lib
+
 > C:\...\lib> mklink /d solr solr-8.1.1
 
 4)  Check your installation: We provide a script that finalizes the
@@ -241,13 +243,15 @@ On Linux please execute (from the OJS directory):
 
 On Windows this would be:
 
-C:\...\ojs> cd plugins\generic\lucene\embedded\bin
-C:\...\lib> chkconfig.bat
+> C:\...\ojs> cd plugins\generic\lucene\embedded\bin
+
+> C:\...\lib> chkconfig.bat
 
 Make sure that you have the right access rights to execute the
 scripts. You might have to set them:
 
 > cd plugins/generic/lucene/embedded/bin
+
 > chmod 774 *
 
 If you get error messages then please return to step 2) and check
@@ -274,6 +278,7 @@ you should see the java process of your running Solr instance.
 On Windows this becomes:
 
 > C:\...\ojs\> cd plugins\generic\lucene\embedded\bin Y C:\...\lib\>
+
 > start.bat
 
 And to check that Solr is actually running execute:
@@ -298,15 +303,15 @@ immediately.
 
 In the standard configuration Basic Authentication is used, and
 configured in the file
+
 plugins/generic/lucene/embedded/solr81/security.json. The standard
 admin username and password are solr and SolrRocks
 
 If you want to change to another authentication method, please
-consult the documentation at
-https://lucene.apache.org/solr/guide/8\_1/authentication-and-authorization-plugins.htm
+consult the [documentation](https://lucene.apache.org/solr/guide/8\_1/authentication-and-authorization-plugins.htm)
 
 One way to change the password once the server is running
-(i.e. after you have completed step 5) is to use curl. To do this,
+(i.e. after you have completed the step 5) is to use curl. To do this,
 complete step 5 and use the following command from the commandline,
 replacing PLEASE CHANGE with the new password:
 
@@ -316,10 +321,7 @@ Temporarily make security.json writeable:
 
 Change password:
 
-> curl --user solr:SolrRocks
-> http://localhost:8983/api/cluster/security/authentication -H
-> 'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE
-> CHANGE"}}'
+> curl --user solr:SolrRocks  http://localhost:8983/api/cluster/security/authentication -H  'Content-type:application/json' -d '{"set-user": {"solr":"PLEASE> CHANGE"}}'
 
 Secure credentials file:
 
@@ -332,10 +334,9 @@ this file again, the password will be reset to SolrRocks
 7)  Now open up your web browser and log into your OJS journal manager
 account.
 
-> Go to "Settings -\> Website -\> Plugins" and enable the "Lucene Search
-> Plugin" (under "Generic Plugins").
+> Go to "Settings -\> Website -\> Plugins" and enable the "Lucene Search  Plugin" (under "Generic Plugins").
 
-Enter the search endpoint as: http://127.0.0.1:8983/solr/ojs/search and
+Enter the search endpoint as: `http://127.0.0.1:8983/solr/ojs/search` and
 provide the admin username and password (see step 6).
 
 8)  Build your lucene index:
@@ -348,25 +349,25 @@ On Linux and from the OJS directory this becomes:
 > php tools/rebuildSearchIndex.php -d
 
 You should see output similar to this:
-
-> LucenePlugin: Clearing index ... done
-> LucenePlugin: Indexing "lucene-test" ... 412 articles indexed
-> LucenePlugin: Indexing "test" ... 536 articles indexed
-> LucenePlugin: Rebuilding dictionaries ... done
+```
+LucenePlugin: Clearing index ... done
+LucenePlugin: Indexing "lucene-test" ... 412 articles indexed
+LucenePlugin: Indexing "test" ... 536 articles indexed
+LucenePlugin: Rebuilding dictionaries ... done
+```
 
 On Windows execute:
 
->         C:\...\ojs> cd tools
->         C:\...\tools> php rebuildSearchIndex.php -d
+>  C:\...\ojs> cd tools
+
+>  C:\...\tools> php rebuildSearchIndex.php -d
 
 Please make sure that the output really includes the "LucenePlugin"
 string. Otherwise your plug-in was not correctly activated.
 
 9)  Execute some searches
 
->     Go to your OJS web frontend and test whether searching with Solr works as
->
-> expected.
+  Go to your OJS web frontend and test whether searching with Solr works as expected.
 
 ### Central Server Mode: Installation and Configuration
 
@@ -392,8 +393,8 @@ your own judgement to establish a basic installation adequate to
 your server environemnt.
 
 3)  As a configuration baseline you can copy the files in
-"plugins/generic/ lucene/embedded/etc" and
-"plugins/generic/lucene/embedded/solr" to the corresponding places
+`plugins/generic/ lucene/embedded/etc` and
+`plugins/generic/lucene/embedded/solr` to the corresponding places
 in your Jetty and Solr installation, respectively.
 
 You'll probably have to change paths and security configuration in
@@ -427,8 +428,7 @@ Solr plug-in in all OJS installations that you want to connect to
 your Solr server. To do so, open up your web browser and log into
 your OJS journal manager account.
 
-Go to "Journal Manager -\> System Plugins -\> Generic Plugins" and
-enable the "Lucene Search Plugin".
+> Go to "Journal Manager -\> System Plugins -\> Generic Plugins" and enable the "Lucene Search Plugin".
 
 5)  Go to the plug-in's setting page and enter the URL of the search
 handler corresponding to the core that you want to index the journal
@@ -451,13 +451,14 @@ your index for that installation:
 
 > cd tools php rebuildSearchIndex.php -d
 
-You should see output similar to this: \> LucenePlugin: Clearing
+You should see output similar to this:
+``` LucenePlugin: Clearing
 index ... done \> LucenePlugin: Indexing "lucene-test" ... 412
 articles indexed \> LucenePlugin: Indexing "test" ... 536 articles
 indexed \> LucenePlugin: Rebuilding dictionaries ... done
-
+```
 Please make sure that the output really includes the "LucenePlugin"
-string. Otherwise your plug-in was not correctly activated.
+string
 
 7)  Execute some searches
 
@@ -469,8 +470,8 @@ searching with Solr works as expected.
 If you have trouble INSTALLING or CONFIGURING the Solr server then you
 may try the following:
 
--   If you get 'Allowed memory size ... exhausted' errors while doing an
-index rebuild then you have to increase your 'memory\_limit' setting
+-   If you get `allowed memory size ... exhausted` errors while doing an
+index rebuild then you have to increase your `memory\_limit` setting
 in php.ini. Doing a huge index rebuild may require considerable
 memory resources. This cannot be fixed easily as it is due to memory
 leaks in the PHP mysql extension used by OJS.
@@ -481,10 +482,11 @@ leaks in the PHP mysql extension used by OJS.
 
 If the server is not running then try the following steps:
 
-1)  Completely delete the folder 'files/lucene'.
+1)  Completely delete the folder `files/lucene`.
 
 2)  Execute the script
-'plugins/generic/lucene/embedded/bin/start.sh'.
+
+> plugins/generic/lucene/embedded/bin/start.sh
 
 3)  Check whether your Solr server is now running.
 
@@ -496,22 +498,23 @@ If the server is not running then try the following steps:
 
 -   Once the server is running, check whether your index contains data.
 To do so, open a browser window and navigate to the URL
-'http://localhost:8983/solr/. The browser should ask you for the
+`http://localhost:8983/solr/`. The browser should ask you for the
 user name and password you configured for your Solr web server. Once
 you entered your credentials, you should see a page with information
 about your SOLR-instance. In the left menu, you find a Core-Selector
 dropdown. After selecting the OJS Core, you will find details about
 the index content. The field 'numDocs' shows how many articles have
-actually been indexed. And the remaining XML can give you an idea
+actually been indexed. Remaining XML can give you an idea
 whether title, abstract, full text, etc. have been correctly
 indexed.
 
 If your index is incomplete then try the following steps:
 
-1)  Stop the Solr server executing the script \>
-plugins/generic/lucene/embedded/bin/stop.sh
+1)  Stop the Solr server executing the script
 
-2)  Completely delete the folder 'files/lucene
+> plugins/generic/lucene/embedded/bin/stop.sh
+
+2)  Completely delete the folder `files/lucene`
 
 3)  Execute the script
 
@@ -522,7 +525,8 @@ plugins/generic/lucene/embedded/bin/stop.sh
 > php tools/rebuildSearchIndex.php -d
 
 5)  Check the index again via the URL
-'http://localhost:8983/solr/\#/ojs/core-overview'.
+
+> http://localhost:8983/solr/\#/ojs/core-overview
 
 6)  Execute a test search request in OJS.
 
@@ -645,10 +649,10 @@ script on the Solr server (see the inline comments there), especially
 change the Authentification Credentials if you have changed them, -
 enable pull-processing in the Lucene plugin settings of all OJS clients,
 - schedule the pull download script
-('plugins/generic/lucene/embedded/bin/ pull.sh') on the Solr server,
+(`plugins/generic/lucene/embedded/bin/ pull.sh`) on the Solr server,
 e.g. as a cron job. We recommend scheduling this script once or twice a
 day during off-hours when server load is low. - schedule the load
-processing script ('plugins/generic/lucene/embedded/bin/ load.sh') on
+processing script (`plugins/generic/lucene/embedded/bin/ load.sh`) on
 the Solr server, e.g. as a cron job. We recommend scheduling this script
 about every 15 minutes. It polls the staging folder and will do nothing
 if no files are staged for load. - regularly monitor the staging, reject
@@ -662,7 +666,7 @@ pull-processing in OJS clients as described above.
 
 2)  Trigger a full index rebuild on one of your OJS clients (either on
 the Lucene plugin settings page or through the
-'tools/rebuildSearchIndex.php' script).
+`tools/rebuildSearchIndex.php` script).
 
 3)  Execute the pull.sh script manually on your Solr server. You should
 see output confirming that one or more XML files have been staged
@@ -811,14 +815,16 @@ Let's take support for German as an example: First the schema.xml file
 contains the type definition:
 
 <!-- German -->
-
+```xml
 <fieldType name="text_de" class="solr.TextField" positionIncrementGap="100">
 <analyzer> ... </analyzer> </fieldType>
+```
 
-Then, further down the schema.xml file you'll find the dynamic field
+Then, further down the schema.xml file you`ll find the dynamic field
 definition that points to the type definition:
-
-<dynamicField name=\"\*\_de\_DE\" type="text\_de" ... /\>
+```xml
+<dynamicField name="*_de_DE" type="text_de" />
+```
 
 If you want to customize support for your language then you'll just have
 to change the field type definition for your language. To introduce a
@@ -828,7 +834,7 @@ default import configuration will deal automatically with new languages.
 To add additional stopwords you have to find the stopword list
 corresponding to the language you are customizing. You find the default
 stopword lists in the folder
-'plugins/generic/lucene/embedded/solr81/conf/lang'. You can edit these
+`plugins/generic/lucene/embedded/solr81/conf/lang`. You can edit these
 files manually and then restart the Solr process. This should be enough
 to introduce the new stopwords.
 
@@ -836,21 +842,22 @@ We use a so-called "bigram" approach by default to index Chinese,
 Taiwanese or Japanese texts. If you have texts in simplified Chinese
 only you may want to try out the following alternative configuration in
 your schema.xml:
-
+```xml
 <dynamicField name="*_zh_CN" type="text_csimp" indexed="true"  stored="true"
   multiValued="false" /> ...
-
+```
 To use this filter, see solr/contrib/analysis-extras/README.txt for
 instructions on which jars you need to add to solr/lib.
 
 Still another approach to indexing Chinese, Korean or Japanese could be
 the following configuration:
 
+```xml
 <fieldType name="text_cjk" class="solr.TextField" positionIncrementGap="100">
 <analyzer> <tokenizer class="solr.LowerCaseTokenizerFactory"/>
 <filter class="solr.EdgeNGramFilterFactory" minGramSize="1"
 	  maxGramSize="2" side="back"/> </analyzer> </fieldType>
-
+```
 If you are searching in mixed-language fields (e.g. titles that contain
 both English and Chinese versions of the same text) then searching for
 words with quotes (e.g. '+China +"中国"') may be helpful to avoid false
@@ -874,11 +881,11 @@ proxy that denies all access to the XML webservice endpoint from outside
 your internal network.
 
 The pull service endpoint URL is: -
-http://www.your-host.com/index.php/index/lucene/pullChangedArticles
+> http://www.your-host.com/index.php/index/lucene/pullChangedArticles
 
 If you are using path-based URLs then your endpoint may change
 accordingly, e.g. -
-http://www.your-host.com/index/lucene/pullChangedArticles
+> http://www.your-host.com/index/lucene/pullChangedArticles
 
 You can issue a parameter-less GET request to the given endpoint to
 check that you are looking at the right URL. But please do not do this
