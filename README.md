@@ -1,5 +1,6 @@
 -   [Welcome to the OJS Lucene/Solr
 Plug-In!](#welcome-to-the-ojs-lucenesolr-plug-in)
+- [Demo websites](#demonstrations)
 -   [Should I use the Lucene/Solr
 Plug-In?](#should-i-use-the-lucenesolr-plug-in)
 -   [Decisions to take before enabling the
@@ -38,6 +39,9 @@ directory of this plug-in, see LICENSE-APACHE-2.0.txt.
 For more details please visit the Solr web site: -
 https://lucene.apache.org/solr/
 
+### Demonstrations
+-  https://tidsskrift.dk/
+
 ### Should I use the Lucene/Solr Plug-In?
 
 The first decision to take is whether to use the plug-in at all. The
@@ -60,14 +64,14 @@ when adding galleys to an article or when having to rebuild the
 index.
 
 -   Additional document formats: The Tika document parser is able to
-convert a large number of documents. Most notably it supports ePub
+convert numerous documents. Most notably it supports ePub
 format which is not otherwise supported by the default OJS search
 implementation. You'll find a current list of all supported document
 formats on the Tika website.
 
 Caution: The default OJS search installation supports parsing of
 PostScript documents. If you have articles that contain information in
-PostScript documents and you do not use any alternative galley format
+PostScript documents, and you do not use any alternative galley format
 that can be understood by Tika then please do not use this plug-in. Tika
 is not able to parse PostScript documents.
 
@@ -78,7 +82,7 @@ requires a working Solr server somewhere on your network.
 
 You should have a basic understanding of how the Solr search server
 works before taking a deployment decision. It is in no way necessary to
-understand Solr internals but it would be useful to understand Solr's
+understand Solr internals, but it would be useful to understand Solr's
 basic architecture and how it interoperates with applications.
 
 This plug-in can be deployed in two quite different ways: 1) with an
@@ -173,7 +177,7 @@ more physical RAM.
 activate it before enabling the plug-in. If you have a large OJS
 installation then rebuilding your index (see the dedicated chapter)
 may require lots of memory. Please increase the 'memory\_limit' in
-php.ini until you no longer get 'Allowed memory size ... exhausted'
+php.ini until you no longer get `Allowed memory size ... exhausted'
 errors.
 
 ### Embedded Server Mode: Installation and Configuration
