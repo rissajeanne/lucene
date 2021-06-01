@@ -45,6 +45,7 @@ import('lib.pkp.classes.xml.XMLCustomWriter');
 import('plugins.generic.lucene.classes.SolrSearchRequest');
 import('lib.pkp.classes.core.PKPPageRouter');
 import('classes.search.ArticleSearch');
+import('lib.pkp.classes.submission.PKPSubmission'); // STATUS_PUBLISHED
 
 class SolrWebService extends XmlWebService {
 
