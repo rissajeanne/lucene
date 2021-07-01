@@ -41,6 +41,7 @@ https://lucene.apache.org/solr/
 
 ### Demonstrations
 -  https://tidsskrift.dk/
+-  https://journal.fi/afs/search
 
 ### Should I use the Lucene/Solr Plug-In?
 
